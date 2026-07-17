@@ -1,0 +1,2565 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AK应用肌动学中文官网 - 后台管理系统</title>
+<style>
+:root {
+  --sidebar-bg: #1a3a5c;
+  --sidebar-hover: #2c5282;
+  --sidebar-active: #3182ce;
+  --sidebar-text: #cbd5e0;
+  --sidebar-text-active: #ffffff;
+  --content-bg: #f0f2f5;
+  --card-bg: #ffffff;
+  --light-blue: #e6f1fb;
+  --primary: #3182ce;
+  --primary-dark: #2c5282;
+  --success: #38a169;
+  --warning: #d69e2e;
+  --danger: #e53e3e;
+  --text-main: #2d3748;
+  --text-secondary: #718096;
+  --border-color: #e2e8f0;
+  --text-white: #ffffff;
+  --shadow: 0 2px 8px rgba(0,0,0,0.08);
+  --radius: 8px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--content-bg);
+  color: var(--text-main);
+  font-size: 14px;
+}
+
+/* ===== Layout ===== */
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+  width: 240px;
+  background: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  overflow-y: auto;
+  transition: transform 0.3s;
+}
+
+.sidebar::-webkit-scrollbar { width: 5px; }
+.sidebar::-webkit-scrollbar-thumb { background: #2c5282; border-radius: 3px; }
+
+.sidebar-logo {
+  padding: 20px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar-logo .logo-icon {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #3182ce, #63b3ed);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.sidebar-logo .logo-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.3;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 8px 0;
+}
+
+.menu-item {
+  position: relative;
+}
+
+.menu-link {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  color: var(--sidebar-text);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  gap: 10px;
+  user-select: none;
+}
+
+.menu-link:hover {
+  background: var(--sidebar-hover);
+  color: var(--sidebar-text-active);
+}
+
+.menu-link.active {
+  background: var(--sidebar-active);
+  color: var(--sidebar-text-active);
+}
+
+.menu-link .menu-icon {
+  width: 18px;
+  text-align: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.menu-link .menu-label {
+  flex: 1;
+  font-size: 14px;
+}
+
+.menu-link .menu-arrow {
+  font-size: 12px;
+  transition: transform 0.2s;
+}
+
+.menu-item.expanded .menu-link .menu-arrow {
+  transform: rotate(90deg);
+}
+
+.submenu {
+  list-style: none;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  background: rgba(0,0,0,0.15);
+}
+
+.menu-item.expanded .submenu {
+  max-height: 300px;
+}
+
+.submenu .menu-link {
+  padding-left: 50px;
+  font-size: 13px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* ===== Main Content ===== */
+.main-content {
+  flex: 1;
+  margin-left: 240px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.topbar {
+  background: var(--card-bg);
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.breadcrumb .current {
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+.admin-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3182ce, #63b3ed);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.admin-name {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.admin-role {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.main-body {
+  padding: 20px 24px;
+  flex: 1;
+}
+
+/* ===== Page Title ===== */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.page-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.page-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* ===== Buttons ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--primary-dark); }
+
+.btn-success { background: var(--success); color: #fff; }
+.btn-success:hover { filter: brightness(1.1); }
+
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-danger:hover { filter: brightness(1.1); }
+
+.btn-default {
+  background: #fff;
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+}
+.btn-default:hover { background: #f7fafc; }
+
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+.btn-group {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* ===== Stats Cards ===== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: transform 0.2s;
+}
+
+.stat-card:hover { transform: translateY(-2px); }
+
+.stat-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.stat-icon.blue { background: #ebf8ff; color: #3182ce; }
+.stat-icon.green { background: #f0fff4; color: #38a169; }
+.stat-icon.orange { background: #fffaf0; color: #d69e2e; }
+.stat-icon.purple { background: #faf5ff; color: #805ad5; }
+
+.stat-info .stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.stat-info .stat-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* ===== Card ===== */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+/* ===== Table ===== */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+table.data-table th {
+  background: var(--light-blue);
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-main);
+  white-space: nowrap;
+  border-bottom: 1px solid var(--border-color);
+}
+
+table.data-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color);
+  white-space: nowrap;
+}
+
+table.data-table tr:hover td {
+  background: #f7fafc;
+}
+
+table.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* ===== Badge ===== */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.badge-success { background: #c6f6d5; color: #22543d; }
+.badge-warning { background: #feebc8; color: #744210; }
+.badge-danger { background: #fed7d7; color: #742a2a; }
+.badge-info { background: #bee3f8; color: #2a4365; }
+.badge-default { background: #e2e8f0; color: #4a5568; }
+
+/* ===== Search ===== */
+.search-bar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.search-input {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 13px;
+  width: 240px;
+  font-family: inherit;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(49,130,206,0.15);
+}
+
+/* ===== Filter Tabs ===== */
+.filter-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.filter-tab {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  transition: all 0.2s;
+}
+
+.filter-tab:hover { background: var(--light-blue); }
+
+.filter-tab.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+/* ===== Empty State ===== */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-secondary);
+}
+
+.empty-state .empty-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+  opacity: 0.4;
+}
+
+.empty-state .empty-text {
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+/* ===== Modal ===== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.modal-overlay.show {
+  display: flex;
+}
+
+.modal {
+  background: #fff;
+  border-radius: var(--radius);
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal.modal-lg { max-width: 800px; }
+
+.modal-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  line-height: 1;
+  padding: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.modal-close:hover { background: #f7fafc; }
+
+.modal-body {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.modal-footer {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* ===== Form ===== */
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.form-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: var(--text-main);
+}
+
+.form-label .required {
+  color: var(--danger);
+  margin-left: 2px;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: inherit;
+  background: #fff;
+  color: var(--text-main);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(49,130,206,0.15);
+}
+
+.form-textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.form-hint {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.form-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.switch {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background: #cbd5e0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.switch.on { background: var(--success); }
+
+.switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+
+.switch.on::after { transform: translateX(20px); }
+
+.file-upload {
+  border: 1px dashed var(--border-color);
+  border-radius: 6px;
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all 0.2s;
+}
+
+.file-upload:hover {
+  border-color: var(--primary);
+  background: var(--light-blue);
+  color: var(--primary);
+}
+
+/* ===== Quick Actions ===== */
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.quick-action {
+  background: var(--light-blue);
+  border-radius: var(--radius);
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+.quick-action:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.quick-action .qa-icon {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.quick-action .qa-label {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ===== Payment Config ===== */
+.pay-config-card {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.pay-config-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.pay-config-title {
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pay-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #fff;
+}
+
+.pay-icon.wechat { background: #07c160; }
+.pay-icon.alipay { background: #1677ff; }
+.pay-icon.bank { background: #fa8c16; }
+
+/* ===== Toggle Menu Button ===== */
+.menu-toggle {
+  display: none;
+  font-size: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 12px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  .main-content {
+    margin-left: 0;
+  }
+  .menu-toggle {
+    display: block;
+  }
+  .search-input {
+    width: 100%;
+  }
+  .form-row {
+    flex-direction: column;
+  }
+}
+
+/* ===== Content Sections ===== */
+.content-section {
+  display: none;
+}
+
+.content-section.active {
+  display: block;
+}
+
+/* ===== Operator Links ===== */
+.op-link {
+  color: var(--primary);
+  cursor: pointer;
+  font-size: 12px;
+  margin-right: 8px;
+}
+
+.op-link:hover { text-decoration: underline; }
+
+.op-link.danger { color: var(--danger); }
+
+/* ===== Checkbox ===== */
+.checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<div class="admin-layout">
+  <!-- ===== Sidebar ===== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">AK</div>
+      <div class="logo-text">应用肌动学<br>后台管理系统</div>
+    </div>
+    <ul class="sidebar-menu">
+      <li class="menu-item">
+        <div class="menu-link active" data-page="dashboard">
+          <span class="menu-icon">📊</span>
+          <span class="menu-label">仪表盘</span>
+        </div>
+      </li>
+      <li class="menu-item has-submenu">
+        <div class="menu-link" onclick="toggleSubmenu(this)">
+          <span class="menu-icon">📚</span>
+          <span class="menu-label">课程管理</span>
+          <span class="menu-arrow">▶</span>
+        </div>
+        <ul class="submenu">
+          <li><div class="menu-link" data-page="offline-courses">线下课程</div></li>
+          <li><div class="menu-link" data-page="online-courses">线上课程</div></li>
+        </ul>
+      </li>
+      <li class="menu-item">
+        <div class="menu-link" data-page="therapists">
+          <span class="menu-icon">👨‍⚕️</span>
+          <span class="menu-label">治疗师管理</span>
+        </div>
+      </li>
+      <li class="menu-item">
+        <div class="menu-link" data-page="resources">
+          <span class="menu-icon">📖</span>
+          <span class="menu-label">学习资源管理</span>
+        </div>
+      </li>
+      <li class="menu-item">
+        <div class="menu-link" data-page="knowledge">
+          <span class="menu-icon">🧠</span>
+          <span class="menu-label">知识库管理</span>
+        </div>
+      </li>
+      <li class="menu-item has-submenu">
+        <div class="menu-link" onclick="toggleSubmenu(this)">
+          <span class="menu-icon">🛒</span>
+          <span class="menu-label">商城管理</span>
+          <span class="menu-arrow">▶</span>
+        </div>
+        <ul class="submenu">
+          <li><div class="menu-link" data-page="products">商品管理</div></li>
+          <li><div class="menu-link" data-page="orders">订单管理</div></li>
+          <li><div class="menu-link" data-page="payment">支付配置</div></li>
+        </ul>
+      </li>
+      <li class="menu-item">
+        <div class="menu-link" data-page="settings">
+          <span class="menu-icon">⚙️</span>
+          <span class="menu-label">系统设置</span>
+        </div>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- ===== Main Content ===== -->
+  <div class="main-content">
+    <!-- Topbar -->
+    <div class="topbar">
+      <div style="display:flex;align-items:center;">
+        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+        <div class="breadcrumb" id="breadcrumb">
+          <span>首页</span>
+          <span>/</span>
+          <span class="current">仪表盘</span>
+        </div>
+      </div>
+      <div class="admin-info">
+        <div style="text-align:right;">
+          <div class="admin-name">管理员</div>
+          <div class="admin-role">超级管理员</div>
+        </div>
+        <div class="admin-avatar">A</div>
+      </div>
+    </div>
+
+    <!-- Main Body -->
+    <div class="main-body">
+
+      <!-- ===== Dashboard ===== -->
+      <div class="content-section active" id="page-dashboard">
+        <div class="page-header">
+          <div>
+            <div class="page-title">仪表盘</div>
+            <div class="page-desc">欢迎使用AK应用肌动学后台管理系统</div>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon blue">📚</div>
+            <div class="stat-info">
+              <div class="stat-value">4</div>
+              <div class="stat-label">线下课程数</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon green">💻</div>
+            <div class="stat-info">
+              <div class="stat-value">0</div>
+              <div class="stat-label">线上课程数</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon orange">👨‍⚕️</div>
+            <div class="stat-info">
+              <div class="stat-value">53</div>
+              <div class="stat-label">治疗师人数</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon purple">🧠</div>
+            <div class="stat-info">
+              <div class="stat-value">45</div>
+              <div class="stat-label">知识库文章</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">最近报名</div>
+            <button class="btn btn-default btn-sm">查看全部</button>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>学员姓名</th>
+                  <th>课程名称</th>
+                  <th>联系电话</th>
+                  <th>报名时间</th>
+                  <th>金额</th>
+                  <th>状态</th>
+                </tr>
+              </thead>
+              <tbody id="recent-signups">
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">快捷操作</div>
+          </div>
+          <div class="card-body">
+            <div class="quick-actions">
+              <div class="quick-action" onclick="navigateTo('offline-courses'); setTimeout(()=>openOfflineModal(),100)">
+                <div class="qa-icon">➕</div>
+                <div class="qa-label">添加课程</div>
+              </div>
+              <div class="quick-action" onclick="navigateTo('therapists')">
+                <div class="qa-icon">📥</div>
+                <div class="qa-label">导入治疗师</div>
+              </div>
+              <div class="quick-action" onclick="navigateTo('resources')">
+                <div class="qa-icon">📤</div>
+                <div class="qa-label">上传资源</div>
+              </div>
+              <div class="quick-action" onclick="navigateTo('knowledge')">
+                <div class="qa-icon">📝</div>
+                <div class="qa-label">发布文章</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Offline Courses ===== -->
+      <div class="content-section" id="page-offline-courses">
+        <div class="page-header">
+          <div>
+            <div class="page-title">线下课程管理</div>
+            <div class="page-desc">管理线下培训班信息</div>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-default" onclick="alert('批量导入功能：请选择Excel文件')">📥 批量导入</button>
+            <button class="btn btn-primary" onclick="openOfflineModal()">➕ 新增课程</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">课程列表</div>
+            <div class="search-bar">
+              <input type="text" class="search-input" placeholder="搜索课程名称/讲师/地点" oninput="filterOffline(this.value)">
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>课程名称</th>
+                  <th>模块</th>
+                  <th>讲师</th>
+                  <th>时间</th>
+                  <th>地点</th>
+                  <th>价格</th>
+                  <th>早鸟价</th>
+                  <th>状态</th>
+                  <th>名额</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="offline-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Online Courses ===== -->
+      <div class="content-section" id="page-online-courses">
+        <div class="page-header">
+          <div>
+            <div class="page-title">线上课程管理</div>
+            <div class="page-desc">管理线上视频课程</div>
+          </div>
+          <button class="btn btn-primary" onclick="openOnlineModal()">⬆ 上传课程</button>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">课程列表</div>
+            <div class="search-bar">
+              <input type="text" class="search-input" placeholder="搜索课程标题" oninput="filterOnline(this.value)">
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>标题</th>
+                  <th>分类</th>
+                  <th>讲师</th>
+                  <th>时长</th>
+                  <th>类型</th>
+                  <th>价格</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="online-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Therapists ===== -->
+      <div class="content-section" id="page-therapists">
+        <div class="page-header">
+          <div>
+            <div class="page-title">治疗师管理</div>
+            <div class="page-desc">管理AK认证治疗师信息</div>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-default" onclick="exportTherapists()">📤 导出</button>
+            <button class="btn btn-default" onclick="document.getElementById('excel-import').click()">📥 Excel批量导入</button>
+            <input type="file" id="excel-import" accept=".xlsx,.xls" style="display:none" onchange="alert('Excel导入功能：已选择文件 '+(this.files[0]?this.files[0].name:''))">
+            <button class="btn btn-primary" onclick="openTherapistModal()">➕ 新增治疗师</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">治疗师列表</div>
+            <div class="search-bar">
+              <input type="text" class="search-input" placeholder="搜索姓名/城市/单位" oninput="filterTherapists(this.value)">
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>姓名</th>
+                  <th>城市</th>
+                  <th>单位名称</th>
+                  <th>主要业务</th>
+                  <th>联系电话</th>
+                  <th>邮箱</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="therapist-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Resources ===== -->
+      <div class="content-section" id="page-resources">
+        <div class="page-header">
+          <div>
+            <div class="page-title">学习资源管理</div>
+            <div class="page-desc">管理AK学习资料和教材</div>
+          </div>
+          <button class="btn btn-primary" onclick="openResourceModal()">📤 上传资源</button>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">资源列表</div>
+            <div class="search-bar">
+              <input type="text" class="search-input" placeholder="搜索标题/来源" oninput="filterResources(this.value)">
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>标题</th>
+                  <th>分类</th>
+                  <th>来源</th>
+                  <th>文件类型</th>
+                  <th>下载次数</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="resource-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Knowledge Base ===== -->
+      <div class="content-section" id="page-knowledge">
+        <div class="page-header">
+          <div>
+            <div class="page-title">知识库管理</div>
+            <div class="page-desc">管理疾病知识库文章</div>
+          </div>
+          <button class="btn btn-primary" onclick="openKnowledgeModal()">📝 新增文章</button>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">文章列表</div>
+            <div class="search-bar">
+              <input type="text" class="search-input" placeholder="搜索疾病名称" oninput="filterKnowledge(this.value)">
+            </div>
+          </div>
+          <div class="filter-tabs" id="knowledge-filters">
+            <div class="filter-tab active" onclick="filterKnowledgeByCategory('all', this)">全部</div>
+            <div class="filter-tab" onclick="filterKnowledgeByCategory('下半身', this)">下半身疾病 (21)</div>
+            <div class="filter-tab" onclick="filterKnowledgeByCategory('上半身', this)">上半身疾病 (13)</div>
+            <div class="filter-tab" onclick="filterKnowledgeByCategory('常见病症', this)">常见病症 (11)</div>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>疾病名称(中文)</th>
+                  <th>英文名称</th>
+                  <th>分类</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="knowledge-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Products ===== -->
+      <div class="content-section" id="page-products">
+        <div class="page-header">
+          <div>
+            <div class="page-title">商品管理</div>
+            <div class="page-desc">管理商城商品信息</div>
+          </div>
+          <button class="btn btn-primary" onclick="openProductModal()">➕ 新增商品</button>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">商品列表</div>
+            <div class="search-bar">
+              <input type="text" class="search-input" placeholder="搜索商品名称" oninput="filterProducts(this.value)">
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>商品图片</th>
+                  <th>商品名称</th>
+                  <th>分类</th>
+                  <th>价格</th>
+                  <th>库存</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="product-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Orders ===== -->
+      <div class="content-section" id="page-orders">
+        <div class="page-header">
+          <div>
+            <div class="page-title">订单管理</div>
+            <div class="page-desc">查看和管理商城订单</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">订单列表</div>
+            <div class="search-bar">
+              <input type="text" class="search-input" placeholder="搜索订单号/买家" oninput="filterOrders(this.value)">
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>订单号</th>
+                  <th>商品名称</th>
+                  <th>买家</th>
+                  <th>金额</th>
+                  <th>支付方式</th>
+                  <th>状态</th>
+                  <th>时间</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="order-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Payment Config ===== -->
+      <div class="content-section" id="page-payment">
+        <div class="page-header">
+          <div>
+            <div class="page-title">支付配置</div>
+            <div class="page-desc">配置商城支付方式</div>
+          </div>
+        </div>
+
+        <!-- 微信支付 -->
+        <div class="pay-config-card">
+          <div class="pay-config-header">
+            <div class="pay-config-title">
+              <div class="pay-icon wechat">💚</div>
+              微信支付
+            </div>
+            <div class="form-switch">
+              <span style="font-size:13px;color:var(--text-secondary)">启用</span>
+              <div class="switch on" onclick="toggleSwitch(this)"></div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">APPID <span class="required">*</span></label>
+              <input type="text" class="form-input" placeholder="请输入微信支付APPID">
+            </div>
+            <div class="form-group">
+              <label class="form-label">商户号 <span class="required">*</span></label>
+              <input type="text" class="form-input" placeholder="请输入商户号">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">API密钥 <span class="required">*</span></label>
+              <input type="text" class="form-input" placeholder="请输入API密钥">
+            </div>
+            <div class="form-group">
+              <label class="form-label">证书文件</label>
+              <div class="file-upload" onclick="alert('请选择证书文件')">📎 点击上传证书文件 (.p12)</div>
+            </div>
+          </div>
+          <button class="btn btn-primary" onclick="alert('微信支付配置已保存')">保存配置</button>
+        </div>
+
+        <!-- 支付宝 -->
+        <div class="pay-config-card">
+          <div class="pay-config-header">
+            <div class="pay-config-title">
+              <div class="pay-icon alipay">💙</div>
+              支付宝
+            </div>
+            <div class="form-switch">
+              <span style="font-size:13px;color:var(--text-secondary)">启用</span>
+              <div class="switch" onclick="toggleSwitch(this)"></div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">应用ID <span class="required">*</span></label>
+              <input type="text" class="form-input" placeholder="请输入支付宝应用ID">
+            </div>
+            <div class="form-group">
+              <label class="form-label">回调地址</label>
+              <input type="text" class="form-input" placeholder="请输入回调地址">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">私钥 <span class="required">*</span></label>
+              <textarea class="form-textarea" placeholder="请输入支付宝私钥"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">公钥 <span class="required">*</span></label>
+              <textarea class="form-textarea" placeholder="请输入支付宝公钥"></textarea>
+            </div>
+          </div>
+          <button class="btn btn-primary" onclick="alert('支付宝配置已保存')">保存配置</button>
+        </div>
+
+        <!-- 银行卡支付 -->
+        <div class="pay-config-card">
+          <div class="pay-config-header">
+            <div class="pay-config-title">
+              <div class="pay-icon bank">🟠</div>
+              银行卡支付
+            </div>
+            <div class="form-switch">
+              <span style="font-size:13px;color:var(--text-secondary)">启用</span>
+              <div class="switch" onclick="toggleSwitch(this)"></div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">商户号 <span class="required">*</span></label>
+              <input type="text" class="form-input" placeholder="请输入商户号">
+            </div>
+            <div class="form-group">
+              <label class="form-label">终端号</label>
+              <input type="text" class="form-input" placeholder="请输入终端号">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">密钥 <span class="required">*</span></label>
+              <input type="text" class="form-input" placeholder="请输入密钥">
+            </div>
+            <div class="form-group">
+              <label class="form-label">回调地址</label>
+              <input type="text" class="form-input" placeholder="请输入回调地址">
+            </div>
+          </div>
+          <button class="btn btn-primary" onclick="alert('银行卡支付配置已保存')">保存配置</button>
+        </div>
+
+        <!-- 统一支付设置 -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">统一支付设置</div>
+          </div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">默认支付方式</label>
+                <select class="form-select">
+                  <option value="wechat">微信支付</option>
+                  <option value="alipay">支付宝</option>
+                  <option value="bank">银行卡支付</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">支付超时时间（分钟）</label>
+                <input type="number" class="form-input" value="30" min="1">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">退款政策</label>
+              <textarea class="form-textarea" placeholder="请输入退款政策">课程报名后，开课前7天以上可全额退款；开课前3-7天退款50%；开课前3天内不予退款。商品售出后7天内未拆封可退款。</textarea>
+            </div>
+            <button class="btn btn-primary" onclick="alert('统一支付设置已保存')">保存设置</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Settings ===== -->
+      <div class="content-section" id="page-settings">
+        <div class="page-header">
+          <div>
+            <div class="page-title">系统设置</div>
+            <div class="page-desc">配置网站基本信息和SEO</div>
+          </div>
+        </div>
+
+        <!-- 网站基本信息 -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">网站基本信息</div>
+          </div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">网站标题 <span class="required">*</span></label>
+                <input type="text" class="form-input" value="AK应用肌动学中文官网">
+              </div>
+              <div class="form-group">
+                <label class="form-label">副标题</label>
+                <input type="text" class="form-input" value="Applied Kinesiology">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Logo</label>
+                <div class="file-upload" onclick="alert('请选择Logo图片')">🖼️ 点击上传Logo图片</div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Favicon</label>
+                <div class="file-upload" onclick="alert('请选择Favicon图标')">🖼️ 点击上传Favicon图标</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 页脚信息 -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">页脚信息</div>
+          </div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">公司名称 <span class="required">*</span></label>
+                <input type="text" class="form-input" value="健衡学园">
+              </div>
+              <div class="form-group">
+                <label class="form-label">电话 <span class="required">*</span></label>
+                <input type="text" class="form-input" value="0371-58532216">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">邮箱</label>
+                <input type="text" class="form-input" value="info@jianhengkf.com">
+              </div>
+              <div class="form-group">
+                <label class="form-label">网站</label>
+                <input type="text" class="form-input" value="www.jianhengkf.com">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">公众号名称</label>
+                <input type="text" class="form-input" value="健衡学园">
+              </div>
+              <div class="form-group">
+                <label class="form-label">公众号二维码</label>
+                <div class="file-upload" onclick="alert('请选择二维码图片')">📱 点击上传公众号二维码</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SEO设置 -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">SEO设置</div>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label class="form-label">网站关键词</label>
+              <input type="text" class="form-input" value="AK,应用肌动学,肌动学,Applied Kinesiology,Hans Garten,康复,治疗师,ICAK">
+              <div class="form-hint">多个关键词用英文逗号分隔</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">网站描述</label>
+              <textarea class="form-textarea" placeholder="请输入网站描述">AK应用肌动学中文官网 - 传播应用肌动学(Applied Kinesiology)专业知识，提供ICAK认证课程培训，推广肌动学诊断与治疗技术。</textarea>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align:right;">
+          <button class="btn btn-primary" onclick="alert('系统设置已保存')">💾 保存所有设置</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===== Generic Modal Container ===== -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal modal-lg" id="modal-container">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title">编辑</div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-footer" id="modal-footer"></div>
+  </div>
+</div>
+
+<!-- ===== Confirm Dialog ===== -->
+<div class="modal-overlay" id="confirm-overlay">
+  <div class="modal" style="max-width:420px;">
+    <div class="modal-header">
+      <div class="modal-title">确认操作</div>
+      <button class="modal-close" onclick="closeConfirm()">×</button>
+    </div>
+    <div class="modal-body">
+      <p id="confirm-message" style="font-size:14px;line-height:1.6;"></p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-default" onclick="closeConfirm()">取消</button>
+      <button class="btn btn-danger" id="confirm-ok-btn">确认删除</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== State =====
+const state = {
+  offlineCourses: [
+    { id:1, name:'广州班', module:'Part I+II', teacher:'Hans Garten', startDate:'2027-02-26', endDate:'2027-03-04', time:'2027.02.26-28 & 03.02-04', location:'广州', address:'广州市天河区培训中心', price:7800, earlyPrice:6500, earlyDeadline:'2027-01-26', status:'报名中', capacity:30, enrolled:30, detail:'德国肌动学大师Hans Garten亲自授课，涵盖Part I和Part II全部内容。', wechatLink:'' },
+    { id:2, name:'北京班', module:'Part I+II', teacher:'Hans Garten', startDate:'2027-05-21', endDate:'2027-05-27', time:'2027.05.21-23 & 05.25-27', location:'北京', address:'北京市朝阳区培训中心', price:7800, earlyPrice:6500, earlyDeadline:'2027-04-21', status:'报名中', capacity:30, enrolled:30, detail:'德国肌动学大师Hans Garten亲自授课，涵盖Part I和Part II全部内容。', wechatLink:'' },
+    { id:3, name:'郑州班', module:'Part I+II', teacher:'Hans Garten', startDate:'2027-09-10', endDate:'2027-09-16', time:'2027.09.10-12 & 09.14-16', location:'郑州', address:'郑州市金水区培训中心', price:7800, earlyPrice:6500, earlyDeadline:'2027-08-10', status:'报名中', capacity:30, enrolled:30, detail:'德国肌动学大师Hans Garten亲自授课，涵盖Part I和Part II全部内容。', wechatLink:'' },
+    { id:4, name:'南京班', module:'Part I+II', teacher:'Hans Garten', startDate:'2027-11-26', endDate:'2027-12-02', time:'2027.11.26-28 & 11.30-12.02', location:'南京', address:'南京市鼓楼区培训中心', price:7800, earlyPrice:6500, earlyDeadline:'2027-10-26', status:'报名中', capacity:30, enrolled:30, detail:'德国肌动学大师Hans Garten亲自授课，涵盖Part I和Part II全部内容。', wechatLink:'' }
+  ],
+  onlineCourses: [],
+  therapists: [
+    { id:1, name:'王锦飞', city:'厦门', org:'福建省厦门市君正康复', business:'治疗师', phone:'15606924576', email:'786942159@qq.com' },
+    { id:2, name:'崔艳', city:'安阳', org:'河南安阳', business:'医生', phone:'18790888213', email:'849421145@qq.com' },
+    { id:3, name:'张淳', city:'北京', org:'北京顺欣阳光医院', business:'医生', phone:'13601366071', email:'zhchmed@qq.com' },
+    { id:4, name:'凌家欢', city:'广州', org:'威蒂斯体育文化有限公司', business:'康复师', phone:'13202962267', email:'1474182609@qq.com' },
+    { id:5, name:'冯志鸿', city:'广州', org:'深圳鹏安运动康复门诊部', business:'康复治疗师', phone:'18875959194', email:'3226882121@qq.com' },
+    { id:6, name:'胡琼', city:'广州', org:'广州融意健康管理有限公司', business:'身心形同调师', phone:'18666026185', email:'793927062@qq.com' },
+    { id:7, name:'丁晶晶', city:'西安', org:'西安立脊康脊柱医学研究院', business:'院长', phone:'15011386694', email:'1461693284@qq.com' },
+    { id:8, name:'王妙维', city:'成都', org:'四川大学华西医院', business:'物理治疗师', phone:'15208263260', email:'373595777@qq.com' },
+    { id:9, name:'陈素环', city:'漯河', org:'河南省漯河市第六人民医院', business:'康复医师/主任', phone:'18739550309', email:'1343971780@qq.com' },
+    { id:10, name:'张家琪', city:'深圳', org:'广东深圳诺亚第', business:'', phone:'15889775964', email:'15889775964@163.com' }
+  ],
+  resources: [
+    { id:1, title:'ICAK-USA Status Statement', category:'AK科普手册', source:'ICAK-USA', fileType:'PDF', downloads:156, desc:'', permission:'免费' },
+    { id:2, title:'AK 100-Hour Course教材', category:'PAK课程讲义', source:'ICAK-USA', fileType:'PDF', downloads:342, desc:'', permission:'免费' },
+    { id:3, title:'DÄGAK课程讲义', category:'PAK课程讲义', source:'DÄGAK', fileType:'PDF', downloads:89, desc:'', permission:'免费' },
+    { id:4, title:'Applied Kinesiology Synopsis', category:'AK经典教材', source:'ICAK', fileType:'PDF', downloads:267, desc:'', permission:'付费' },
+    { id:5, title:'AK肌肉测试挂图', category:'挂图/图谱', source:'ICAK-USA', fileType:'图片', downloads:198, desc:'', permission:'免费' }
+  ],
+  knowledge: [
+    { id:1, cnName:'跟腱炎', enName:'Achilles Tendonitis', category:'下半身', status:'已发布' },
+    { id:2, cnName:'前交叉韧带问题', enName:'ACL Knee Problems', category:'下半身', status:'已发布' },
+    { id:3, cnName:'踝关节扭伤', enName:'Ankle Sprains', category:'下半身', status:'已发布' },
+    { id:4, cnName:'腰痛', enName:'Lumbago', category:'下半身', status:'已发布' },
+    { id:5, cnName:'足底筋膜炎', enName:'Plantar Fasciitis', category:'下半身', status:'已发布' },
+    { id:6, cnName:'坐骨神经痛', enName:'Sciatica', category:'下半身', status:'已发布' },
+    { id:7, cnName:'网球肘', enName:'Tennis Elbow', category:'上半身', status:'已发布' },
+    { id:8, cnName:'肩袖损伤', enName:'Rotator Cuff', category:'上半身', status:'已发布' },
+    { id:9, cnName:'偏头痛', enName:'Migraine', category:'常见病症', status:'已发布' },
+    { id:10, cnName:'哮喘', enName:'Asthma', category:'常见病症', status:'已发布' }
+  ],
+  products: [],
+  orders: [],
+  knowledgeFilter: 'all'
+};
+
+const recentSignups = [
+  { name:'张三', course:'广州班', phone:'138****8888', date:'2027-01-15', amount:6500, status:'已付款' },
+  { name:'李四', course:'北京班', phone:'139****9999', date:'2027-01-14', amount:6500, status:'已付款' },
+  { name:'王五', course:'郑州班', phone:'137****7777', date:'2027-01-12', amount:7800, status:'待付款' },
+  { name:'赵六', course:'南京班', phone:'136****6666', date:'2027-01-10', amount:6500, status:'已付款' },
+  { name:'孙七', course:'广州班', phone:'135****5555', date:'2027-01-08', amount:6500, status:'已退款' }
+];
+
+// ===== Navigation =====
+const pageNames = {
+  'dashboard': '仪表盘',
+  'offline-courses': '线下课程',
+  'online-courses': '线上课程',
+  'therapists': '治疗师管理',
+  'resources': '学习资源管理',
+  'knowledge': '知识库管理',
+  'products': '商品管理',
+  'orders': '订单管理',
+  'payment': '支付配置',
+  'settings': '系统设置'
+};
+
+const pageParents = {
+  'offline-courses': '课程管理',
+  'online-courses': '课程管理',
+  'products': '商城管理',
+  'orders': '商城管理',
+  'payment': '商城管理'
+};
+
+function navigateTo(page) {
+  document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+
+  document.querySelectorAll('.sidebar .menu-link').forEach(l => l.classList.remove('active'));
+  const activeLink = document.querySelector(`.menu-link[data-page="${page}"]`);
+  if (activeLink) activeLink.classList.add('active');
+
+  // Update breadcrumb
+  const breadcrumb = document.getElementById('breadcrumb');
+  const parent = pageParents[page];
+  if (parent) {
+    breadcrumb.innerHTML = `<span>首页</span><span>/</span><span>${parent}</span><span>/</span><span class="current">${pageNames[page]}</span>`;
+  } else {
+    breadcrumb.innerHTML = `<span>首页</span><span>/</span><span class="current">${pageNames[page]}</span>`;
+  }
+
+  // Close sidebar on mobile
+  if (window.innerWidth <= 768) {
+    document.getElementById('sidebar').classList.remove('open');
+  }
+}
+
+function toggleSubmenu(el) {
+  const item = el.parentElement;
+  item.classList.toggle('expanded');
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+// Bind menu links
+document.querySelectorAll('.menu-link[data-page]').forEach(link => {
+  link.addEventListener('click', () => navigateTo(link.dataset.page));
+});
+
+// ===== Modal =====
+function openModal(title, bodyHtml, footerHtml) {
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-body').innerHTML = bodyHtml;
+  document.getElementById('modal-footer').innerHTML = footerHtml;
+  document.getElementById('modal-overlay').classList.add('show');
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('show');
+}
+
+// ===== Confirm Dialog =====
+let confirmCallback = null;
+function showConfirm(message, callback, btnText) {
+  document.getElementById('confirm-message').textContent = message;
+  document.getElementById('confirm-ok-btn').textContent = btnText || '确认删除';
+  confirmCallback = callback;
+  document.getElementById('confirm-overlay').classList.add('show');
+}
+
+function closeConfirm() {
+  document.getElementById('confirm-overlay').classList.remove('show');
+  confirmCallback = null;
+}
+
+document.getElementById('confirm-ok-btn').addEventListener('click', () => {
+  if (confirmCallback) confirmCallback();
+  closeConfirm();
+});
+
+// Close modal on overlay click
+document.getElementById('modal-overlay').addEventListener('click', (e) => {
+  if (e.target.id === 'modal-overlay') closeModal();
+});
+document.getElementById('confirm-overlay').addEventListener('click', (e) => {
+  if (e.target.id === 'confirm-overlay') closeConfirm();
+});
+
+// ===== Switch Toggle =====
+function toggleSwitch(el) {
+  el.classList.toggle('on');
+}
+
+// ===== Dashboard Render =====
+function renderDashboard() {
+  const tbody = document.getElementById('recent-signups');
+  tbody.innerHTML = recentSignups.map(s => `
+    <tr>
+      <td>${s.name}</td>
+      <td>${s.course}</td>
+      <td>${s.phone}</td>
+      <td>${s.date}</td>
+      <td>¥${s.amount}</td>
+      <td><span class="badge ${s.status==='已付款'?'badge-success':s.status==='待付款'?'badge-warning':'badge-danger'}">${s.status}</span></td>
+    </tr>
+  `).join('');
+}
+
+// ===== Offline Courses Render =====
+function renderOffline(filter) {
+  const tbody = document.getElementById('offline-tbody');
+  let data = state.offlineCourses;
+  if (filter) {
+    const f = filter.toLowerCase();
+    data = data.filter(c =>
+      c.name.toLowerCase().includes(f) ||
+      c.teacher.toLowerCase().includes(f) ||
+      c.location.toLowerCase().includes(f)
+    );
+  }
+  tbody.innerHTML = data.map(c => `
+    <tr>
+      <td>${c.name}</td>
+      <td>${c.module}</td>
+      <td>${c.teacher}</td>
+      <td>${c.time}</td>
+      <td>${c.location}</td>
+      <td>¥${c.price}</td>
+      <td>¥${c.earlyPrice}</td>
+      <td><span class="badge ${c.status==='报名中'?'badge-success':c.status==='已满'?'badge-warning':'badge-default'}">${c.status}</span></td>
+      <td>${c.enrolled}/${c.capacity}</td>
+      <td>
+        <span class="op-link" onclick="openOfflineModal(${c.id})">编辑</span>
+        <span class="op-link danger" onclick="deleteOffline(${c.id})">删除</span>
+      </td>
+    </tr>
+  `).join('') || '<tr><td colspan="10" style="text-align:center;padding:40px;color:var(--text-secondary)">暂无数据</td></tr>';
+}
+
+function filterOffline(val) { renderOffline(val); }
+
+function openOfflineModal(id) {
+  const course = id ? state.offlineCourses.find(c => c.id === id) : null;
+  const isEdit = !!course;
+
+  const bodyHtml = `
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">课程名称 <span class="required">*</span></label>
+        <input type="text" class="form-input" id="f-name" value="${course?course.name:''}" placeholder="如：广州班">
+      </div>
+      <div class="form-group">
+        <label class="form-label">模块 <span class="required">*</span></label>
+        <select class="form-select" id="f-module">
+          <option value="Part I" ${course&&course.module==='Part I'?'selected':''}>Part I</option>
+          <option value="Part II" ${course&&course.module==='Part II'?'selected':''}>Part II</option>
+          <option value="Part I+II" ${course&&course.module==='Part I+II'?'selected':''}>Part I+II</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">讲师 <span class="required">*</span></label>
+        <input type="text" class="form-input" id="f-teacher" value="${course?course.teacher:'Hans Garten'}" placeholder="讲师姓名">
+      </div>
+      <div class="form-group">
+        <label class="form-label">状态 <span class="required">*</span></label>
+        <select class="form-select" id="f-status">
+          <option value="报名中" ${course&&course.status==='报名中'?'selected':''}>报名中</option>
+          <option value="已满" ${course&&course.status==='已满'?'selected':''}>已满</option>
+          <option value="已结束" ${course&&course.status==='已结束'?'selected':''}>已结束</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">开始日期 <span class="required">*</span></label>
+        <input type="date" class="form-input" id="f-startDate" value="${course?course.startDate:''}">
+      </div>
+      <div class="form-group">
+        <label class="form-label">结束日期 <span class="required">*</span></label>
+        <input type="date" class="form-input" id="f-endDate" value="${course?course.endDate:''}">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">地点 <span class="required">*</span></label>
+        <input type="text" class="form-input" id="f-location" value="${course?course.location:''}" placeholder="如：广州">
+      </div>
+      <div class="form-group">
+        <label class="form-label">详细地址</label>
+        <input type="text" class="form-input" id="f-address" value="${course?course.address:''}" placeholder="详细地址">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">价格 <span class="required">*</span></label>
+        <input type="number" class="form-input" id="f-price" value="${course?course.price:''}" placeholder="标准价格">
+      </div>
+      <div class="form-group">
+        <label class="form-label">早鸟价</label>
+        <input type="number" class="form-input" id="f-earlyPrice" value="${course?course.earlyPrice:''}" placeholder="早鸟价格">
+      </div>
+      <div class="form-group">
+        <label class="form-label">早鸟截止日期</label>
+        <input type="date" class="form-input" id="f-earlyDeadline" value="${course?course.earlyDeadline:''}">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">名额</label>
+        <input type="number" class="form-input" id="f-capacity" value="${course?course.capacity:30}" placeholder="名额">
+      </div>
+      <div class="form-group">
+        <label class="form-label">已报名</label>
+        <input type="number" class="form-input" id="f-enrolled" value="${course?course.enrolled:0}" placeholder="已报名人数">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">课程详情</label>
+      <textarea class="form-textarea" id="f-detail" placeholder="课程详情描述">${course?course.detail:''}</textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">公众号简章链接</label>
+      <input type="url" class="form-input" id="f-wechatLink" value="${course?course.wechatLink:''}" placeholder="https://...">
+    </div>
+  `;
+
+  const footerHtml = `
+    <button class="btn btn-default" onclick="closeModal()">取消</button>
+    <button class="btn btn-primary" onclick="saveOffline(${id||0})">${isEdit?'保存':'新增'}</button>
+  `;
+
+  openModal((isEdit?'编辑课程':'新增课程'), bodyHtml, footerHtml);
+}
+
+function saveOffline(id) {
+  const name = document.getElementById('f-name').value.trim();
+  if (!name) { alert('请填写课程名称'); return; }
+  const data = {
+    name,
+    module: document.getElementById('f-module').value,
+    teacher: document.getElementById('f-teacher').value.trim() || 'Hans Garten',
+    startDate: document.getElementById('f-startDate').value,
+    endDate: document.getElementById('f-endDate').value,
+    location: document.getElementById('f-location').value.trim(),
+    address: document.getElementById('f-address').value.trim(),
+    price: +document.getElementById('f-price').value || 0,
+    earlyPrice: +document.getElementById('f-earlyPrice').value || 0,
+    earlyDeadline: document.getElementById('f-earlyDeadline').value,
+    status: document.getElementById('f-status').value,
+    capacity: +document.getElementById('f-capacity').value || 30,
+    enrolled: +document.getElementById('f-enrolled').value || 0,
+    detail: document.getElementById('f-detail').value.trim(),
+    wechatLink: document.getElementById('f-wechatLink').value.trim()
+  };
+  // Build time display
+  if (data.startDate && data.endDate) {
+    const s = data.startDate.replace(/-/g,'.');
+    const e = data.endDate.replace(/-/g,'.');
+    data.time = s + ' - ' + e;
+  }
+
+  if (id) {
+    const idx = state.offlineCourses.findIndex(c => c.id === id);
+    if (idx >= 0) state.offlineCourses[idx] = { ...state.offlineCourses[idx], ...data };
+  } else {
+    data.id = Date.now();
+    state.offlineCourses.push(data);
+  }
+  closeModal();
+  renderOffline();
+}
+
+function deleteOffline(id) {
+  showConfirm('确定要删除此课程吗？此操作不可撤销。', () => {
+    state.offlineCourses = state.offlineCourses.filter(c => c.id !== id);
+    renderOffline();
+  });
+}
+
+// ===== Online Courses Render =====
+function renderOnline() {
+  const tbody = document.getElementById('online-tbody');
+  if (state.onlineCourses.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📹</div><div class="empty-text">暂无线上课程，点击上传课程</div><button class="btn btn-primary" onclick="openOnlineModal()">⬆ 上传课程</button></div></td></tr>`;
+  } else {
+    tbody.innerHTML = state.onlineCourses.map(c => `
+      <tr>
+        <td>${c.title}</td>
+        <td>${c.category}</td>
+        <td>${c.teacher}</td>
+        <td>${c.duration}分钟</td>
+        <td>${c.type==='免费'?'<span class="badge badge-success">免费</span>':'<span class="badge badge-info">付费</span>'}</td>
+        <td>${c.type==='免费'?'-':'¥'+c.price}</td>
+        <td><span class="badge ${c.status==='已发布'?'badge-success':'badge-default'}">${c.status}</span></td>
+        <td>
+          <span class="op-link" onclick="openOnlineModal(${c.id})">编辑</span>
+          <span class="op-link danger" onclick="deleteOnline(${c.id})">删除</span>
+        </td>
+      </tr>
+    `).join('');
+  }
+}
+
+function filterOnline(val) {
+  // Simple re-render; filter applied on state
+  renderOnline();
+}
+
+function openOnlineModal(id) {
+  const course = id ? state.onlineCourses.find(c => c.id === id) : null;
+  const isEdit = !!course;
+
+  const bodyHtml = `
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">标题 <span class="required">*</span></label>
+        <input type="text" class="form-input" id="o-title" value="${course?course.title:''}" placeholder="课程标题">
+      </div>
+      <div class="form-group">
+        <label class="form-label">分类 <span class="required">*</span></label>
+        <select class="form-select" id="o-category">
+          <option value="基础" ${course&&course.category==='基础'?'selected':''}>基础</option>
+          <option value="进阶" ${course&&course.category==='进阶'?'selected':''}>进阶</option>
+          <option value="实操" ${course&&course.category==='实操'?'selected':''}>实操</option>
+          <option value="理论" ${course&&course.category==='理论'?'selected':''}>理论</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">讲师</label>
+        <input type="text" class="form-input" id="o-teacher" value="${course?course.teacher:''}" placeholder="讲师姓名">
+      </div>
+      <div class="form-group">
+        <label class="form-label">时长（分钟）</label>
+        <input type="number" class="form-input" id="o-duration" value="${course?course.duration:''}" placeholder="课程时长">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">封面图</label>
+        <div class="file-upload" onclick="alert('请选择封面图片')">🖼️ 点击上传封面图</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">视频文件</label>
+        <div class="file-upload" onclick="alert('请选择视频文件或输入URL')">🎬 点击上传视频 / 输入URL</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">关联线下课程</label>
+      <select class="form-select" id="o-offlineRef">
+        <option value="">不关联</option>
+        ${state.offlineCourses.map(c => `<option value="${c.id}" ${course&&course.offlineRef==c.id?'selected':''}>${c.name} - ${c.time}</option>`).join('')}
+      </select>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">免费/付费</label>
+        <div class="form-switch">
+          <div class="switch ${course&&course.type==='付费'?'on':''}" id="o-paySwitch" onclick="toggleSwitch(this)"></div>
+          <span id="o-payLabel">${course&&course.type==='付费'?'付费':'免费'}</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">试看时长（分钟）</label>
+        <input type="number" class="form-input" id="o-preview" value="${course?course.preview:5}" placeholder="试看时长">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">标准价格</label>
+        <input type="number" class="form-input" id="o-price" value="${course?course.price:''}" placeholder="标准价格">
+      </div>
+      <div class="form-group">
+        <label class="form-label">活动价格</label>
+        <input type="number" class="form-input" id="o-actPrice" value="${course?course.actPrice:''}" placeholder="活动价格">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">活动开始日期</label>
+        <input type="date" class="form-input" id="o-actStart" value="${course?course.actStart:''}">
+      </div>
+      <div class="form-group">
+        <label class="form-label">活动结束日期</label>
+        <input type="date" class="form-input" id="o-actEnd" value="${course?course.actEnd:''}">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">课程详情</label>
+      <textarea class="form-textarea" id="o-detail" placeholder="课程详情描述">${course?course.detail:''}</textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">学习目标</label>
+      <textarea class="form-textarea" id="o-objectives" placeholder="学习目标">${course?course.objectives:''}</textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">知识点大纲</label>
+      <textarea class="form-textarea" id="o-outline" placeholder="知识点大纲">${course?course.outline:''}</textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">适合人群</label>
+      <textarea class="form-textarea" id="o-audience" placeholder="适合人群">${course?course.audience:''}</textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">防盗版</label>
+      <div class="form-switch" style="gap:16px;">
+        <div>
+          <div class="switch ${course&&course.watermark?'on':''}" id="o-watermark" onclick="toggleSwitch(this)"></div>
+          <span style="font-size:13px;margin-left:8px">水印</span>
+        </div>
+        <div>
+          <div class="switch ${course&&course.antiRecord?'on':''}" id="o-antiRecord" onclick="toggleSwitch(this)"></div>
+          <span style="font-size:13px;margin-left:8px">防录屏</span>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const footerHtml = `
+    <button class="btn btn-default" onclick="closeModal()">取消</button>
+    <button class="btn btn-primary" onclick="saveOnline(${id||0})">${isEdit?'保存':'上传'}</button>
+  `;
+
+  openModal((isEdit?'编辑线上课程':'上传线上课程'), bodyHtml, footerHtml);
+}
+
+function saveOnline(id) {
+  const title = document.getElementById('o-title').value.trim();
+  if (!title) { alert('请填写课程标题'); return; }
+  const paySwitch = document.getElementById('o-paySwitch');
+  const data = {
+    title,
+    category: document.getElementById('o-category').value,
+    teacher: document.getElementById('o-teacher').value.trim(),
+    duration: +document.getElementById('o-duration').value || 0,
+    offlineRef: +document.getElementById('o-offlineRef').value || 0,
+    type: paySwitch.classList.contains('on') ? '付费' : '免费',
+    preview: +document.getElementById('o-preview').value || 5,
+    price: +document.getElementById('o-price').value || 0,
+    actPrice: +document.getElementById('o-actPrice').value || 0,
+    actStart: document.getElementById('o-actStart').value,
+    actEnd: document.getElementById('o-actEnd').value,
+    detail: document.getElementById('o-detail').value.trim(),
+    objectives: document.getElementById('o-objectives').value.trim(),
+    outline: document.getElementById('o-outline').value.trim(),
+    audience: document.getElementById('o-audience').value.trim(),
+    watermark: document.getElementById('o-watermark').classList.contains('on'),
+    antiRecord: document.getElementById('o-antiRecord').classList.contains('on'),
+    status: '已发布'
+  };
+  if (id) {
+    const idx = state.onlineCourses.findIndex(c => c.id === id);
+    if (idx >= 0) state.onlineCourses[idx] = { ...state.onlineCourses[idx], ...data };
+  } else {
+    data.id = Date.now();
+    state.onlineCourses.push(data);
+  }
+  closeModal();
+  renderOnline();
+}
+
+function deleteOnline(id) {
+  showConfirm('确定要删除此线上课程吗？', () => {
+    state.onlineCourses = state.onlineCourses.filter(c => c.id !== id);
+    renderOnline();
+  });
+}
+
+// ===== Therapists Render =====
+function renderTherapists(filter) {
+  const tbody = document.getElementById('therapist-tbody');
+  let data = state.therapists;
+  if (filter) {
+    const f = filter.toLowerCase();
+    data = data.filter(t =>
+      t.name.toLowerCase().includes(f) ||
+      t.city.toLowerCase().includes(f) ||
+      (t.org||'').toLowerCase().includes(f)
+    );
+  }
+  tbody.innerHTML = data.map(t => `
+    <tr>
+      <td>${t.name}</td>
+      <td>${t.city}</td>
+      <td>${t.org||'-'}</td>
+      <td>${t.business||'-'}</td>
+      <td>${t.phone||'-'}</td>
+      <td>${t.email||'-'}</td>
+      <td>
+        <span class="op-link" onclick="openTherapistModal(${t.id})">编辑</span>
+        <span class="op-link danger" onclick="deleteTherapist(${t.id})">删除</span>
+      </td>
+    </tr>
+  `).join('') || '<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--text-secondary)">暂无数据</td></tr>';
+}
+
+function filterTherapists(val) { renderTherapists(val); }
+
+function openTherapistModal(id) {
+  const t = id ? state.therapists.find(x => x.id === id) : null;
+  const isEdit = !!t;
+  const bodyHtml = `
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">姓名 <span class="required">*</span></label>
+        <input type="text" class="form-input" id="t-name" value="${t?t.name:''}" placeholder="治疗师姓名">
+      </div>
+      <div class="form-group">
+        <label class="form-label">城市 <span class="required">*</span></label>
+        <input type="text" class="form-input" id="t-city" value="${t?t.city:''}" placeholder="所在城市">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">单位名称</label>
+      <input type="text" class="form-input" id="t-org" value="${t?t.org:''}" placeholder="单位名称">
+    </div>
+    <div class="form-group">
+      <label class="form-label">主要业务</label>
+      <input type="text" class="form-input" id="t-business" value="${t?t.business:''}" placeholder="如：治疗师/医生/康复师">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">联系电话</label>
+        <input type="text" class="form-input" id="t-phone" value="${t?t.phone:''}" placeholder="联系电话">
+      </div>
+      <div class="form-group">
+        <label class="form-label">邮箱</label>
+        <input type="email" class="form-input" id="t-email" value="${t?t.email:''}" placeholder="邮箱地址">
+      </div>
+    </div>
+  `;
+  const footerHtml = `
+    <button class="btn btn-default" onclick="closeModal()">取消</button>
+    <button class="btn btn-primary" onclick="saveTherapist(${id||0})">${isEdit?'保存':'新增'}</button>
+  `;
+  openModal((isEdit?'编辑治疗师':'新增治疗师'), bodyHtml, footerHtml);
+}
+
+function saveTherapist(id) {
+  const name = document.getElementById('t-name').value.trim();
+  if (!name) { alert('请填写姓名'); return; }
+  const city = document.getElementById('t-city').value.trim();
+  if (!city) { alert('请填写城市'); return; }
+  const data = {
+    name, city,
+    org: document.getElementById('t-org').value.trim(),
+    business: document.getElementById('t-business').value.trim(),
+    phone: document.getElementById('t-phone').value.trim(),
+    email: document.getElementById('t-email').value.trim()
+  };
+  if (id) {
+    const idx = state.therapists.findIndex(x => x.id === id);
+    if (idx >= 0) state.therapists[idx] = { ...state.therapists[idx], ...data };
+  } else {
+    data.id = Date.now();
+    state.therapists.push(data);
+  }
+  closeModal();
+  renderTherapists();
+}
+
+function deleteTherapist(id) {
+  showConfirm('确定要删除此治疗师吗？', () => {
+    state.therapists = state.therapists.filter(t => t.id !== id);
+    renderTherapists();
+  });
+}
+
+function exportTherapists() {
+  alert('导出功能：即将导出 ' + state.therapists.length + ' 条治疗师数据');
+}
+
+// ===== Resources Render =====
+function renderResources(filter) {
+  const tbody = document.getElementById('resource-tbody');
+  let data = state.resources;
+  if (filter) {
+    const f = filter.toLowerCase();
+    data = data.filter(r =>
+      r.title.toLowerCase().includes(f) ||
+      (r.source||'').toLowerCase().includes(f)
+    );
+  }
+  tbody.innerHTML = data.map(r => `
+    <tr>
+      <td>${r.title}</td>
+      <td>${r.category}</td>
+      <td>${r.source}</td>
+      <td><span class="badge badge-info">${r.fileType}</span></td>
+      <td>${r.downloads}</td>
+      <td>
+        <span class="op-link" onclick="openResourceModal(${r.id})">编辑</span>
+        <span class="op-link danger" onclick="deleteResource(${r.id})">删除</span>
+      </td>
+    </tr>
+  `).join('') || '<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--text-secondary)">暂无数据</td></tr>';
+}
+
+function filterResources(val) { renderResources(val); }
+
+function openResourceModal(id) {
+  const r = id ? state.resources.find(x => x.id === id) : null;
+  const isEdit = !!r;
+  const bodyHtml = `
+    <div class="form-group">
+      <label class="form-label">标题 <span class="required">*</span></label>
+      <input type="text" class="form-input" id="r-title" value="${r?r.title:''}" placeholder="资源标题">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">分类 <span class="required">*</span></label>
+        <select class="form-select" id="r-category">
+          <option value="AK经典教材" ${r&&r.category==='AK经典教材'?'selected':''}>AK经典教材</option>
+          <option value="PAK课程讲义" ${r&&r.category==='PAK课程讲义'?'selected':''}>PAK课程讲义</option>
+          <option value="AK科普手册" ${r&&r.category==='AK科普手册'?'selected':''}>AK科普手册</option>
+          <option value="教学视频" ${r&&r.category==='教学视频'?'selected':''}>教学视频</option>
+          <option value="挂图/图谱" ${r&&r.category==='挂图/图谱'?'selected':''}>挂图/图谱</option>
+          <option value="推荐书单" ${r&&r.category==='推荐书单'?'selected':''}>推荐书单</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">来源</label>
+        <select class="form-select" id="r-source">
+          <option value="ICAK" ${r&&r.source==='ICAK'?'selected':''}>ICAK</option>
+          <option value="ICAK-USA" ${r&&r.source==='ICAK-USA'?'selected':''}>ICAK-USA</option>
+          <option value="DÄGAK" ${r&&r.source==='DÄGAK'?'selected':''}>DÄGAK</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">文件</label>
+      <div class="file-upload" onclick="alert('请选择文件上传')">📎 点击上传文件</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">描述</label>
+      <textarea class="form-textarea" id="r-desc" placeholder="资源描述">${r?r.desc:''}</textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">下载权限</label>
+      <select class="form-select" id="r-permission">
+        <option value="免费" ${r?r.permission==='免费'?'selected':'':'selected'}>免费</option>
+        <option value="付费" ${r&&r.permission==='付费'?'selected':''}>付费</option>
+      </select>
+    </div>
+  `;
+  const footerHtml = `
+    <button class="btn btn-default" onclick="closeModal()">取消</button>
+    <button class="btn btn-primary" onclick="saveResource(${id||0})">${isEdit?'保存':'上传'}</button>
+  `;
+  openModal((isEdit?'编辑资源':'上传资源'), bodyHtml, footerHtml);
+}
+
+function saveResource(id) {
+  const title = document.getElementById('r-title').value.trim();
+  if (!title) { alert('请填写标题'); return; }
+  const data = {
+    title,
+    category: document.getElementById('r-category').value,
+    source: document.getElementById('r-source').value,
+    desc: document.getElementById('r-desc').value.trim(),
+    permission: document.getElementById('r-permission').value,
+    fileType: 'PDF',
+    downloads: 0
+  };
+  if (id) {
+    const idx = state.resources.findIndex(x => x.id === id);
+    if (idx >= 0) state.resources[idx] = { ...state.resources[idx], ...data };
+  } else {
+    data.id = Date.now();
+    state.resources.push(data);
+  }
+  closeModal();
+  renderResources();
+}
+
+function deleteResource(id) {
+  showConfirm('确定要删除此资源吗？', () => {
+    state.resources = state.resources.filter(r => r.id !== id);
+    renderResources();
+  });
+}
+
+// ===== Knowledge Render =====
+function renderKnowledge() {
+  const tbody = document.getElementById('knowledge-tbody');
+  let data = state.knowledge;
+  if (state.knowledgeFilter !== 'all') {
+    data = data.filter(k => k.category === state.knowledgeFilter);
+  }
+  tbody.innerHTML = data.map(k => `
+    <tr>
+      <td>${k.cnName}</td>
+      <td>${k.enName}</td>
+      <td><span class="badge ${k.category==='下半身'?'badge-info':k.category==='上半身'?'badge-warning':'badge-success'}">${k.category}</span></td>
+      <td><span class="badge ${k.status==='已发布'?'badge-success':'badge-default'}">${k.status}</span></td>
+      <td>
+        <span class="op-link" onclick="openKnowledgeModal(${k.id})">编辑</span>
+        <span class="op-link danger" onclick="deleteKnowledge(${k.id})">删除</span>
+      </td>
+    </tr>
+  `).join('') || '<tr><td colspan="5" style="text-align:center;padding:40px;color:var(--text-secondary)">暂无数据</td></tr>';
+}
+
+function filterKnowledgeByCategory(cat, el) {
+  document.querySelectorAll('#knowledge-filters .filter-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  state.knowledgeFilter = cat;
+  renderKnowledge();
+}
+
+function filterKnowledge(val) {
+  const tbody = document.getElementById('knowledge-tbody');
+  let data = state.knowledge;
+  if (state.knowledgeFilter !== 'all') {
+    data = data.filter(k => k.category === state.knowledgeFilter);
+  }
+  if (val) {
+    const f = val.toLowerCase();
+    data = data.filter(k =>
+      k.cnName.toLowerCase().includes(f) ||
+      k.enName.toLowerCase().includes(f)
+    );
+  }
+  tbody.innerHTML = data.map(k => `
+    <tr>
+      <td>${k.cnName}</td>
+      <td>${k.enName}</td>
+      <td><span class="badge ${k.category==='下半身'?'badge-info':k.category==='上半身'?'badge-warning':'badge-success'}">${k.category}</span></td>
+      <td><span class="badge ${k.status==='已发布'?'badge-success':'badge-default'}">${k.status}</span></td>
+      <td>
+        <span class="op-link" onclick="openKnowledgeModal(${k.id})">编辑</span>
+        <span class="op-link danger" onclick="deleteKnowledge(${k.id})">删除</span>
+      </td>
+    </tr>
+  `).join('') || '<tr><td colspan="5" style="text-align:center;padding:40px;color:var(--text-secondary)">暂无数据</td></tr>';
+}
+
+function openKnowledgeModal(id) {
+  const k = id ? state.knowledge.find(x => x.id === id) : null;
+  const isEdit = !!k;
+  const bodyHtml = `
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">疾病名称(中文) <span class="required">*</span></label>
+        <input type="text" class="form-input" id="k-cnName" value="${k?k.cnName:''}" placeholder="中文名称">
+      </div>
+      <div class="form-group">
+        <label class="form-label">英文名称 <span class="required">*</span></label>
+        <input type="text" class="form-input" id="k-enName" value="${k?k.enName:''}" placeholder="英文名称">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">分类 <span class="required">*</span></label>
+        <select class="form-select" id="k-category">
+          <option value="下半身" ${k&&k.category==='下半身'?'selected':''}>下半身</option>
+          <option value="上半身" ${k&&k.category==='上半身'?'selected':''}>上半身</option>
+          <option value="常见病症" ${k&&k.category==='常见病症'?'selected':''}>常见病症</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">状态</label>
+        <select class="form-select" id="k-status">
+          <option value="草稿" ${k&&k.status==='草稿'?'selected':''}>草稿</option>
+          <option value="已发布" ${k?!k.status||k.status==='已发布'?'selected':'':'selected'}>已发布</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">症状</label>
+      <textarea class="form-textarea" id="k-symptoms" placeholder="症状描述">${k?k.symptoms||'':''}</textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">描述</label>
+      <textarea class="form-textarea" id="k-desc" placeholder="疾病描述">${k?k.desc||'':''}</textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">原因</label>
+      <textarea class="form-textarea" id="k-cause" placeholder="致病原因">${k?k.cause||'':''}</textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">标准治疗</label>
+      <textarea class="form-textarea" id="k-standard" placeholder="标准治疗方法">${k?k.standard||'':''}</textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">AK方法</label>
+      <textarea class="form-textarea" id="k-akMethod" placeholder="AK应用肌动学方法">${k?k.akMethod||'':''}</textarea>
+    </div>
+  `;
+  const footerHtml = `
+    <button class="btn btn-default" onclick="closeModal()">取消</button>
+    <button class="btn btn-primary" onclick="saveKnowledge(${id||0})">${isEdit?'保存':'新增'}</button>
+  `;
+  openModal((isEdit?'编辑文章':'新增文章'), bodyHtml, footerHtml);
+}
+
+function saveKnowledge(id) {
+  const cnName = document.getElementById('k-cnName').value.trim();
+  if (!cnName) { alert('请填写疾病中文名称'); return; }
+  const enName = document.getElementById('k-enName').value.trim();
+  if (!enName) { alert('请填写英文名称'); return; }
+  const data = {
+    cnName, enName,
+    category: document.getElementById('k-category').value,
+    status: document.getElementById('k-status').value,
+    symptoms: document.getElementById('k-symptoms').value.trim(),
+    desc: document.getElementById('k-desc').value.trim(),
+    cause: document.getElementById('k-cause').value.trim(),
+    standard: document.getElementById('k-standard').value.trim(),
+    akMethod: document.getElementById('k-akMethod').value.trim()
+  };
+  if (id) {
+    const idx = state.knowledge.findIndex(x => x.id === id);
+    if (idx >= 0) state.knowledge[idx] = { ...state.knowledge[idx], ...data };
+  } else {
+    data.id = Date.now();
+    state.knowledge.push(data);
+  }
+  closeModal();
+  renderKnowledge();
+}
+
+function deleteKnowledge(id) {
+  showConfirm('确定要删除此文章吗？', () => {
+    state.knowledge = state.knowledge.filter(k => k.id !== id);
+    renderKnowledge();
+  });
+}
+
+// ===== Products Render =====
+function renderProducts() {
+  const tbody = document.getElementById('product-tbody');
+  if (state.products.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">📦</div><div class="empty-text">暂无商品，点击新增商品</div><button class="btn btn-primary" onclick="openProductModal()">➕ 新增商品</button></div></td></tr>`;
+  } else {
+    tbody.innerHTML = state.products.map(p => `
+      <tr>
+        <td><div style="width:40px;height:40px;background:#f0f0f0;border-radius:6px;display:flex;align-items:center;justify-content:center;">🖼️</div></td>
+        <td>${p.name}</td>
+        <td>${p.category}</td>
+        <td>¥${p.price}</td>
+        <td>${p.stock}</td>
+        <td><span class="badge ${p.status==='上架'?'badge-success':'badge-default'}">${p.status}</span></td>
+        <td>
+          <span class="op-link" onclick="openProductModal(${p.id})">编辑</span>
+          <span class="op-link danger" onclick="deleteProduct(${p.id})">删除</span>
+        </td>
+      </tr>
+    `).join('');
+  }
+}
+
+function filterProducts(val) { renderProducts(); }
+
+function openProductModal(id) {
+  const p = id ? state.products.find(x => x.id === id) : null;
+  const isEdit = !!p;
+  const bodyHtml = `
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">商品名称 <span class="required">*</span></label>
+        <input type="text" class="form-input" id="p-name" value="${p?p.name:''}" placeholder="商品名称">
+      </div>
+      <div class="form-group">
+        <label class="form-label">分类 <span class="required">*</span></label>
+        <select class="form-select" id="p-category">
+          <option value="教材书籍" ${p&&p.category==='教材书籍'?'selected':''}>教材书籍</option>
+          <option value="康复工具" ${p&&p.category==='康复工具'?'selected':''}>康复工具</option>
+          <option value="周边产品" ${p&&p.category==='周边产品'?'selected':''}>周边产品</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">价格 <span class="required">*</span></label>
+        <input type="number" class="form-input" id="p-price" value="${p?p.price:''}" placeholder="商品价格">
+      </div>
+      <div class="form-group">
+        <label class="form-label">库存</label>
+        <input type="number" class="form-input" id="p-stock" value="${p?p.stock:0}" placeholder="库存数量">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">商品图片</label>
+      <div class="file-upload" onclick="alert('请选择商品图片')">🖼️ 点击上传商品图片</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">商品描述</label>
+      <textarea class="form-textarea" id="p-desc" placeholder="商品描述">${p?p.desc:''}</textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">状态</label>
+      <select class="form-select" id="p-status">
+        <option value="上架" ${p?p.status==='上架'?'selected':'':'selected'}>上架</option>
+        <option value="下架" ${p&&p.status==='下架'?'selected':''}>下架</option>
+      </select>
+    </div>
+  `;
+  const footerHtml = `
+    <button class="btn btn-default" onclick="closeModal()">取消</button>
+    <button class="btn btn-primary" onclick="saveProduct(${id||0})">${isEdit?'保存':'新增'}</button>
+  `;
+  openModal((isEdit?'编辑商品':'新增商品'), bodyHtml, footerHtml);
+}
+
+function saveProduct(id) {
+  const name = document.getElementById('p-name').value.trim();
+  if (!name) { alert('请填写商品名称'); return; }
+  const price = +document.getElementById('p-price').value;
+  if (!price && price !== 0) { alert('请填写价格'); return; }
+  const data = {
+    name,
+    category: document.getElementById('p-category').value,
+    price,
+    stock: +document.getElementById('p-stock').value || 0,
+    desc: document.getElementById('p-desc').value.trim(),
+    status: document.getElementById('p-status').value
+  };
+  if (id) {
+    const idx = state.products.findIndex(x => x.id === id);
+    if (idx >= 0) state.products[idx] = { ...state.products[idx], ...data };
+  } else {
+    data.id = Date.now();
+    state.products.push(data);
+  }
+  closeModal();
+  renderProducts();
+}
+
+function deleteProduct(id) {
+  showConfirm('确定要删除此商品吗？', () => {
+    state.products = state.products.filter(p => p.id !== id);
+    renderProducts();
+  });
+}
+
+// ===== Orders Render =====
+function renderOrders() {
+  const tbody = document.getElementById('order-tbody');
+  if (state.orders.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">暂无订单</div></div></td></tr>`;
+  } else {
+    tbody.innerHTML = state.orders.map(o => `
+      <tr>
+        <td>${o.orderNo}</td>
+        <td>${o.product}</td>
+        <td>${o.buyer}</td>
+        <td>¥${o.amount}</td>
+        <td>${o.payMethod}</td>
+        <td><span class="badge ${o.status==='已完成'?'badge-success':o.status==='待付款'?'badge-warning':'badge-default'}">${o.status}</span></td>
+        <td>${o.time}</td>
+        <td>
+          <span class="op-link" onclick="alert('查看订单详情')">详情</span>
+        </td>
+      </tr>
+    `).join('');
+  }
+}
+
+function filterOrders(val) { renderOrders(); }
+
+// ===== Init =====
+renderDashboard();
+renderOffline();
+renderOnline();
+renderTherapists();
+renderResources();
+renderKnowledge();
+renderProducts();
+renderOrders();
+</script>
+
+</body>
+</html>

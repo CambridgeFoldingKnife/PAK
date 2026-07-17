@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AK应用肌动学中文官网</title>
+<style>
+:root {
+  --primary: #1a3a5c;
+  --primary-light: #2a5a8c;
+  --primary-dark: #0e2a4c;
+  --bg-light: #e6f1fb;
+  --bg-green: #e1f5ee;
+  --white: #ffffff;
+  --gray-100: #f5f7fa;
+  --gray-200: #e8ecf1;
+  --gray-300: #d1d8e0;
+  --gray-400: #9aa5b4;
+  --gray-500: #6b7a8d;
+  --gray-600: #4a5568;
+  --gray-700: #2d3748;
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+  --green: #10b981;
+  --green-hover: #059669;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+  --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
+  --radius: 8px;
+  --radius-lg: 12px;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  color: var(--gray-700);
+  line-height: 1.6;
+  background: var(--white);
+  overflow-x: hidden;
+}
+
+/* ===== NAV ===== */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: var(--primary);
+  padding: 0 24px;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: var(--shadow-md);
+  transition: background 0.3s;
+}
+.nav-logo {
+  font-size: 20px; font-weight: 700; color: var(--white);
+  letter-spacing: 1px; cursor: pointer;
+}
+.nav-logo span { color: var(--accent); }
+.nav-links {
+  display: flex; gap: 4px; align-items: center;
+}
+.nav-links a {
+  color: rgba(255,255,255,0.85); text-decoration: none;
+  padding: 8px 14px; font-size: 14px; font-weight: 500;
+  border-radius: 6px; transition: all 0.2s; cursor: pointer;
+  white-space: nowrap;
+}
+.nav-links a:hover, .nav-links a.active {
+  background: rgba(255,255,255,0.15); color: var(--white);
+}
+.nav-contact {
+  background: var(--accent); color: var(--white);
+  padding: 8px 20px; border-radius: 6px; font-size: 14px; font-weight: 600;
+  border: none; cursor: pointer; transition: background 0.2s;
+  text-decoration: none;
+}
+.nav-contact:hover { background: var(--accent-hover); }
+
+.mobile-menu-btn {
+  display: none; background: none; border: none; color: var(--white);
+  font-size: 24px; cursor: pointer; padding: 8px;
+}
+.mobile-menu {
+  display: none; position: fixed; top: 64px; left: 0; right: 0;
+  background: var(--primary); padding: 16px 24px;
+  box-shadow: var(--shadow-lg); z-index: 999;
+}
+.mobile-menu a {
+  display: block; color: rgba(255,255,255,0.85); text-decoration: none;
+  padding: 12px 0; font-size: 16px; border-bottom: 1px solid rgba(255,255,255,0.1);
+  cursor: pointer;
+}
+.mobile-menu a:hover { color: var(--white); }
+
+@media (max-width: 900px) {
+  .nav-links, .nav-contact { display: none; }
+  .mobile-menu-btn { display: block; }
+  .mobile-menu.open { display: block; }
+}
+
+/* ===== COMMON ===== */
+.section {
+  display: none; padding: 80px 24px 60px;
+  max-width: 1200px; margin: 0 auto;
+  animation: fadeIn 0.4s ease;
+}
+.section.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section-title {
+  font-size: 32px; font-weight: 700; color: var(--primary);
+  margin-bottom: 8px; text-align: center;
+}
+.section-subtitle {
+  font-size: 16px; color: var(--gray-500); text-align: center;
+  margin-bottom: 40px;
+}
+
+.card {
+  background: var(--white); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200);
+  padding: 24px; transition: all 0.3s;
+}
+.card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 24px; border-radius: 8px; font-size: 15px;
+  font-weight: 600; cursor: pointer; transition: all 0.2s;
+  border: none; text-decoration: none;
+}
+.btn-primary { background: var(--accent); color: var(--white); }
+.btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
+.btn-outline {
+  background: transparent; color: var(--accent);
+  border: 2px solid var(--accent);
+}
+.btn-outline:hover { background: var(--accent); color: var(--white); }
+.btn-green { background: var(--green); color: var(--white); }
+.btn-green:hover { background: var(--green-hover); }
+.btn-sm { padding: 8px 16px; font-size: 13px; }
+
+/* Scroll animation */
+.fade-up {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* ===== HERO ===== */
+.hero {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: calc(100vh - 64px); padding: 60px 24px;
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 40%, var(--primary-light) 100%);
+  color: var(--white); text-align: center; position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; top: -50%; right: -30%;
+  width: 600px; height: 600px; border-radius: 50%;
+  background: rgba(59,130,246,0.08);
+}
+.hero::after {
+  content: ''; position: absolute; bottom: -40%; left: -20%;
+  width: 400px; height: 400px; border-radius: 50%;
+  background: rgba(16,185,129,0.06);
+}
+.hero h1 {
+  font-size: 56px; font-weight: 800; margin-bottom: 16px;
+  letter-spacing: 3px; position: relative; z-index: 1;
+}
+.hero .subtitle {
+  font-size: 20px; font-weight: 300; margin-bottom: 32px;
+  color: rgba(255,255,255,0.9); position: relative; z-index: 1;
+}
+.hero .quote {
+  font-size: 16px; font-style: italic; color: rgba(255,255,255,0.7);
+  margin-bottom: 40px; max-width: 600px; position: relative; z-index: 1;
+  border-left: 3px solid rgba(255,255,255,0.3); padding-left: 16px;
+}
+.hero .quote em { color: rgba(255,255,255,0.5); font-size: 14px; }
+.hero .btns { display: flex; gap: 16px; position: relative; z-index: 1; flex-wrap: wrap; justify-content: center; }
+@media (max-width: 600px) {
+  .hero h1 { font-size: 36px; }
+  .hero .subtitle { font-size: 16px; }
+}
+
+/* ===== ABOUT AK ===== */
+.about-intro {
+  background: var(--bg-light); border-radius: var(--radius-lg);
+  padding: 32px; margin-bottom: 40px;
+}
+.about-intro p { font-size: 16px; line-height: 1.8; }
+
+.triangle-section {
+  display: flex; align-items: center; justify-content: center;
+  gap: 40px; margin-bottom: 40px; flex-wrap: wrap;
+}
+.triangle-diagram {
+  position: relative; width: 280px; height: 260px;
+}
+.triangle-svg { width: 280px; height: 260px; }
+.triangle-info { max-width: 500px; }
+.triangle-info h3 { font-size: 20px; color: var(--primary); margin-bottom: 16px; }
+.triangle-item {
+  padding: 12px 0; border-bottom: 1px solid var(--gray-200);
+}
+.triangle-item:last-child { border-bottom: none; }
+.triangle-item h4 { font-size: 15px; color: var(--primary); }
+.triangle-item p { font-size: 14px; color: var(--gray-500); }
+
+.people-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px; margin-bottom: 40px;
+}
+.person-card {
+  background: var(--white); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm); padding: 24px; border: 1px solid var(--gray-200);
+}
+.person-card .avatar {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: var(--bg-light); display: flex; align-items: center; justify-content: center;
+  font-size: 32px; color: var(--primary); margin-bottom: 16px;
+}
+.person-card h3 { font-size: 18px; color: var(--primary); margin-bottom: 4px; }
+.person-card .role { font-size: 14px; color: var(--accent); margin-bottom: 12px; }
+.person-card p { font-size: 14px; color: var(--gray-600); line-height: 1.7; }
+
+.course-system {
+  background: var(--bg-green); border-radius: var(--radius-lg);
+  padding: 32px; margin-bottom: 40px;
+}
+.course-system h3 { font-size: 20px; color: var(--primary); margin-bottom: 20px; }
+.stage-flow {
+  display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.stage {
+  background: var(--white); border-radius: var(--radius);
+  padding: 16px 20px; text-align: center; min-width: 180px;
+  border: 2px solid var(--gray-200); position: relative;
+}
+.stage.active-stage { border-color: var(--accent); }
+.stage h4 { font-size: 14px; color: var(--primary); margin-bottom: 4px; }
+.stage p { font-size: 12px; color: var(--gray-500); }
+.stage-arrow {
+  font-size: 24px; color: var(--gray-400);
+}
+.modules-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px; margin-bottom: 16px;
+}
+.module-tag {
+  background: var(--white); padding: 8px 12px; border-radius: 6px;
+  font-size: 13px; text-align: center; border: 1px solid var(--gray-200);
+  color: var(--gray-600);
+}
+
+.ak-vs-pk {
+  background: var(--bg-light); border-radius: var(--radius-lg);
+  padding: 32px;
+}
+.ak-vs-pk h3 { font-size: 20px; color: var(--primary); margin-bottom: 16px; }
+.ak-vs-pk .comparison {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+}
+.ak-vs-pk .comp-col h4 { font-size: 16px; margin-bottom: 12px; }
+.ak-vs-pk .comp-col.ak h4 { color: var(--primary); }
+.ak-vs-pk .comp-col.pk h4 { color: var(--green); }
+.ak-vs-pk .comp-col ul { list-style: none; padding: 0; }
+.ak-vs-pk .comp-col ul li {
+  padding: 6px 0; font-size: 14px; color: var(--gray-600);
+  border-bottom: 1px solid var(--gray-100);
+}
+.ak-vs-pk .comp-col ul li::before {
+  content: '•'; color: var(--accent); font-weight: bold; margin-right: 8px;
+}
+@media (max-width: 600px) {
+  .ak-vs-pk .comparison { grid-template-columns: 1fr; }
+}
+
+/* ===== VIDEO ===== */
+.video-hero {
+  background: var(--primary); border-radius: var(--radius-lg);
+  padding: 40px; text-align: center; margin-bottom: 32px;
+  color: var(--white);
+}
+.video-hero h2 { font-size: 24px; margin-bottom: 8px; }
+.video-hero p { font-size: 14px; color: rgba(255,255,255,0.7); }
+.video-hero .embed-placeholder {
+  width: 100%; max-width: 720px; height: 360px;
+  background: rgba(0,0,0,0.3); border-radius: var(--radius);
+  margin: 24px auto 0; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: background 0.3s;
+}
+.video-hero .embed-placeholder:hover { background: rgba(0,0,0,0.4); }
+.video-hero .play-icon {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center;
+}
+.video-hero .play-icon svg { width: 28px; height: 28px; fill: var(--white); }
+
+.video-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+.video-card {
+  background: var(--white); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200);
+  overflow: hidden; transition: all 0.3s;
+}
+.video-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.video-card .thumb {
+  width: 100%; height: 180px; background: var(--bg-light);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; cursor: pointer;
+}
+.video-card .thumb .play-btn {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--accent); display: flex; align-items: center; justify-content: center;
+  transition: transform 0.2s;
+}
+.video-card .thumb:hover .play-btn { transform: scale(1.1); }
+.video-card .thumb .play-btn svg { width: 20px; height: 20px; fill: var(--white); }
+.video-card .thumb .platform {
+  position: absolute; top: 12px; right: 12px;
+  background: rgba(0,0,0,0.5); color: var(--white);
+  padding: 4px 10px; border-radius: 4px; font-size: 12px;
+}
+.video-card .info { padding: 16px; }
+.video-card .info h3 { font-size: 16px; color: var(--primary); margin-bottom: 8px; }
+.video-card .info p { font-size: 13px; color: var(--gray-500); line-height: 1.5; }
+
+/* ===== COURSE CENTER ===== */
+.tabs {
+  display: flex; gap: 0; margin-bottom: 32px;
+  background: var(--gray-100); border-radius: var(--radius);
+  overflow: hidden;
+}
+.tab-btn {
+  padding: 14px 32px; font-size: 15px; font-weight: 600;
+  cursor: pointer; background: transparent; border: none;
+  color: var(--gray-500); transition: all 0.2s;
+}
+.tab-btn.active {
+  background: var(--accent); color: var(--white);
+}
+
+.course-list {
+  display: grid; gap: 24px;
+}
+.course-card {
+  background: var(--white); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200);
+  padding: 28px; transition: all 0.3s;
+}
+.course-card:hover { box-shadow: var(--shadow-md); }
+.course-card .course-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 16px; flex-wrap: wrap; gap: 8px;
+}
+.course-card .course-name {
+  font-size: 18px; font-weight: 700; color: var(--primary);
+}
+.course-card .course-status {
+  padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;
+}
+.status-open { background: #d1fae5; color: #065f46; }
+.status-upcoming { background: #dbeafe; color: #1e40af; }
+.course-card .course-meta {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 8px; margin-bottom: 16px;
+}
+.course-card .meta-item {
+  font-size: 14px; color: var(--gray-600);
+}
+.course-card .meta-item span { color: var(--gray-400); }
+.course-card .price-row {
+  display: flex; align-items: center; gap: 16px; margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.course-card .price { font-size: 22px; font-weight: 700; color: var(--accent); }
+.course-card .early-bird {
+  font-size: 14px; color: var(--green); font-weight: 600;
+  background: #d1fae5; padding: 4px 12px; border-radius: 4px;
+}
+.course-card .seats { font-size: 14px; color: var(--gray-500); }
+.course-card .btns-row {
+  display: flex; gap: 12px; flex-wrap: wrap;
+}
+
+.online-placeholder {
+  text-align: center; padding: 80px 24px;
+  background: var(--bg-light); border-radius: var(--radius-lg);
+}
+.online-placeholder .icon {
+  font-size: 48px; color: var(--gray-300); margin-bottom: 16px;
+}
+.online-placeholder h3 { font-size: 20px; color: var(--gray-500); margin-bottom: 8px; }
+.online-placeholder p { font-size: 14px; color: var(--gray-400); }
+
+/* ===== RESOURCES ===== */
+.resource-tabs {
+  display: flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap;
+  justify-content: center;
+}
+.resource-tab {
+  padding: 8px 20px; border-radius: 20px; font-size: 14px;
+  cursor: pointer; background: var(--gray-100); border: 1px solid var(--gray-200);
+  color: var(--gray-500); transition: all 0.2s;
+}
+.resource-tab.active {
+  background: var(--accent); color: var(--white); border-color: var(--accent);
+}
+
+.resource-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+.resource-card {
+  background: var(--white); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200);
+  padding: 24px; transition: all 0.3s;
+}
+.resource-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.resource-card .type-tag {
+  padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 600;
+  margin-bottom: 12px; display: inline-block;
+}
+.type-pdf { background: #fee2e2; color: #991b1b; }
+.type-book { background: #dbeafe; color: #1e40af; }
+.type-note { background: #fef3c7; color: #92400e; }
+.type-video { background: #d1fae5; color: #065f46; }
+.type-chart { background: #e0e7ff; color: #3730a3; }
+.resource-card h3 { font-size: 16px; color: var(--primary); margin-bottom: 8px; }
+.resource-card .source {
+  font-size: 13px; color: var(--gray-400); margin-bottom: 16px;
+}
+.resource-card .source::before { content: '来源：'; color: var(--gray-500); }
+
+.upload-hint {
+  text-align: center; padding: 24px; margin-top: 24px;
+  background: var(--bg-green); border-radius: var(--radius);
+  font-size: 14px; color: var(--gray-500);
+}
+
+/* ===== STUDENT SERVICES ===== */
+.photo-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  margin-bottom: 40px;
+}
+.photo-item {
+  height: 200px; background: var(--bg-light); border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gray-300); font-size: 14px; border: 1px solid var(--gray-200);
+}
+@media (max-width: 600px) {
+  .photo-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.testimonials {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px; margin-bottom: 40px;
+}
+.testimonial-card {
+  background: var(--bg-light); border-radius: var(--radius-lg);
+  padding: 24px; position: relative;
+}
+.testimonial-card .quote-text {
+  font-size: 15px; line-height: 1.7; color: var(--gray-600);
+  margin-bottom: 16px; font-style: italic;
+}
+.testimonial-card .quote-text::before { content: '"'; font-size: 24px; color: var(--accent); }
+.testimonial-card .quote-text::after { content: '"'; font-size: 24px; color: var(--accent); }
+.testimonial-card .author { font-size: 14px; color: var(--primary); font-weight: 600; }
+
+.community-qr {
+  text-align: center; padding: 40px;
+  background: var(--bg-green); border-radius: var(--radius-lg);
+  margin-bottom: 40px;
+}
+.community-qr .qr-placeholder {
+  width: 160px; height: 160px; background: var(--white);
+  border: 1px solid var(--gray-200); border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px; color: var(--gray-300); font-size: 14px;
+}
+.community-qr h3 { font-size: 18px; color: var(--primary); }
+.community-qr p { font-size: 14px; color: var(--gray-500); }
+
+/* ===== DIRECTORY ===== */
+.directory-controls {
+  display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap;
+}
+.search-input {
+  flex: 1; min-width: 200px; padding: 12px 16px;
+  border: 1px solid var(--gray-200); border-radius: var(--radius);
+  font-size: 14px; outline: none; transition: border 0.2s;
+}
+.search-input:focus { border-color: var(--accent); }
+.city-select {
+  padding: 12px 16px; border: 1px solid var(--gray-200);
+  border-radius: var(--radius); font-size: 14px;
+  background: var(--white); min-width: 140px;
+}
+
+.directory-table {
+  width: 100%; border-collapse: collapse;
+  background: var(--white); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm); overflow: hidden;
+}
+.directory-table thead { background: var(--primary); color: var(--white); }
+.directory-table th {
+  padding: 14px 16px; font-size: 14px; font-weight: 600; text-align: left;
+}
+.directory-table td {
+  padding: 12px 16px; font-size: 14px; border-bottom: 1px solid var(--gray-100);
+}
+.directory-table tr:hover td { background: var(--bg-light); }
+.no-results {
+  text-align: center; padding: 40px; color: var(--gray-400);
+  font-size: 14px;
+}
+@media (max-width: 700px) {
+  .directory-table { font-size: 12px; }
+  .directory-table th, .directory-table td { padding: 8px; }
+}
+
+/* ===== SHOP ===== */
+.shop-tabs {
+  display: flex; gap: 8px; margin-bottom: 32px; justify-content: center; flex-wrap: wrap;
+}
+.shop-tab {
+  padding: 8px 24px; border-radius: 20px; font-size: 14px;
+  cursor: pointer; background: var(--gray-100); border: 1px solid var(--gray-200);
+  color: var(--gray-500); transition: all 0.2s;
+}
+.shop-tab.active { background: var(--accent); color: var(--white); border-color: var(--accent); }
+
+.shop-placeholder {
+  text-align: center; padding: 80px 24px;
+  background: var(--bg-light); border-radius: var(--radius-lg);
+  margin-bottom: 32px;
+}
+.shop-placeholder .icon { font-size: 48px; color: var(--gray-300); margin-bottom: 16px; }
+.shop-placeholder h3 { font-size: 20px; color: var(--gray-500); margin-bottom: 8px; }
+.shop-placeholder p { font-size: 14px; color: var(--gray-400); }
+
+.payment-icons {
+  display: flex; justify-content: center; gap: 24px; padding: 24px;
+  background: var(--white); border-radius: var(--radius);
+  border: 1px solid var(--gray-200);
+}
+.payment-item {
+  text-align: center; font-size: 13px; color: var(--gray-500);
+}
+.payment-item .pay-icon {
+  width: 40px; height: 40px; border-radius: var(--radius);
+  background: var(--gray-100); display: flex; align-items: center; justify-content: center;
+  margin-bottom: 8px; font-size: 18px;
+}
+
+/* ===== KNOWLEDGE ===== */
+.kb-controls {
+  display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap;
+}
+.kb-search {
+  flex: 1; min-width: 200px; padding: 12px 16px;
+  border: 1px solid var(--gray-200); border-radius: var(--radius);
+  font-size: 14px; outline: none;
+}
+.kb-search:focus { border-color: var(--accent); }
+
+.kb-categories {
+  display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap;
+}
+.kb-cat {
+  padding: 8px 20px; border-radius: 20px; font-size: 14px;
+  cursor: pointer; background: var(--gray-100); border: 1px solid var(--gray-200);
+  color: var(--gray-500); transition: all 0.2s;
+}
+.kb-cat.active { background: var(--primary); color: var(--white); border-color: var(--primary); }
+.kb-cat span { font-size: 12px; opacity: 0.7; }
+
+.kb-accordion {
+  display: grid; gap: 8px;
+}
+.kb-item {
+  background: var(--white); border: 1px solid var(--gray-200);
+  border-radius: var(--radius); overflow: hidden; transition: all 0.2s;
+}
+.kb-item-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 20px; cursor: pointer; font-size: 15px; font-weight: 600;
+  color: var(--primary); background: var(--bg-light);
+  transition: background 0.2s;
+}
+.kb-item-header:hover { background: #d4e8f5; }
+.kb-item-header .arrow {
+  transition: transform 0.3s; font-size: 18px; color: var(--gray-400);
+}
+.kb-item.open .kb-item-header .arrow { transform: rotate(180deg); }
+.kb-item.open .kb-item-header { background: var(--bg-light); border-bottom: 1px solid var(--gray-200); }
+.kb-item-body {
+  display: none; padding: 20px; font-size: 14px; line-height: 1.7;
+}
+.kb-item.open .kb-item-body { display: block; }
+.kb-field { margin-bottom: 12px; }
+.kb-field h4 { font-size: 14px; color: var(--accent); margin-bottom: 4px; }
+.kb-field p { color: var(--gray-600); }
+
+.kb-disclaimer {
+  background: #fef3c7; border-radius: var(--radius);
+  padding: 16px 24px; margin-top: 32px; font-size: 14px;
+  color: #92400e; line-height: 1.6; text-align: center;
+  border: 1px solid #fde68a;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  background: var(--primary-dark); color: rgba(255,255,255,0.8);
+  padding: 48px 24px 24px; margin-top: 60px;
+}
+.footer-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 32px;
+}
+.footer h3 { font-size: 16px; color: var(--white); margin-bottom: 16px; }
+.footer p { font-size: 14px; margin-bottom: 8px; }
+.footer a { color: rgba(255,255,255,0.7); text-decoration: none; }
+.footer a:hover { color: var(--white); }
+.footer .qr-box {
+  width: 120px; height: 120px; background: rgba(255,255,255,0.1);
+  border-radius: var(--radius); display: flex; align-items: center; justify-content: center;
+  margin-top: 8px; font-size: 12px; color: rgba(255,255,255,0.4);
+}
+.footer-bottom {
+  max-width: 1200px; margin: 32px auto 0; padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.1); text-align: center;
+  font-size: 13px; color: rgba(255,255,255,0.4);
+}
+
+/* Utility */
+.hidden { display: none; }
+.text-center { text-align: center; }
+.mb-16 { margin-bottom: 16px; }
+.mb-24 { margin-bottom: 24px; }
+.mb-32 { margin-bottom: 32px; }
+.mb-40 { margin-bottom: 40px; }
+</style>
+</head>
+<body>
+
+<!-- ===== NAVIGATION ===== -->
+<nav class="nav" id="navbar">
+  <div class="nav-logo" onclick="showSection('home')">AK<span>应用肌动学</span></div>
+  <div class="nav-links" id="navLinks">
+    <a class="active" data-section="home" onclick="showSection('home')">首页</a>
+    <a data-section="about" onclick="showSection('about')">关于AK</a>
+    <a data-section="courses" onclick="showSection('courses')">课程中心</a>
+    <a data-section="resources" onclick="showSection('resources')">学习资源</a>
+    <a data-section="students" onclick="showSection('students')">学员服务</a>
+    <a data-section="directory" onclick="showSection('directory')">治疗师目录</a>
+    <a data-section="shop" onclick="showSection('shop')">AK商城</a>
+    <a data-section="knowledge" onclick="showSection('knowledge')">AK知识库</a>
+  </div>
+  <a class="nav-contact" onclick="showSection('about')">联系我们</a>
+  <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()">☰</button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a onclick="showSection('home');closeMobileMenu()">首页</a>
+  <a onclick="showSection('about');closeMobileMenu()">关于AK</a>
+  <a onclick="showSection('courses');closeMobileMenu()">课程中心</a>
+  <a onclick="showSection('resources');closeMobileMenu()">学习资源</a>
+  <a onclick="showSection('students');closeMobileMenu()">学员服务</a>
+  <a onclick="showSection('directory');closeMobileMenu()">治疗师目录</a>
+  <a onclick="showSection('shop');closeMobileMenu()">AK商城</a>
+  <a onclick="showSection('knowledge');closeMobileMenu()">AK知识库</a>
+</div>
+
+<!-- ===== HOME / HERO ===== -->
+<div class="section active" id="section-home">
+  <div class="hero">
+    <h1>AK应用肌动学</h1>
+    <div class="subtitle">The Best Kept Secret in Healthcare — 医疗保健界最被保守的秘密</div>
+    <div class="quote">
+      "The body heals itself in a sure, sensible, practical, reasonable and observable manner."
+      <br><em>— George J. Goodheart Jr.</em>
+    </div>
+    <div class="btns">
+      <button class="btn btn-primary" onclick="showSection('about')">了解AK技术</button>
+      <button class="btn btn-outline" style="color:#fff;border-color:#fff;" onclick="showSection('courses')">查看课程</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ABOUT AK ===== -->
+<div class="section" id="section-about">
+  <div class="section-title fade-up">关于AK应用肌动学</div>
+  <div class="section-subtitle fade-up">Applied Kinesiology — 整体健康诊断与治疗系统</div>
+
+  <div class="about-intro fade-up">
+    <p>Applied Kinesiology (AK) 是1964年由<strong>George J. Goodheart Jr.</strong>博士创立的诊断与治疗系统。AK通过<strong>手法肌肉测试（Manual Muscle Testing）</strong>评估人体<strong>结构（Structural）</strong>、<strong>化学（Chemical）</strong>和<strong>心理（Mental）</strong>三方面的健康状态，形成全面的健康评估体系。AK不替代传统医学诊断，而是为医疗专业人员提供了一种补充性评估方法。</p>
+  </div>
+
+  <div class="triangle-section fade-up">
+    <div class="triangle-diagram">
+      <svg class="triangle-svg" viewBox="0 0 280 260">
+        <polygon points="140,20 20,240 260,240" fill="none" stroke="#1a3a5c" stroke-width="3"/>
+        <text x="140" y="16" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a3a5c">结构 Structural</text>
+        <text x="20" y="260" text-anchor="middle" font-size="14" font-weight="bold" fill="#3b82f6">化学 Chemical</text>
+        <text x="260" y="260" text-anchor="middle" font-size="14" font-weight="bold" fill="#10b981">心理 Mental</text>
+        <circle cx="140" cy="160" r="20" fill="#e6f1fb" stroke="#1a3a5c" stroke-width="2"/>
+        <text x="140" y="164" text-anchor="middle" font-size="11" fill="#1a3a5c">健康</text>
+      </svg>
+    </div>
+    <div class="triangle-info">
+      <h3>健康金三角 — AK的核心理论</h3>
+      <div class="triangle-item">
+        <h4>结构（Structural）</h4>
+        <p>骨骼、肌肉、关节、神经的结构完整性，是身体功能的物理基础</p>
+      </div>
+      <div class="triangle-item">
+        <h4>化学（Chemical）</h4>
+        <p>营养、毒素、代谢、内分泌的化学平衡，是身体运作的化学基础</p>
+      </div>
+      <div class="triangle-item">
+        <h4>心理（Mental）</h4>
+        <p>情绪、压力、信念、精神状态的心理平衡，是身体健康的心理基础</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="people-grid fade-up">
+    <div class="person-card">
+      <div class="avatar">G</div>
+      <h3>George J. Goodheart Jr.</h3>
+      <div class="role">AK创始人 | 1918-2008</div>
+      <p>1964年创立Applied Kinesiology，发现了肌肉测试与身体功能之间的关联。1980年成为美国奥运医疗队首位脊骨神经医师，被誉为"医疗保健界最被保守的秘密"的发现者。</p>
+    </div>
+    <div class="person-card">
+      <div class="avatar">H</div>
+      <h3>Hans Garten</h3>
+      <div class="role">AK讲师 | DÄGAK创始人 | DIBAK认证</div>
+      <p>DÄGAK（德国应用肌动学医学会）创始人，拥有DIBAK（国际应用肌动学文凭）认证。applied-kinesiology.org培训网站创始人，长期在全球授课，是中国AK课程的核心讲师。</p>
+    </div>
+    <div class="person-card">
+      <div class="avatar">I</div>
+      <h3>ICAK 国际应用肌动学学院</h3>
+      <div class="role">International College of Applied Kinesiology | 1976年成立</div>
+      <p>国际应用肌动学学院（ICAK）于1976年成立，拥有14个全球分会，是AK技术标准制定和认证的权威机构。ICAK致力于推动AK的科学研究、教育培训和专业认证。</p>
+    </div>
+  </div>
+
+  <div class="course-system fade-up">
+    <h3>DÄGAK课程体系 — 4阶段进阶路径</h3>
+    <div class="stage-flow">
+      <div class="stage active-stage"><h4>入门阶段</h4><p>Part I & II 基础课程</p></div>
+      <div class="stage-arrow">→</div>
+      <div class="stage"><h4>基础文凭</h4><p>256学时认证</p></div>
+      <div class="stage-arrow">→</div>
+      <div class="stage"><h4>正式文凭</h4><p>高级课程认证</p></div>
+      <div class="stage-arrow">→</div>
+      <div class="stage"><h4>ICAK Diplomate</h4><p>国际最高认证</p></div>
+    </div>
+    <p style="font-size:14px;color:var(--gray-500);margin-bottom:12px;">12个课程模块覆盖AK完整知识体系：</p>
+    <div class="modules-grid">
+      <div class="module-tag">M1 基础原理</div>
+      <div class="module-tag">M2 肌肉测试</div>
+      <div class="module-tag">M3 脊柱调整</div>
+      <div class="module-tag">M4 极性系统</div>
+      <div class="module-tag">M5 营养化学</div>
+      <div class="module-tag">M6 情绪技术</div>
+      <div class="module-tag">M7 神经淋巴</div>
+      <div class="module-tag">M8 神经血管</div>
+      <div class="module-tag">M9颅骨技术</div>
+      <div class="module-tag">M10 肌筋膜</div>
+      <div class="module-tag">M11 关节技术</div>
+      <div class="module-tag">M12 综合诊疗</div>
+    </div>
+  </div>
+
+  <div class="ak-vs-pk fade-up">
+    <h3>AK与普通肌动学的区别</h3>
+    <div class="comparison">
+      <div class="comp-col ak">
+        <h4>Applied Kinesiology (AK)</h4>
+        <ul>
+          <li>面向医疗专业人员（医生、脊骨神经医师等）</li>
+          <li>诊断与治疗系统，具有临床应用价值</li>
+          <li>结构-化学-心理三维度评估</li>
+          <li>ICAK国际认证体系</li>
+          <li>基于Goodheart博士60余年研究</li>
+        </ul>
+      </div>
+      <div class="comp-col pk">
+        <h4>Professional Applied Kinesiology (PAK)</h4>
+        <ul>
+          <li>仅限医疗专业人员学习与执业</li>
+          <li>强调专业资质与伦理规范</li>
+          <li>需要医学背景才能获得认证</li>
+          <li>受ICAK监管与认证</li>
+          <li>区别于非专业的肌动学实践</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- AK视频板块 -->
+  <div style="margin-top:60px;">
+    <div class="section-title fade-up">AK视频资源</div>
+    <div class="section-subtitle fade-up">纪录片与教学视频精选</div>
+
+    <div class="video-hero fade-up">
+      <h2>Applied Kinesiology: The Best Kept Secret in Healthcare</h2>
+      <p>ICAK官方纪录片 — 探索AK的历史、科学与临床应用</p>
+      <div class="embed-placeholder" onclick="window.open('https://www.youtube.com/results?search_query=Applied+Kinesiology+Best+Kept+Secret','_blank')">
+        <div class="play-icon">
+          <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-grid fade-up">
+      <div class="video-card">
+        <div class="thumb" onclick="window.open('https://www.youtube.com/results?search_query=Applied+Kinesiology+Best+Kept+Secret+Healthcare','_blank')">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+          <div class="platform">YouTube</div>
+        </div>
+        <div class="info">
+          <h3>AK纪录片</h3>
+          <p>"The Best Kept Secret in Healthcare" — ICAK官方纪录片，全面展示AK的历史与发展。</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="thumb" onclick="window.open('https://www.youtube.com/results?search_query=Goodheart+Origins+Applied+Kinesiology','_blank')">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+          <div class="platform">YouTube</div>
+        </div>
+        <div class="info">
+          <h3>Goodheart Origins of AK</h3>
+          <p>系列视频讲述George Goodheart博士发现与创立AK的故事。</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="thumb" onclick="window.open('https://www.youtube.com/results?search_query=Dr+Schmitt+AK+100+Hour+Course','_blank')">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+          <div class="platform">YouTube</div>
+        </div>
+        <div class="info">
+          <h3>Dr. Schmitt's AK 100 Hour Course</h3>
+          <p>Dr. Schmitt的经典100小时AK课程系列，系统学习AK技术。</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="thumb" onclick="window.open('https://www.youtube.com/results?search_query=Dr+Gangemi+Systems+Health+Care','_blank')">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+          <div class="platform">YouTube</div>
+        </div>
+        <div class="info">
+          <h3>Dr. Gangemi's Systems Health Care</h3>
+          <p>Dr. Gangemi的系统健康护理系列，聚焦AK临床应用。</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="thumb" onclick="window.open('https://vimeo.com/showcase/11359107','_blank')">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+          <div class="platform">Vimeo</div>
+        </div>
+        <div class="info">
+          <h3>ICAK Roundtables</h3>
+          <p>ICAK圆桌讨论系列，专家深度对话AK前沿话题与临床案例。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== COURSE CENTER ===== -->
+<div class="section" id="section-courses">
+  <div class="section-title fade-up">课程中心</div>
+  <div class="section-subtitle fade-up">线下实操与线上理论学习，系统掌握AK技术</div>
+
+  <div class="tabs fade-up">
+    <button class="tab-btn active" onclick="switchCourseTab('offline')">线下课程</button>
+    <button class="tab-btn" onclick="switchCourseTab('online')">线上课程</button>
+  </div>
+
+  <div id="courseOffline">
+    <div class="course-list">
+      <!-- 广州班 -->
+      <div class="course-card fade-up">
+        <div class="course-header">
+          <div class="course-name">2027 广州班 — AK应用肌动学基础课程</div>
+          <div class="course-status status-open">开放报名</div>
+        </div>
+        <div class="course-meta">
+          <div class="meta-item"><span>模块：</span>Part I + Part II</div>
+          <div class="meta-item"><span>讲师：</span>Hans Garten</div>
+          <div class="meta-item"><span>Part I：</span>2027年2月26-28日（3天）</div>
+          <div class="meta-item"><span>Part II：</span>2027年3月2-4日（3天）</div>
+          <div class="meta-item"><span>地点：</span>广州</div>
+          <div class="meta-item"><span>名额：</span>限30人</div>
+        </div>
+        <div class="price-row">
+          <div class="price">¥12,800</div>
+          <div class="early-bird">早鸟价 ¥10,800</div>
+          <div class="seats">剩余名额：30</div>
+        </div>
+        <div class="btns-row">
+          <button class="btn btn-primary btn-sm" onclick="showSection('about')">查看简章</button>
+          <button class="btn btn-green btn-sm">立即报名</button>
+        </div>
+      </div>
+
+      <!-- 北京班 -->
+      <div class="course-card fade-up">
+        <div class="course-header">
+          <div class="course-name">2027 北京班 — AK应用肌动学基础课程</div>
+          <div class="course-status status-upcoming">即将开放</div>
+        </div>
+        <div class="course-meta">
+          <div class="meta-item"><span>模块：</span>Part I + Part II</div>
+          <div class="meta-item"><span>讲师：</span>Hans Garten</div>
+          <div class="meta-item"><span>Part I：</span>2027年5月21-23日（3天）</div>
+          <div class="meta-item"><span>Part II：</span>2027年5月25-27日（3天）</div>
+          <div class="meta-item"><span>地点：</span>北京</div>
+          <div class="meta-item"><span>名额：</span>限30人</div>
+        </div>
+        <div class="price-row">
+          <div class="price">¥12,800</div>
+          <div class="early-bird">早鸟价 ¥10,800</div>
+          <div class="seats">剩余名额：30</div>
+        </div>
+        <div class="btns-row">
+          <button class="btn btn-primary btn-sm">查看简章</button>
+          <button class="btn btn-outline btn-sm">即将开放报名</button>
+        </div>
+      </div>
+
+      <!-- 郑州班 -->
+      <div class="course-card fade-up">
+        <div class="course-header">
+          <div class="course-name">2027 郑州班 — AK应用肌动学基础课程</div>
+          <div class="course-status status-upcoming">即将开放</div>
+        </div>
+        <div class="course-meta">
+          <div class="meta-item"><span>模块：</span>Part I + Part II</div>
+          <div class="meta-item"><span>讲师：</span>Hans Garten</div>
+          <div class="meta-item"><span>Part I：</span>2027年9月10-12日（3天）</div>
+          <div class="meta-item"><span>Part II：</span>2027年9月14-16日（3天）</div>
+          <div class="meta-item"><span>地点：</span>郑州</div>
+          <div class="meta-item"><span>名额：</span>限30人</div>
+        </div>
+        <div class="price-row">
+          <div class="price">¥12,800</div>
+          <div class="early-bird">早鸟价 ¥10,800</div>
+          <div class="seats">剩余名额：30</div>
+        </div>
+        <div class="btns-row">
+          <button class="btn btn-primary btn-sm">查看简章</button>
+          <button class="btn btn-outline btn-sm">即将开放报名</button>
+        </div>
+      </div>
+
+      <!-- 南京班 -->
+      <div class="course-card fade-up">
+        <div class="course-header">
+          <div class="course-name">2027 南京班 — AK应用肌动学基础课程</div>
+          <div class="course-status status-upcoming">即将开放</div>
+        </div>
+        <div class="course-meta">
+          <div class="meta-item"><span>模块：</span>Part I + Part II</div>
+          <div class="meta-item"><span>讲师：</span>Hans Garten</div>
+          <div class="meta-item"><span>Part I：</span>2027年11月26-28日（3天）</div>
+          <div class="meta-item"><span>Part II：</span>2027年11月30-12月2日（3天）</div>
+          <div class="meta-item"><span>地点：</span>南京</div>
+          <div class="meta-item"><span>名额：</span>限30人</div>
+        </div>
+        <div class="price-row">
+          <div class="price">¥12,800</div>
+          <div class="early-bird">早鸟价 ¥10,800</div>
+          <div class="seats">剩余名额：30</div>
+        </div>
+        <div class="btns-row">
+          <button class="btn btn-primary btn-sm">查看简章</button>
+          <button class="btn btn-outline btn-sm">即将开放报名</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="courseOnline" class="hidden">
+    <div class="online-placeholder">
+      <div class="icon">🎬</div>
+      <h3>线上课程录制中</h3>
+      <p>AK线上课程正在精心录制，敬请期待！课程将涵盖理论讲解、实操演示与案例分析。</p>
+      <button class="btn btn-primary btn-sm" style="margin-top:16px;">上传课程</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== LEARNING RESOURCES ===== -->
+<div class="section" id="section-resources">
+  <div class="section-title fade-up">学习资源</div>
+  <div class="section-subtitle fade-up">教材、讲义、图谱与推荐书单</div>
+
+  <div class="resource-tabs fade-up">
+    <div class="resource-tab active" onclick="filterResources('all')">全部</div>
+    <div class="resource-tab" onclick="filterResources('book')">AK经典教材</div>
+    <div class="resource-tab" onclick="filterResources('note')">PAK课程讲义</div>
+    <div class="resource-tab" onclick="filterResources('manual')">AK科普手册</div>
+    <div class="resource-tab" onclick="filterResources('video')">教学视频</div>
+    <div class="resource-tab" onclick="filterResources('chart')">挂图/图谱</div>
+    <div class="resource-tab" onclick="filterResources('recommend')">推荐书单</div>
+  </div>
+
+  <div class="resource-grid fade-up" id="resourceGrid">
+    <div class="resource-card" data-type="manual">
+      <div class="type-tag type-pdf">PDF</div>
+      <h3>ICAK-USA Status Statement</h3>
+      <div class="source">ICAK-USA</div>
+      <button class="btn btn-outline btn-sm">下载</button>
+    </div>
+    <div class="resource-card" data-type="book">
+      <div class="type-tag type-book">教材</div>
+      <h3>AK 100-Hour Course教材</h3>
+      <div class="source">ICAK-USA</div>
+      <button class="btn btn-outline btn-sm">下载</button>
+    </div>
+    <div class="resource-card" data-type="note">
+      <div class="type-tag type-note">讲义</div>
+      <h3>DÄGAK课程讲义</h3>
+      <div class="source">DÄGAK</div>
+      <button class="btn btn-outline btn-sm">下载</button>
+    </div>
+    <div class="resource-card" data-type="book">
+      <div class="type-tag type-book">教材</div>
+      <h3>Applied Kinesiology Synopsis</h3>
+      <div class="source">David Walther</div>
+      <button class="btn btn-outline btn-sm">购买</button>
+    </div>
+    <div class="resource-card" data-type="chart">
+      <div class="type-tag type-chart">图谱</div>
+      <h3>AK肌肉测试挂图</h3>
+      <div class="source">ICAK-USA</div>
+      <button class="btn btn-outline btn-sm">下载</button>
+    </div>
+  </div>
+
+  <div class="upload-hint fade-up">
+    <p>如有优质AK学习资源，欢迎上传共享 → <button class="btn btn-primary btn-sm">上传资源</button></p>
+  </div>
+</div>
+
+<!-- ===== STUDENT SERVICES ===== -->
+<div class="section" id="section-students">
+  <div class="section-title fade-up">学员服务</div>
+  <div class="section-subtitle fade-up">上课场景、学员风采与校友社群</div>
+
+  <h3 class="fade-up" style="font-size:20px;color:var(--primary);margin-bottom:16px;">上课场景</h3>
+  <div class="photo-grid fade-up">
+    <div class="photo-item">课堂实景 1</div>
+    <div class="photo-item">实操练习 2</div>
+    <div class="photo-item">小组讨论 3</div>
+    <div class="photo-item">讲师授课 4</div>
+    <div class="photo-item">学员合影 5</div>
+    <div class="photo-item">证书颁发 6</div>
+  </div>
+
+  <h3 class="fade-up" style="font-size:20px;color:var(--primary);margin-bottom:16px;">学员好评</h3>
+  <div class="testimonials fade-up">
+    <div class="testimonial-card">
+      <div class="quote-text">6天的AK课程让我对肌肉测试有了全新的认识，Hans老师的授课深入浅出，临床实用性极强。</div>
+      <div class="author">— 康复治疗师</div>
+    </div>
+    <div class="testimonial-card">
+      <div class="quote-text">AK打开了一扇新的大门，让我能更精准地找到患者的问题根源。</div>
+      <div class="author">— 全科医生</div>
+    </div>
+    <div class="testimonial-card">
+      <div class="quote-text">课程内容丰富，实操环节充分，回国后立即就能用到临床中。</div>
+      <div class="author">— 物理治疗师</div>
+    </div>
+  </div>
+
+  <div class="community-qr fade-up">
+    <div class="qr-placeholder">公众号二维码</div>
+    <h3>扫码加入AK校友群</h3>
+    <p>与全国AK学员交流学习心得，获取最新课程信息与行业动态</p>
+  </div>
+</div>
+
+<!-- ===== DIRECTORY ===== -->
+<div class="section" id="section-directory">
+  <div class="section-title fade-up">治疗师目录</div>
+  <div class="section-subtitle fade-up">PAK认证治疗师与AK学员专业目录</div>
+
+  <div class="directory-controls fade-up">
+    <input class="search-input" id="dirSearch" placeholder="搜索姓名或城市..." oninput="filterDirectory()">
+    <select class="city-select" id="dirCity" onchange="filterDirectory()">
+      <option value="">全部城市</option>
+    </select>
+  </div>
+
+  <div id="directoryResults" class="fade-up"></div>
+</div>
+
+<!-- ===== SHOP ===== -->
+<div class="section" id="section-shop">
+  <div class="section-title fade-up">AK商城</div>
+  <div class="section-subtitle fade-up">教材、康复工具与周边产品</div>
+
+  <div class="shop-tabs fade-up">
+    <div class="shop-tab active" onclick="filterShop('all')">全部</div>
+    <div class="shop-tab" onclick="filterShop('book')">教材书籍</div>
+    <div class="shop-tab" onclick="filterShop('tool')">康复工具</div>
+    <div class="shop-tab" onclick="filterShop('merch')">周边产品</div>
+  </div>
+
+  <div class="shop-placeholder fade-up">
+    <div class="icon">🛒</div>
+    <h3>商品筹备中</h3>
+    <p>AK商城正在筹备中，即将上线教材书籍、康复工具与周边产品。</p>
+  </div>
+
+  <div class="payment-icons fade-up">
+    <div class="payment-item">
+      <div class="pay-icon">💳</div>
+      <div>微信支付</div>
+    </div>
+    <div class="payment-item">
+      <div class="pay-icon">🔵</div>
+      <div>支付宝</div>
+    </div>
+    <div class="payment-item">
+      <div class="pay-icon">🏦</div>
+      <div>银行卡支付</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== KNOWLEDGE BASE ===== -->
+<div class="section" id="section-knowledge">
+  <div class="section-title fade-up">AK知识库</div>
+  <div class="section-subtitle fade-up">45种常见病症的AK诊疗方法</div>
+
+  <div class="kb-controls fade-up">
+    <input class="kb-search" id="kbSearch" placeholder="搜索疾病名称..." oninput="filterKB()">
+  </div>
+
+  <div class="kb-categories fade-up" id="kbCategories">
+    <div class="kb-cat active" data-cat="lower" onclick="filterKBByCat('lower')">下半身疾病 <span>(21)</span></div>
+    <div class="kb-cat" data-cat="upper" onclick="filterKBByCat('upper')">上半身疾病 <span>(13)</span></div>
+    <div class="kb-cat" data-cat="common" onclick="filterKBByCat('common')">常见病症 <span>(11)</span></div>
+  </div>
+
+  <div class="kb-accordion fade-up" id="kbAccordion"></div>
+
+  <div class="kb-disclaimer fade-up">
+    AK应用肌动学为辅助诊断与治疗方法，不能替代专业医疗诊断。如有健康问题，请咨询专业医生。
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <h3>健衡学园</h3>
+      <p>电话：0371-58532216</p>
+      <p>邮箱：hejukangfu</p>
+      <p>网站：<a href="#">www.jianhengkf.com</a></p>
+    </div>
+    <div>
+      <h3>微信公众号</h3>
+      <p>健衡学园</p>
+      <p>健衡康复资讯</p>
+      <div class="qr-box">公众号二维码</div>
+    </div>
+    <div>
+      <h3>快速链接</h3>
+      <p><a onclick="showSection('about')">关于AK</a></p>
+      <p><a onclick="showSection('courses')">课程中心</a></p>
+      <p><a onclick="showSection('resources')">学习资源</a></p>
+      <p><a onclick="showSection('directory')">治疗师目录</a></p>
+      <p><a onclick="showSection('knowledge')">AK知识库</a></p>
+    </div>
+    <div>
+      <h3>合作伙伴</h3>
+      <p>ICAK 国际应用肌动学学院</p>
+      <p>DÄGAK 德国应用肌动学医学会</p>
+      <p>applied-kinesiology.org</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 AK应用肌动学中文官网 版权所有
+  </div>
+</footer>
+
+<script>
+// ===== DATA =====
+const therapists = [
+  {"name":"王锦飞","city":"厦门","unit":"福建省厦门市君正康复","business":"治疗师","phone":"15606924576","email":"786942159@qq.com"},
+  {"name":"崔艳","city":"安阳","unit":"河南安阳","business":"医生","phone":"18790888213","email":"849421145@qq.com"},
+  {"name":"张淳","city":"北京","unit":"北京顺欣阳光医院","business":"医生","phone":"13601366071","email":"zhchmed@qq.com"},
+  {"name":"周钇全","city":"温州","unit":"浙江温州","business":"治疗师","phone":"15988775767","email":"349912583@qq.com"},
+  {"name":"梁丽芳","city":"深圳","unit":"深圳市盈润私密健康有限公司","business":"性治疗师","phone":"15158231678","email":"2678504763@qq.com"},
+  {"name":"凌家欢","city":"广州","unit":"威蒂斯体育文化有限公司","business":"康复师","phone":"13202962267","email":"1474182609@qq.com"},
+  {"name":"朱梦","city":"武汉","unit":"松沐运动矫形中心","business":"普拉提教练","phone":"15220146043","email":"1024741365@qq.com"},
+  {"name":"赵嘉","city":"深圳","unit":"ES瑜伽&普拉提","business":"瑜伽老师","phone":"13632933036","email":""},
+  {"name":"李喆","city":"宝鸡","unit":"宝鸡市体育运动学校","business":"教练员","phone":"18109172123","email":"67624133@qq.com"},
+  {"name":"冯志鸿","city":"广州","unit":"深圳鹏安运动康复门诊部","business":"康复治疗师","phone":"18875959194","email":"3226882121@qq.com"},
+  {"name":"晨露","city":"","unit":"Here&Now整体健康工作室","business":"治疗师","phone":"18562761080","email":"170305274@qq.com"},
+  {"name":"胡琼","city":"广州","unit":"广州融意健康管理有限公司","business":"身心形同调师","phone":"18666026185","email":"793927062@qq.com"},
+  {"name":"汪彬彬","city":"滁州","unit":"汪彬彬运动康复工作室","business":"运动康复","phone":"17705505910","email":""},
+  {"name":"顾梓馨","city":"常州","unit":"OnlyOne佳木孕产美学","business":"老板","phone":"18112872228","email":"444168889@qq.com"},
+  {"name":"张志静","city":"广州","unit":"导乐公司","business":"分娩导乐","phone":"13928811484","email":"2775148@qq.com"},
+  {"name":"徐韩","city":"济南","unit":"","business":"治疗师","phone":"15689703728","email":"claurier@qq.com"},
+  {"name":"蓝青","city":"广州","unit":"广州","business":"全职妈妈","phone":"13826090063","email":"25735200@qq.com"},
+  {"name":"王秦","city":"北京","unit":"童书妈妈（北京三川滔滔文化传播有限公司）","business":"老师","phone":"18618486765","email":"wangqin567@qq.com"},
+  {"name":"黄冠英","city":"广州","unit":"米兔孕育","business":"课程总监","phone":"13249624456","email":"229863394@qq.com"},
+  {"name":"马勤","city":"广州","unit":"安儒月子中心","business":"治疗师","phone":"13903050234","email":""},
+  {"name":"毕雨晴","city":"上海","unit":"徐汇区中心医院","business":"治疗师","phone":"17684715238","email":""},
+  {"name":"郑倩芸","city":"上海","unit":"徐汇区中心医院","business":"治疗师","phone":"13636534759","email":""},
+  {"name":"张小敏","city":"东莞","unit":"广东省东莞市","business":"教育培训","phone":"13925592660","email":""},
+  {"name":"丁清","city":"扬州","unit":"F+运动康复中心","business":"全科医生","phone":"13952329009","email":"ariellah@qq.com"},
+  {"name":"张超楠","city":"开封","unit":"开封市中心医院","business":"康复治疗师","phone":"15837870682","email":""},
+  {"name":"陈珩","city":"深圳","unit":"AIGA4M整合医学功能医学抗衰","business":"整合医学营养师","phone":"13600159257","email":""},
+  {"name":"田淼","city":"重庆","unit":"重庆市秀山县","business":"治疗师","phone":"13810622454","email":""},
+  {"name":"刘莫曦","city":"常德","unit":"湖南常德市","business":"治疗师","phone":"","email":""},
+  {"name":"孙洋","city":"","unit":"","business":"健身教练","phone":"18036856357","email":""},
+  {"name":"王春艳","city":"常州","unit":"江苏-常州","business":"运动康复","phone":"13806127490","email":""},
+  {"name":"高晨珉","city":"佛山","unit":"脊刻好","business":"","phone":"18666371444","email":"519913792@qq.com"},
+  {"name":"陈珊","city":"福州","unit":"福建省福州市社区医院","business":"治疗师","phone":"17720736689","email":"359560162@qq.com"},
+  {"name":"代琴纯","city":"深圳","unit":"深圳曼姿碧姿健康咨询公司","business":"健康管理","phone":"13544236833","email":"360390365@qq.com"},
+  {"name":"李长江","city":"乌鲁木齐","unit":"新疆医科大学第五附属医院康复科","business":"","phone":"13999229586","email":""},
+  {"name":"李倩君","city":"江门","unit":"白沙兴盛社区卫生服务中心","business":"中医师","phone":"13823491990","email":"979299408@qq.com"},
+  {"name":"丁晶晶","city":"西安","unit":"西安立脊康脊柱医学研究院","business":"院长","phone":"15011386694","email":"1461693284@qq.com"},
+  {"name":"姚俊名","city":"深圳","unit":"广东省深圳市","business":"康复治疗师","phone":"17666052990","email":"916047811@qq.com"},
+  {"name":"陈彬武","city":"金华","unit":"金华联济医院","business":"康复治疗师","phone":"13486697334","email":"401009456@qq.com"},
+  {"name":"吕洁","city":"上海","unit":"上海运动康复","business":"康复治疗师","phone":"18602160055","email":"lvdayong145@163.com"},
+  {"name":"王妙维","city":"成都","unit":"四川大学华西医院","business":"物理治疗师","phone":"15208263260","email":"373595777@qq.com"},
+  {"name":"宋军哲","city":"海口","unit":"宋军哲中医综合诊所","business":"医生","phone":"13943210525","email":"sjz9905@139.com"},
+  {"name":"陈素环","city":"漯河","unit":"河南省漯河市第六人民医院","business":"康复医师/主任","phone":"18739550309","email":"1343971780@qq.com"},
+  {"name":"马春燕","city":"瑞安","unit":"","business":"康复训练师","phone":"13967754601","email":"654425620@qq.com"},
+  {"name":"朱智杰","city":"常州","unit":"晨·普拉提康复体能中心","business":"普拉提教练","phone":"13961256899","email":"zhuzhijie17@126.com"},
+  {"name":"黄茂康","city":"佛山","unit":"","business":"自由职业者","phone":"13326735486","email":""},
+  {"name":"王健","city":"","unit":"","business":"验光师","phone":"18691639506","email":"916085356@qq.com"},
+  {"name":"张家琪","city":"深圳","unit":"广东深圳诺亚第","business":"","phone":"15889775964","email":"15889775964@163.com"},
+  {"name":"贾青青","city":"石家庄","unit":"河北省石家庄市","business":"瑜伽老师","phone":"18231138999","email":"259153237@qq.com"},
+  {"name":"薄皓天","city":"临沂","unit":"庆华健身","business":"教练","phone":"18253939636","email":"bht18253939636@163.com"},
+  {"name":"孙晓波","city":"上海","unit":"个体","business":"体能教练","phone":"13805781380","email":"290802643@qq.com"},
+  {"name":"任海林","city":"上海","unit":"上海","business":"康复治疗师","phone":"","email":"1196076972@qq.com"},
+  {"name":"陆金花","city":"常州","unit":"常州熙纳全宇健康科技有限公司","business":"视觉训练师","phone":"15061932938","email":""},
+  {"name":"赵鹏","city":"","unit":"贝斯特数字艺术网校","business":"工程师","phone":"15800049525","email":""},
+  {"name":"张颖","city":"上海","unit":"上海凯谋教育科技","business":"心理咨询师","phone":"13918830994","email":"1151527245@qq.com"}
+];
+
+const kbData = {
+  lower: [
+    "跟腱炎","前交叉韧带问题","AK膝关节诊疗方法","踝关节扭伤","髌骨软骨软化",
+    "髂胫束综合征","跳跃膝/髌腱炎","腰痛","内侧副韧带问题","半月板损伤",
+    "跖骨痛/足趾痛","足过度旋前","髌腱炎/膝痛","髌股关节痛","梨状肌综合征",
+    "足底筋膜炎","骶髂关节/骨盆痛","坐骨神经痛","胫骨内侧应力综合征","腰椎滑脱",
+    "跗管综合征/足跟痛"
+  ],
+  upper: [
+    "肋软骨炎/胸骨痛","肘部疼痛","肋间神经痛","网球肘","高尔夫球肘",
+    "颈神经根炎/颈痛","肩袖损伤","肩部问题","胸廓出口综合征","胸椎/中背痛",
+    "颞下颌关节紊乱/颌痛","斜颈/颈痛","上肢卡压综合征"
+  ],
+  common: [
+    "痤疮","过敏","哮喘","面瘫","丛集性头痛","纤维肌痛",
+    "胃食管反流/食管裂孔疝","偏头痛","鼻窦问题","紧张性头痛","耳鸣"
+  ]
+};
+
+const kbDescriptions = {
+  "跟腱炎": {symptoms:"跟腱区域疼痛、肿胀、活动受限",desc:"跟腱是连接小腿肌肉与跟骨的强韧纤维组织，过度使用可导致炎症",reason:"过度运动、不合适鞋具、生物力学异常",standard:"休息、冰敷、物理治疗、抗炎药物",ak:"评估相关肌肉功能（腓肠肌、比目鱼肌），检查足部旋前问题，调整相关结构"},
+  "前交叉韧带问题": {symptoms:"膝关节不稳定、疼痛、肿胀",desc:"前交叉韧带是膝关节重要的稳定结构",reason:"运动损伤、膝关节过度扭转",standard:"手术重建、物理康复",ak:"评估膝关节周围肌肉平衡（股四头肌与腘绳肌），检查髋关节与踝关节的联动"},
+  "AK膝关节诊疗方法": {symptoms:"膝关节各类疼痛与功能障碍",desc:"AK系统化的膝关节评估与治疗方法",reason:"结构、化学或心理因素导致的膝关节问题",standard:"对症治疗",ak:"通过肌肉测试判断膝关节问题的根源，区分结构/化学/心理因素，针对性治疗"},
+  "踝关节扭伤": {symptoms:"踝关节疼痛、肿胀、行走困难",desc:"踝关节韧带损伤是最常见的运动损伤之一",reason:"足部内翻或外翻过度、地面不平",standard:"RICE原则、物理治疗",ak:"评估踝关节周围肌肉（腓骨肌群），检查足过度旋前，纠正生物力学失衡"},
+  "髌骨软骨软化": {symptoms:"膝前疼痛、蹲下加重",desc:"髌骨后方软骨的退变",reason:"髌骨轨迹异常、股四头肌失衡",standard:"物理治疗、抗炎药物",ak:"评估股四头肌各头的功能平衡，检查髌骨轨迹，调整相关结构"},
+  "髂胫束综合征": {symptoms:"膝外侧疼痛、跑步时加重",desc:"髂胫束在股骨外侧髁的摩擦引起的炎症",reason:"过度跑步、髋外展肌薄弱",standard:"休息、冰敷、拉伸",ak:"评估髋外展肌（臀中肌）功能，检查足过度旋前对髂胫束的影响"},
+  "跳跃膝/髌腱炎": {symptoms:"膝前下方疼痛、跳跃时加重",desc:"髌腱的过度使用性炎症",reason:"反复跳跃、股四头肌过度负荷",standard:"休息、冰敷、物理治疗",ak:"评估股四头肌与腘绳肌的平衡关系，检查骨盆与足部的结构关联"},
+  "腰痛": {symptoms:"腰部疼痛、活动受限",desc:"最常见的脊柱问题之一",reason:"肌肉劳损、椎间盘问题、姿势不良",standard:"物理治疗、药物治疗",ak:"评估核心肌群功能，检查骶髂关节、髋关节与腰椎的联动关系"},
+  "内侧副韧带问题": {symptoms:"膝内侧疼痛、不稳定感",desc:"膝关节内侧稳定结构损伤",reason:"膝关节外翻应力损伤",standard:"休息、支具保护、物理治疗",ak:"评估内侧稳定肌群，检查髋关节与踝关节的联动影响"},
+  "半月板损伤": {symptoms:"膝关节疼痛、肿胀、卡锁感",desc:"半月板是膝关节内的纤维软骨垫",reason:"膝关节扭转损伤",standard:"保守治疗或手术修复",ak:"评估膝关节周围肌肉功能平衡，检查相关结构代偿"},
+  "跖骨痛/足趾痛": {symptoms:"前脚掌疼痛、行走困难",desc:"跖骨区域的疼痛综合征",reason:"足部结构异常、鞋具不合适",standard:"矫形鞋垫、休息",ak:"评估足部肌肉功能，检查足弓结构与步态模式"},
+  "足过度旋前": {symptoms:"足弓塌陷、足内侧疼痛",desc:"步行时足部过度内翻",reason:"足部结构问题、肌肉失衡",standard:"矫形鞋垫、支撑鞋",ak:"评估足部与小腿肌肉，检查胫骨后肌功能，调整结构失衡"},
+  "髌腱炎/膝痛": {symptoms:"膝前疼痛",desc:"髌腱炎症导致的膝前痛",reason:"过度使用、结构失衡",standard:"物理治疗",ak:"评估股四头肌功能，检查骨盆与足部关联"},
+  "髌股关节痛": {symptoms:"膝前疼痛、屈膝加重",desc:"髌骨与股骨关节面的问题",reason:"髌骨轨迹异常",standard:"物理治疗",ak:"评估股四头肌功能平衡，纠正髌骨轨迹"},
+  "梨状肌综合征": {symptoms:"臀部深部疼痛、坐骨神经痛样症状",desc:"梨状肌压迫坐骨神经",reason:"梨状肌痉挛或肥大",standard:"拉伸、物理治疗",ak:"评估梨状肌及相关髋外旋肌群功能，检查骶髂关节"},
+  "足底筋膜炎": {symptoms:"足底疼痛、晨起加重",desc:"足底筋膜的过度使用性炎症",reason:"足部结构异常、过度使用",standard:"拉伸、矫形鞋垫",ak:"评估足部肌肉与小腿肌肉功能，检查足过度旋前问题"},
+  "骶髂关节/骨盆痛": {symptoms:"腰骶部疼痛、臀部疼痛",desc:"骶髂关节功能障碍",reason:"姿势不良、创伤",standard:"物理治疗、手法治疗",ak:"评估骨盆周围肌肉功能，检查骶髂关节活动度"},
+  "坐骨神经痛": {symptoms:"腰臀部至腿部的放射痛",desc:"坐骨神经受压迫或刺激",reason:"椎间盘突出、梨状肌综合征",standard:"药物治疗、物理治疗",ak:"评估相关肌肉功能，区分结构性与化学性原因"},
+  "胫骨内侧应力综合征": {symptoms:"小腿内侧疼痛、运动时加重",desc:"胫骨内侧的过度使用性损伤",reason:"过度跑步、鞋具不合适",standard:"休息、冰敷",ak:"评估小腿肌肉功能，检查足过度旋前与步态"},
+  "腰椎滑脱": {symptoms:"腰痛、腿部症状",desc:"一个椎体在另一个椎体上前移",reason:"结构退化、创伤",standard:"保守治疗或手术",ak:"评估核心肌群与腰椎周围肌肉，检查结构稳定性"},
+  "跗管综合征/足跟痛": {symptoms:"足跟与足底疼痛、麻木",desc:"跗管内胫神经受压",reason:"足部结构异常、炎症",standard:"矫形鞋垫、手术",ak:"评估足部肌肉功能，检查结构与化学因素"},
+  "肋软骨炎/胸骨痛": {symptoms:"胸壁疼痛、深呼吸加重",desc:"肋软骨的炎症",reason:"感染、创伤、重复应力",standard:"抗炎药物、休息",ak:"评估肋间肌与胸廓运动肌群，检查相关结构"},
+  "肘部疼痛": {symptoms:"肘关节疼痛、活动受限",desc:"肘部各类疼痛问题",reason:"过度使用、创伤",standard:"休息、物理治疗",ak:"评估肘部周围肌肉功能，检查肩关节与手腕的联动"},
+  "肋间神经痛": {symptoms:"沿肋间走行的疼痛",desc:"肋间神经受刺激或压迫",reason:"肋软骨炎、胸椎问题",standard:"药物治疗",ak:"评估肋间肌与相关结构，检查胸椎与呼吸模式"},
+  "网球肘": {symptoms:"肘外侧疼痛、握力减弱",desc:"桡侧腕短伸肌的过度使用性损伤",reason:"重复手腕伸展动作",standard:"休息、物理治疗",ak:"评估前臂伸肌群功能，检查肩关节与颈椎的关联"},
+  "高尔夫球肘": {symptoms:"肘内侧疼痛",desc:"前臂屈肌的过度使用性损伤",reason:"重复手腕屈曲动作",standard:"休息、物理治疗",ak:"评估前臂屈肌群功能，检查相关结构联动"},
+  "颈神经根炎/颈痛": {symptoms:"颈痛、手臂放射痛",desc:"颈椎神经根受刺激",reason:"颈椎间盘问题、姿势不良",standard:"物理治疗、药物",ak:"评估颈椎周围肌肉功能，检查肩关节与胸椎的关联"},
+  "肩袖损伤": {symptoms:"肩部疼痛、抬臂困难",desc:"肩袖肌群的损伤",reason:"过度使用、创伤",standard:"保守治疗或手术",ak:"评估肩袖各肌功能，检查肩关节结构与稳定性"},
+  "肩部问题": {symptoms:"肩部疼痛、活动受限",desc:"肩关节各类功能障碍",reason:"结构、化学或心理因素",standard:"对症治疗",ak:"系统评估肩关节周围肌肉，区分三角因素根源"},
+  "胸廓出口综合征": {symptoms:"手臂麻木、疼痛",desc:"臂丛神经或血管在胸廓出口受压",reason:"姿势不良、肌肉紧张",standard:"物理治疗",ak:"评估相关肌肉（斜角肌、胸小肌），检查结构与化学因素"},
+  "胸椎/中背痛": {symptoms:"中背部疼痛",desc:"胸椎区域的功能障碍",reason:"姿势不良、肌肉失衡",standard:"物理治疗",ak:"评估胸椎周围肌肉功能，检查呼吸模式与肋骨运动"},
+  "颞下颌关节紊乱/颌痛": {symptoms:"颌部疼痛、咀嚼困难、关节弹响",desc:"颞下颌关节的功能紊乱",reason:"咬合问题、肌肉失衡、压力",standard:"牙科治疗、物理治疗",ak:"评估咀嚼肌群功能，检查颈椎与颅骨的关联"},
+  "斜颈/颈痛": {symptoms:"头部偏斜、颈部疼痛",desc:"颈部肌肉的不对称紧张",reason:"肌肉痉挛、结构异常",standard:"物理治疗",ak:"评估颈部两侧肌肉功能对比，检查相关结构"},
+  "上肢卡压综合征": {symptoms:"手臂麻木、疼痛、无力",desc:"神经在上肢走行中受压",reason:"肌肉紧张、结构异常",standard:"物理治疗",ak:"评估相关肌肉功能，定位卡压点，区分结构与化学因素"},
+  "痤疮": {symptoms:"面部/身体皮肤粉刺、炎症",desc:"毛囊皮脂腺的慢性炎症",reason:"激素波动、饮食、压力",standard:"外用药物、口服药物",ak:"评估相关化学因素（激素、营养），检查消化功能与毒素负担"},
+  "过敏": {symptoms:"过敏反应、皮肤瘙痒、呼吸道症状",desc:"免疫系统过度反应",reason:"环境过敏原、化学失衡",standard:"抗过敏药物",ak:"评估免疫系统化学因素，检查营养缺乏与毒素负担"},
+  "哮喘": {symptoms:"呼吸困难、喘鸣、胸闷",desc:"气道的慢性炎症性疾病",reason:"过敏、化学失衡、情绪压力",standard:"吸入药物、避免触发因素",ak:"评估呼吸相关肌肉功能，检查化学因素与情绪因素"},
+  "面瘫": {symptoms:"面部一侧肌肉无力或瘫痪",desc:"面神经功能障碍",reason:"病毒感染、结构压迫",standard:"药物治疗、物理治疗",ak:"评估面部肌肉功能，检查颅骨结构与神经供应"},
+  "丛集性头痛": {symptoms:"剧烈单侧头痛、眼周疼痛",desc:"严重的反复性头痛",reason:"神经血管机制",standard:"药物治疗",ak:"评估颈部与颅骨结构，检查化学与心理因素"},
+  "纤维肌痛": {symptoms:"全身广泛性疼痛、疲劳",desc:"中枢神经系统敏感化导致的全身疼痛",reason:"神经系统异常、化学失衡",standard:"药物治疗、运动",ak:"评估全身肌肉功能模式，检查化学与心理因素"},
+  "胃食管反流/食管裂孔疝": {symptoms:"烧心、反酸、胸痛",desc:"胃内容物反流至食管",reason:"食管裂孔疝、饮食因素",standard:"药物治疗、饮食调整",ak:"评估相关肌肉（膈肌），检查化学因素与结构因素"},
+  "偏头痛": {symptoms:"剧烈头痛、恶心、光敏感",desc:"反复发作的神经系统疾病",reason:"血管变化、化学触发",standard:"药物治疗",ak:"评估颈部与颅骨结构，检查化学触发因素与情绪因素"},
+  "鼻窦问题": {symptoms:"鼻塞、面部压力、头痛",desc:"鼻窦的炎症或感染",reason:"过敏、感染、结构问题",standard:"药物治疗",ak:"评估颅骨结构，检查化学因素与免疫状态"},
+  "紧张性头痛": {symptoms:"双侧压迫性头痛",desc:"最常见的头痛类型",reason:"肌肉紧张、压力、姿势不良",standard:"放松、止痛药",ak:"评估颈部与肩部肌肉功能，检查心理因素与结构因素"},
+  "耳鸣": {symptoms:"耳内鸣响、嗡嗡声",desc:"听觉系统的异常感知",reason:"结构问题、化学因素",standard:"对症治疗",ak:"评估颞下颌关节与颅骨结构，检查化学因素"}
+};
+
+// ===== SECTION NAVIGATION =====
+let currentSection = 'home';
+
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('section-' + id).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.classList.toggle('active', a.dataset.section === id);
+  });
+  currentSection = id;
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  closeMobileMenu();
+  // trigger fade animations
+  setTimeout(() => {
+    document.querySelectorAll('#section-' + id + ' .fade-up').forEach(el => {
+      el.classList.add('visible');
+    });
+  }, 50);
+}
+
+function toggleMobileMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+function closeMobileMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+// ===== COURSE TAB =====
+function switchCourseTab(tab) {
+  document.querySelectorAll('.tabs .tab-btn').forEach(b => b.classList.remove('active'));
+  if (tab === 'offline') {
+    document.querySelector('.tabs .tab-btn:first-child').classList.add('active');
+    document.getElementById('courseOffline').classList.remove('hidden');
+    document.getElementById('courseOnline').classList.add('hidden');
+  } else {
+    document.querySelector('.tabs .tab-btn:last-child').classList.add('active');
+    document.getElementById('courseOffline').classList.add('hidden');
+    document.getElementById('courseOnline').classList.remove('hidden');
+  }
+}
+
+// ===== DIRECTORY =====
+function renderDirectory() {
+  // populate city select
+  const cities = [...new Set(therapists.map(t => t.city).filter(c => c))].sort();
+  const sel = document.getElementById('dirCity');
+  cities.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c; opt.textContent = c;
+    sel.appendChild(opt);
+  });
+  filterDirectory();
+}
+
+function filterDirectory() {
+  const search = document.getElementById('dirSearch').value.toLowerCase();
+  const city = document.getElementById('dirCity').value;
+  let filtered = therapists;
+  if (search) {
+    filtered = filtered.filter(t =>
+      t.name.toLowerCase().includes(search) ||
+      t.city.toLowerCase().includes(search)
+    );
+  }
+  if (city) {
+    filtered = filtered.filter(t => t.city === city);
+  }
+
+  const container = document.getElementById('directoryResults');
+  if (filtered.length === 0) {
+    container.innerHTML = '<div class="no-results">没有找到匹配的治疗师</div>';
+    return;
+  }
+
+  let html = `<table class="directory-table">
+    <thead><tr><th>姓名</th><th>城市</th><th>单位</th><th>主要业务</th><th>联系电话</th><th>邮箱</th></tr></thead>
+    <tbody>`;
+  filtered.forEach(t => {
+    html += `<tr>
+      <td>${t.name}</td>
+      <td>${t.city || '—'}</td>
+      <td>${t.unit || '—'}</td>
+      <td>${t.business || '—'}</td>
+      <td>${t.phone || '—'}</td>
+      <td>${t.email || '—'}</td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+// ===== KNOWLEDGE BASE =====
+let kbCurrentCat = 'lower';
+
+function renderKB() {
+  const search = document.getElementById('kbSearch').value.toLowerCase();
+  const items = kbData[kbCurrentCat].filter(name => name.toLowerCase().includes(search));
+  const container = document.getElementById('kbAccordion');
+
+  if (items.length === 0) {
+    container.innerHTML = '<div class="no-results">没有找到匹配的疾病</div>';
+    return;
+  }
+
+  container.innerHTML = items.map(name => {
+    const desc = kbDescriptions[name] || {symptoms:'暂无详细资料',desc:'',reason:'',standard:'',ak:''};
+    return `<div class="kb-item" onclick="toggleKBItem(this)">
+      <div class="kb-item-header">${name} <span class="arrow">▼</span></div>
+      <div class="kb-item-body">
+        <div class="kb-field"><h4>症状</h4><p>${desc.symptoms}</p></div>
+        <div class="kb-field"><h4>描述</h4><p>${desc.desc}</p></div>
+        <div class="kb-field"><h4>原因</h4><p>${desc.reason}</p></div>
+        <div class="kb-field"><h4>标准治疗</h4><p>${desc.standard}</p></div>
+        <div class="kb-field"><h4>AK方法</h4><p>${desc.ak}</p></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleKBItem(el) {
+  // close others
+  el.parentElement.querySelectorAll('.kb-item.open').forEach(item => {
+    if (item !== el) item.classList.remove('open');
+  });
+  el.classList.toggle('open');
+}
+
+function filterKB() {
+  renderKB();
+}
+
+function filterKBByCat(cat) {
+  kbCurrentCat = cat;
+  document.querySelectorAll('.kb-cat').forEach(c => {
+    c.classList.toggle('active', c.dataset.cat === cat);
+  });
+  document.getElementById('kbSearch').value = '';
+  renderKB();
+}
+
+// ===== RESOURCES =====
+function filterResources(type) {
+  document.querySelectorAll('.resource-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.resource-card').forEach(card => {
+    if (type === 'all') {
+      card.style.display = '';
+    } else {
+      card.style.display = card.dataset.type === type ? '' : 'none';
+    }
+  });
+}
+
+// ===== SHOP =====
+function filterShop(type) {
+  document.querySelectorAll('.shop-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+// ===== INTERSECTION OBSERVER =====
+function initObserver() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, {threshold: 0.1, rootMargin: '0px 0px -50px 0px'});
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+}
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', () => {
+  renderDirectory();
+  renderKB();
+  initObserver();
+  // make home section visible
+  document.querySelectorAll('#section-home .fade-up').forEach(el => el.classList.add('visible'));
+});
+</script>
+</body>
+</html>
