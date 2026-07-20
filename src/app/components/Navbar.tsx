@@ -3,10 +3,13 @@ import { Link, useLocation } from "react-router"
 
 const links = [
   { label: "首页", href: "/" },
-  { label: "课程介绍", href: "/course" },
-  { label: "FAQ问答", href: "/faq" },
+  { label: "关于AK", href: "/course" },
+  { label: "课程中心", href: "/course-center" },
+  { label: "学员课堂", href: "/student-scenes" },
+  { label: "AK知识库", href: "/knowledge" },
   { label: "PAK联盟", href: "/pak-union" },
-  { label: "获取文献", href: "/research" },
+  { label: "学习资料", href: "/research" },
+  { label: "FAQ问答", href: "/faq" },
 ]
 
 export default function Navbar() {

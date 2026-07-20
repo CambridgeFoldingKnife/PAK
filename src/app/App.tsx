@@ -1,37 +1,6 @@
-import { Link } from "react-router";
-import Navbar from "@/app/components/Navbar";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselPrevious,
-  CarouselNext,
-} from "@/app/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
-
-// ─── Reusable placeholder rectangle ───────────────────────────────────────────
-function Placeholder({
-  label,
-  className = "",
-  aspectRatio = "aspect-[4/3]",
-}: {
-  label: string;
-  className?: string;
-  aspectRatio?: string;
-}) {
-  return (
-    <div
-      className={`${aspectRatio} ${className} bg-[#C8C8C2] flex items-center justify-center rounded-sm overflow-hidden`}
-    >
-      <span
-        className="text-[#6B6B62] text-sm font-['Inter',sans-serif] tracking-wide px-4 text-center"
-        style={{ fontStyle: "italic" }}
-      >
-        {label}
-      </span>
-    </div>
-  );
-}
+import { Link } from "react-router"
+import Navbar from "@/app/components/Navbar"
+import ScrollReveal from "@/app/components/ScrollReveal"
 
 // ─── Hero ─────────────────────────────────────────────────────────────────────
 function Hero() {
@@ -43,174 +12,132 @@ function Hero() {
           <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-6">
             ICAK 亚太地区合作伙伴 · 德国 DÄGAK 官方认证
           </p>
-          <h1
-            className="font-['Playfair_Display',serif] text-5xl lg:text-6xl font-semibold leading-[1.12] text-foreground mb-6"
-          >
-            掌握应用肌动学，
+          <h1 className="font-['Playfair_Display',serif] text-5xl lg:text-6xl font-semibold leading-[1.12] text-foreground mb-6">
+            医疗保健界
             <br />
-            <em className="not-italic font-normal" style={{ fontStyle: "italic" }}>
-              读懂身体的语言
-            </em>
+            最被保守的秘密
           </h1>
-          <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] mb-10 leading-relaxed max-w-[440px]">
-            DÄGAK 创始人 Hans Garten 博士亲授 — 全球权威应用肌动学课程，
-            系统训练结构、化学与心理三维平衡诊疗思维。
+          <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] mb-8 leading-relaxed max-w-[440px]">
+            AK 应用肌动学（Applied Kinesiology）由 George Goodheart 博士于 1964 年创立，
+            是一套通过徒手肌肉测试评估人体结构、化学与心理三维健康状态的诊断与治疗系统。
+            健衡学园将这一全球权威体系引入中文医疗社群。
           </p>
-          <div className="flex flex-wrap gap-4 mb-12">
-            <Link
-              to="/contact"
-              className="inline-flex items-center px-7 py-3.5 bg-foreground text-[#F5F5F0] font-['Inter',sans-serif] text-sm font-medium rounded-sm hover:bg-[#333330] transition-colors duration-200"
-            >
-              预约课程咨询
-            </Link>
+
+          {/* Goodheart quote */}
+          <div className="border-l-2 border-accent/40 pl-5 mb-10 max-w-[440px]">
+            <p className="font-['Playfair_Display',serif] text-lg leading-relaxed text-foreground" style={{ fontStyle: "italic" }}>
+              "The body heals itself in a sure, sensible, practical, reasonable and observable manner."
+            </p>
+            <p className="font-['Inter',sans-serif] text-xs text-[#9B9B90] mt-2">
+              — George J. Goodheart Jr.
+            </p>
           </div>
 
-          {/* Instructor brief */}
-          <div className="border-t border-border pt-8">
-            <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.12em] uppercase text-accent mb-2">
-              首席讲师
-            </p>
-            <h3 className="font-['Playfair_Display',serif] text-2xl font-semibold text-foreground mb-1">
-              Dr. Med. Hans Garten
-            </h3>
-            <p className="font-['Inter',sans-serif] text-sm text-[#6B6B62] mb-4">
-              DÄGAK 创始人 · ICAK 资深讲师
-            </p>
-            <p className="font-['Inter',sans-serif] text-sm text-[#4A4A45] leading-relaxed mb-4">
-              全球应用肌动学领域最具影响力的教育者之一，35+ 年临床与教学经验，
-              将严谨科学与直觉性临床洞察相结合，帮助数千名医疗专业人士掌握 PAK 体系。
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {["ICAK 国际认证讲师", "DÄGAK 创始会员", "德国运动医学协会"].map((tag) => (
-                <span
-                  key={tag}
-                  className="font-['Inter',sans-serif] text-xs text-[#4A4A45] border border-border/60 px-3 py-1.5 rounded-sm"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
+          <div className="flex flex-wrap gap-4 mb-12">
+            <Link
+              to="/course"
+              className="inline-flex items-center px-7 py-3.5 bg-foreground text-[#F5F5F0] font-['Inter',sans-serif] text-sm font-medium rounded-sm hover:bg-[#333330] transition-colors duration-200"
+            >
+              了解 AK 技术
+            </Link>
+            <Link
+              to="/course-center"
+              className="inline-flex items-center px-7 py-3.5 border border-border text-foreground font-['Inter',sans-serif] text-sm font-medium rounded-sm hover:bg-[#E6E6E0] transition-colors duration-200"
+            >
+              查看课程
+            </Link>
           </div>
         </div>
 
-        {/* Right image */}
+        {/* Right image + instructor info */}
         <div className="relative">
           <img
             src="/assets/汉斯.jpg"
             alt="Dr. Med. Hans Garten"
             className="w-full aspect-[3/4] object-cover rounded-sm"
           />
-          <div className="absolute -bottom-6 -left-6 bg-[#F5F5F0] border border-border px-5 py-4 max-w-[220px] shadow-sm">
-            <p className="font-['Playfair_Display',serif] text-2xl font-semibold text-foreground">30+</p>
-            <p className="font-['Inter',sans-serif] text-xs text-[#6B6B62] mt-0.5">年临床与教学经验</p>
+          <div className="absolute -bottom-6 -left-6 bg-[#F5F5F0] border border-border px-6 py-5 max-w-[260px] shadow-sm">
+            <p className="font-['Playfair_Display',serif] text-base font-semibold text-foreground mb-1">
+              Dr. Med. Hans Garten
+            </p>
+            <p className="font-['Inter',sans-serif] text-xs text-accent mb-2">
+              DÄGAK 创始人 · ICAK 资深讲师
+            </p>
+            <p className="font-['Inter',sans-serif] text-xs text-[#6B6B62] leading-relaxed">
+              35+ 年临床与教学经验，全球应用肌动学领域最具影响力的教育者之一。
+            </p>
           </div>
         </div>
       </div>
     </section>
-  );
+  )
 }
 
-// ─── Quote block ──────────────────────────────────────────────────────────────
-function QuoteBlock() {
+// ─── Why PAK ──────────────────────────────────────────────────────────────────
+function WhyPak() {
   return (
-    <section className="bg-[#E6E6E0] py-24 lg:py-32">
+    <section className="bg-[#E6E6E0] py-24 lg:py-36">
       <div className="max-w-[1200px] mx-auto px-6">
-        <div className="max-w-[760px] mx-auto text-center mb-16">
-          <p
-            className="font-['Playfair_Display',serif] text-3xl lg:text-4xl font-normal leading-snug text-foreground"
-            style={{ fontStyle: "italic" }}
-          >
-            "当你准备好提升诊疗能力，
-            <br />
-            PAK 就是你的全新起点。"
-          </p>
-        </div>
-        <Carousel
-          opts={{ loop: true }}
-          plugins={[Autoplay({ delay: 4000, stopOnInteraction: false })]}
-          className="w-full"
-        >
-          <CarouselContent>
-            {[
-              { src: "/assets/1.jpg", alt: "课程实操教学" },
-              { src: "/assets/2.jpeg", alt: "培训教室" },
-              { src: "/assets/4.png", alt: "课程讲授" },
-              { src: "/assets/5.png", alt: "课程实操教学" },
-              { src: "/assets/6.png", alt: "培训教室" },
-            ].map((img) => (
-              <CarouselItem key={img.src}>
-                <div className="aspect-[16/9] overflow-hidden rounded-sm">
-                  <img
-                    src={img.src}
-                    alt={img.alt}
-                    className="w-full h-full object-cover"
-                  />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+          <div>
+            <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-5">
+              临床思维重构
+            </p>
+            <h2 className="font-['Playfair_Display',serif] text-4xl lg:text-5xl font-semibold leading-[1.15] text-foreground mb-7">
+              重新定义你的
+              <br />
+              临床诊疗路径
+            </h2>
+            <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] leading-relaxed mb-6">
+              应用肌动学（PAK）将人体视为结构、化学与心理三者相互交织的整体系统。
+              传统诊疗往往只关注症状所在，而 PAK 让你能透过徒手肌肉测试，
+              精准识别各系统之间的失衡关联，从而制定更有效的干预方案。
+            </p>
+            <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] leading-relaxed mb-10">
+              无论你是物理治疗师、整脊医生、自然疗法师还是全科医生，
+              PAK 都能为你的临床工作带来全新的视角与工具。
+            </p>
+            <div className="flex flex-col gap-3">
+              {[
+                "结构层面：筋膜、关节与神经肌肉失衡评估",
+                "化学层面：营养、毒素负荷与代谢功能检测",
+                "心理层面：情绪模式对身体张力的影响分析",
+              ].map((item) => (
+                <div key={item} className="flex items-start gap-3">
+                  <span className="mt-1.5 w-4 h-4 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-accent block" />
+                  </span>
+                  <span className="font-['Inter',sans-serif] text-sm text-[#4A4A45]">{item}</span>
                 </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious className="left-4 -translate-y-0 top-1/2 bg-[#F5F5F0]/80 hover:bg-[#F5F5F0] text-foreground border-border" />
-          <CarouselNext className="right-4 -translate-y-0 top-1/2 bg-[#F5F5F0]/80 hover:bg-[#F5F5F0] text-foreground border-border" />
-        </Carousel>
-      </div>
-    </section>
-  );
-}
+              ))}
+            </div>
+          </div>
 
-// ─── Feature split ────────────────────────────────────────────────────────────
-function FeatureSplit() {
-  return (
-    <section className="max-w-[1200px] mx-auto px-6 py-24 lg:py-36">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-        {/* Text */}
-        <div>
-          <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-5">
-            临床思维重构
-          </p>
-          <h2 className="font-['Playfair_Display',serif] text-4xl lg:text-5xl font-semibold leading-[1.15] text-foreground mb-7">
-            重新定义你的
-            <br />
-            临床诊疗路径
-          </h2>
-          <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] leading-relaxed mb-6">
-            应用肌动学（PAK）将人体视为结构、化学与心理三者相互交织的整体系统。
-            传统诊疗往往只关注症状所在，而 PAK 让你能透过徒手肌肉测试，
-            精准识别各系统之间的失衡关联，从而制定更有效的干预方案。
-          </p>
-          <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] leading-relaxed mb-10">
-            无论你是物理治疗师、整脊医生、自然疗法师还是全科医生，
-            PAK 都能为你的临床工作带来全新的视角与工具。
-          </p>
-          <div className="flex flex-col gap-3">
+          {/* Right side: text-based stats + key facts */}
+          <div className="flex flex-col gap-6">
             {[
-              "结构层面：筋膜、关节与神经肌肉失衡评估",
-              "化学层面：营养、毒素负荷与代谢功能检测",
-              "心理层面：情绪模式对身体张力的影响分析",
-            ].map((item) => (
-              <div key={item} className="flex items-start gap-3">
-                <span className="mt-1.5 w-4 h-4 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent block" />
+              { num: "1964", label: "年由 Goodheart 博士创立" },
+              { num: "60+", label: "年的临床研究与实践积累" },
+              { num: "14", label: "个全球 ICAK 分会" },
+              { num: "45+", label: "种常见病症的 AK 诊疗方法" },
+            ].map((stat) => (
+              <div key={stat.label} className="flex items-baseline gap-4 pb-5 border-b border-border/50">
+                <span className="font-['Playfair_Display',serif] text-4xl font-semibold text-accent">
+                  {stat.num}
                 </span>
-                <span className="font-['Inter',sans-serif] text-sm text-[#4A4A45]">{item}</span>
+                <span className="font-['Inter',sans-serif] text-sm text-[#6B6B62]">
+                  {stat.label}
+                </span>
               </div>
             ))}
           </div>
         </div>
-
-        {/* Image */}
-        <div>
-          <img
-            src="/assets/3.jpeg"
-            alt="脊柱模型讲解"
-            className="w-full aspect-[4/3] object-cover rounded-sm"
-          />
-        </div>
       </div>
     </section>
-  );
+  )
 }
 
-// ─── Four features ────────────────────────────────────────────────────────────
+// ─── Features ─────────────────────────────────────────────────────────────────
 const features = [
   {
     number: "01",
@@ -232,7 +159,7 @@ const features = [
     title: "国际认证路径",
     desc: "完成 DÄGAK 规定的 100 小时理论与实操培训，通过考核后即可获得 ICAK 国际认证资格。",
   },
-];
+]
 
 function Features() {
   return (
@@ -269,28 +196,58 @@ function Features() {
         </div>
       </div>
     </section>
-  );
+  )
+}
+
+// ─── CTA ──────────────────────────────────────────────────────────────────────
+function CTA() {
+  return (
+    <section className="bg-[#1C1C1A] py-24 lg:py-32">
+      <div className="max-w-[1200px] mx-auto px-6 text-center">
+        <h2 className="font-['Playfair_Display',serif] text-3xl lg:text-4xl font-semibold leading-[1.2] text-[#F5F5F0] mb-5">
+          准备好探索身体的智慧了吗？
+        </h2>
+        <p className="font-['Inter',sans-serif] text-base text-[#9B9B90] mb-10 max-w-[520px] mx-auto leading-relaxed">
+          加入 PAK 认证培训，与全国数百位优秀从业者一起，
+          用应用肌动学为你的临床工作打开新的可能。
+        </p>
+        <Link
+          to="/contact"
+          className="inline-flex items-center px-8 py-4 bg-accent text-accent-foreground font-['Inter',sans-serif] text-sm font-medium rounded-sm hover:bg-[#4A7F7B] transition-colors duration-200"
+        >
+          预约课程咨询
+        </Link>
+      </div>
+    </section>
+  )
 }
 
 // ─── Footer ───────────────────────────────────────────────────────────────────
 const footerCols = [
   {
     title: "课程",
-    links: [{ label: "PAK Part I 基础培训", href: "/course/part1" }, { label: "PAK Part II 进阶培训", href: "/course/part2" }],
+    links: [
+      { label: "PAK Part I 基础培训", href: "/course" },
+      { label: "PAK Part II 进阶培训", href: "/course" },
+    ],
   },
   {
     title: "关于",
     links: [
       { label: "健衡学园简介", href: "http://jianhengkf.com/lists/50.html" },
-      { label: "ICAK 合作关系", href: "#" },
-      { label: "DÄGAK 官方认证", href: "#" },
+      { label: "应用肌动学入门", href: "/intro" },
+      { label: "PAK 联盟（治疗师目录）", href: "/pak-union" },
     ],
   },
   {
     title: "资源",
-    links: [{ label: "应用肌动学入门", href: "/intro" }, { label: "临床研究文献", href: "/research" }],
+    links: [
+      { label: "FAQ 问答", href: "/faq" },
+      { label: "临床研究文献", href: "/research" },
+      { label: "课程咨询", href: "/contact" },
+    ],
   },
-];
+]
 
 function Footer() {
   return (
@@ -355,7 +312,7 @@ function Footer() {
         </div>
       </div>
     </footer>
-  );
+  )
 }
 
 // ─── Root ─────────────────────────────────────────────────────────────────────
@@ -364,12 +321,20 @@ export default function App() {
     <div className="min-h-screen bg-background text-foreground font-['Inter',sans-serif] overflow-x-hidden">
       <Navbar />
       <main className="pt-16">
-        <Hero />
-        <QuoteBlock />
-        <FeatureSplit />
-        <Features />
+        <ScrollReveal>
+          <Hero />
+        </ScrollReveal>
+        <ScrollReveal>
+          <WhyPak />
+        </ScrollReveal>
+        <ScrollReveal>
+          <Features />
+        </ScrollReveal>
+        <ScrollReveal>
+          <CTA />
+        </ScrollReveal>
       </main>
       <Footer />
     </div>
-  );
+  )
 }

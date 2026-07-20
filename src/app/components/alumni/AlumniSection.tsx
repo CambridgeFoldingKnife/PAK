@@ -8,7 +8,7 @@ export default function AlumniSection() {
         {/* Header */}
         <div className="mb-14">
           <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
-            学员风采
+            学员目录
           </p>
           <h2 className="font-['Playfair_Display',serif] text-4xl lg:text-5xl font-semibold leading-[1.15] text-foreground mb-5">
             他们已经在实践中验证了 PAK

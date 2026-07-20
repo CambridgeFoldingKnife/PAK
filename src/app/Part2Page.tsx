@@ -157,7 +157,7 @@ function CTA() {
           完成你的 PAK 认证之路
         </h2>
         <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] mb-10 max-w-[520px] mx-auto leading-relaxed">
-          每期限额 24 人，预约课程顾问获取最新开课安排与报名详情。
+          每期限额 30 人，预约课程顾问获取最新开课安排与报名详情。
         </p>
         <Link
           to="/contact"

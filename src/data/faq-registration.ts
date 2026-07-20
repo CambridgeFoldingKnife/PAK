@@ -1,4 +1,4 @@
-﻿import type { FAQCategory } from "./faq-types"
+import type { FAQCategory } from "./faq-types"
 
 const registration: FAQCategory = {
   id: "registration",
@@ -22,7 +22,7 @@ const registration: FAQCategory = {
     {
       id: "registration-process",
       question: "报名流程是怎样的？如何预约？",
-      answer: "报名流程如下：\n\n1. 填写本页面的预约咨询表单（姓名+手机+职业背景+意向课程）\n2. 课程顾问在 1 个工作日内与你联系，了解你的背景和需求，提供个性化课程建议\n3. 确认报名意向后，支付定金锁定名额\n4. 开课前 2 周支付尾款，领取预习资料\n5. 按时参加培训\n\n每期限额 24 人，名额先到先得。建议尽早预约咨询以确定席位。",
+      answer: "报名流程如下：\n\n1. 填写本页面的预约咨询表单（姓名+手机+职业背景+意向课程）\n2. 课程顾问在 1 个工作日内与你联系，了解你的背景和需求，提供个性化课程建议\n3. 确认报名意向后，支付定金锁定名额\n4. 开课前 2 周支付尾款，领取预习资料\n5. 按时参加培训\n\n每期限额 30 人，名额先到先得。建议尽早预约咨询以确定席位。",
       keywords: ["报名流程", "预约", "如何报名", "锁定名额", "定金"],
       related: ["fee", "location", "refund"],
     },
