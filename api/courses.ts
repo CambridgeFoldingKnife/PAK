@@ -15,11 +15,6 @@ interface Course {
   earlyBird: string
 }
 
-const FEISHU_APP_ID = process.env.FEISHU_APP_ID
-const FEISHU_APP_SECRET = process.env.FEISHU_APP_SECRET
-const FEISHU_APP_TOKEN = process.env.FEISHU_APP_TOKEN
-const FEISHU_TABLE_ID = process.env.FEISHU_TABLE_ID
-
 interface FeishuText {
   text?: string
 }
@@ -82,13 +77,13 @@ function mapStatus(statusText: string): CourseStatus | "cancelled" | null {
   }
 }
 
-async function getTenantAccessToken(): Promise<string> {
+async function getTenantAccessToken(appId: string, appSecret: string): Promise<string> {
   const res = await fetch("https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      app_id: FEISHU_APP_ID,
-      app_secret: FEISHU_APP_SECRET,
+      app_id: appId,
+      app_secret: appSecret,
     }),
   })
 
@@ -101,8 +96,8 @@ async function getTenantAccessToken(): Promise<string> {
   return data.tenant_access_token
 }
 
-async function fetchFeishuRecords(token: string): Promise<Record<string, unknown>[]> {
-  const url = `https://open.feishu.cn/open-apis/bitable/v1/apps/${FEISHU_APP_TOKEN}/tables/${FEISHU_TABLE_ID}/records?page_size=500`
+async function fetchFeishuRecords(token: string, appToken: string, tableId: string): Promise<Record<string, unknown>[]> {
+  const url = `https://open.feishu.cn/open-apis/bitable/v1/apps/${appToken}/tables/${tableId}/records?page_size=500`
   const res = await fetch(url, {
     headers: { Authorization: `Bearer ${token}` },
   })
@@ -147,13 +142,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: "Method not allowed" })
   }
 
+  const FEISHU_APP_ID = process.env.FEISHU_APP_ID
+  const FEISHU_APP_SECRET = process.env.FEISHU_APP_SECRET
+  const FEISHU_APP_TOKEN = process.env.FEISHU_APP_TOKEN
+  const FEISHU_TABLE_ID = process.env.FEISHU_TABLE_ID
+
   if (!FEISHU_APP_ID || !FEISHU_APP_SECRET || !FEISHU_APP_TOKEN || !FEISHU_TABLE_ID) {
     return res.status(500).json({ error: "Missing Feishu configuration" })
   }
 
   try {
-    const token = await getTenantAccessToken()
-    const records = await fetchFeishuRecords(token)
+    const token = await getTenantAccessToken(FEISHU_APP_ID, FEISHU_APP_SECRET)
+    const records = await fetchFeishuRecords(token, FEISHU_APP_TOKEN, FEISHU_TABLE_ID)
     const courses = records.map(mapCourse).filter((c): c is Course => c !== null)
 
     res.setHeader("Content-Type", "application/json")
