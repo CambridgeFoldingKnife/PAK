@@ -1,57 +1,9 @@
+import { useEffect, useState } from "react"
 import { Link } from "react-router"
 import Navbar from "@/app/components/Navbar"
 import ScrollReveal from "@/app/components/ScrollReveal"
-
-const courses = [
-  {
-    name: "2027 广州班 — AK应用肌动学基础课程",
-    status: "open" as const,
-    module: "Part I + Part II",
-    instructor: "Hans Garten",
-    part1: "2027年2月26-28日（3天）",
-    part2: "2027年3月2-4日（3天）",
-    location: "广州",
-    seats: 30,
-    price: "¥12,800",
-    earlyBird: "¥10,800",
-  },
-  {
-    name: "2027 北京班 — AK应用肌动学基础课程",
-    status: "upcoming" as const,
-    module: "Part I + Part II",
-    instructor: "Hans Garten",
-    part1: "2027年5月21-23日（3天）",
-    part2: "2027年5月25-27日（3天）",
-    location: "北京",
-    seats: 30,
-    price: "¥12,800",
-    earlyBird: "¥10,800",
-  },
-  {
-    name: "2027 郑州班 — AK应用肌动学基础课程",
-    status: "upcoming" as const,
-    module: "Part I + Part II",
-    instructor: "Hans Garten",
-    part1: "2027年9月10-12日（3天）",
-    part2: "2027年9月14-16日（3天）",
-    location: "郑州",
-    seats: 30,
-    price: "¥12,800",
-    earlyBird: "¥10,800",
-  },
-  {
-    name: "2027 南京班 — AK应用肌动学基础课程",
-    status: "upcoming" as const,
-    module: "Part I + Part II",
-    instructor: "Hans Garten",
-    part1: "2027年11月26-28日（3天）",
-    part2: "2027年11月30-12月2日（3天）",
-    location: "南京",
-    seats: 30,
-    price: "¥12,800",
-    earlyBird: "¥10,800",
-  },
-]
+import { fetchCourses } from "@/lib/courses"
+import type { Course } from "@/types/course"
 
 function Hero() {
   return (
@@ -71,76 +23,186 @@ function Hero() {
   )
 }
 
+function statusBadge(status: Course["status"]) {
+  switch (status) {
+    case "open":
+      return { text: "开放报名", className: "bg-[#d1fae5] text-[#065f46]" }
+    case "upcoming":
+      return { text: "即将开放", className: "bg-[#dbeafe] text-[#1e40af]" }
+    case "closed":
+      return { text: "报名已截止", className: "bg-[#f3f4f6] text-[#6b7280]" }
+  }
+}
+
+function actionButton(status: Course["status"]) {
+  switch (status) {
+    case "open":
+      return { text: "立即报名", className: "bg-accent text-accent-foreground hover:bg-[#4A7F7B]" }
+    case "upcoming":
+      return { text: "即将开放报名", className: "border border-border text-[#6B6B62] hover:bg-[#E6E6E0]" }
+    case "closed":
+      return { text: "报名已截止", className: "border border-border text-[#9B9B90] cursor-not-allowed" }
+  }
+}
+
+function LoadingState() {
+  return (
+    <section className="py-24 lg:py-32">
+      <div className="max-w-[900px] mx-auto px-6 flex justify-center">
+        <div className="flex items-center gap-3 text-[#6B6B62]">
+          <span className="inline-block w-5 h-5 border-2 border-accent border-t-transparent rounded-full animate-spin" />
+          <span className="font-['Inter',sans-serif] text-sm">课程加载中…</span>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function ErrorState() {
+  return (
+    <section className="py-24 lg:py-32">
+      <div className="max-w-[900px] mx-auto px-6 text-center">
+        <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] mb-6">
+          课程加载失败，请联系咨询。
+        </p>
+        <div className="relative inline-block group">
+          <button
+            type="button"
+            className="inline-flex items-center px-5 py-2.5 text-sm font-medium rounded-sm bg-accent text-accent-foreground hover:bg-[#4A7F7B] transition-colors duration-200"
+          >
+            课程咨询
+          </button>
+          <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-3 hidden group-hover:block z-10">
+            <div className="bg-white border border-border rounded-sm shadow-lg p-2 w-40">
+              <img
+                src="/assets/微信公众号.png"
+                alt="微信公众号"
+                className="w-full h-auto"
+              />
+              <p className="text-xs text-center text-[#6B6B62] mt-1">扫码关注咨询</p>
+            </div>
+            <div className="absolute left-1/2 -translate-x-1/2 top-full w-2 h-2 bg-white border-r border-b border-border rotate-45 -mt-1" />
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function EmptyState() {
+  return (
+    <section className="py-24 lg:py-32">
+      <div className="max-w-[900px] mx-auto px-6 text-center">
+        <p className="font-['Inter',sans-serif] text-base text-[#6B6B62]">
+          暂无开放课程，敬请期待。
+        </p>
+      </div>
+    </section>
+  )
+}
+
 function CourseSchedule() {
+  const [courses, setCourses] = useState<Course[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
+
+  useEffect(() => {
+    let cancelled = false
+
+    fetchCourses()
+      .then((res) => {
+        if (cancelled) return
+        setCourses(res.data)
+      })
+      .catch(() => {
+        if (cancelled) return
+        setError(true)
+      })
+      .finally(() => {
+        if (cancelled) return
+        setLoading(false)
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  if (loading) return <LoadingState />
+  if (error) return <ErrorState />
+  if (courses.length === 0) return <EmptyState />
+
   return (
     <section className="py-24 lg:py-32">
       <div className="max-w-[900px] mx-auto px-6">
         <div className="flex flex-col gap-6">
-          {courses.map((c) => (
-            <div
-              key={c.name}
-              className="bg-[#F5F5F0] border border-border rounded-sm p-6 hover:shadow-sm transition-shadow"
-            >
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-                <h3 className="font-['Playfair_Display',serif] text-lg font-semibold text-foreground">
-                  {c.name}
-                </h3>
-                <span
-                  className={`inline-flex self-start px-3 py-1 rounded-full text-xs font-semibold ${
-                    c.status === "open"
-                      ? "bg-[#d1fae5] text-[#065f46]"
-                      : "bg-[#dbeafe] text-[#1e40af]"
-                  }`}
-                >
-                  {c.status === "open" ? "开放报名" : "即将开放"}
-                </span>
-              </div>
+          {courses.map((c) => {
+            const badge = statusBadge(c.status)
+            const action = actionButton(c.status)
+            return (
+              <div
+                key={c.name}
+                className="bg-[#F5F5F0] border border-border rounded-sm p-6 hover:shadow-sm transition-shadow"
+              >
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                  <h3 className="font-['Playfair_Display',serif] text-lg font-semibold text-foreground">
+                    {c.name}
+                  </h3>
+                  <span
+                    className={`inline-flex self-start px-3 py-1 rounded-full text-xs font-semibold ${badge.className}`}
+                  >
+                    {badge.text}
+                  </span>
+                </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-5">
-                <div className="text-sm text-[#6B6B62]">
-                  <span className="text-[#9B9B90]">模块：</span>{c.module}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-5">
+                  <div className="text-sm text-[#6B6B62]">
+                    <span className="text-[#9B9B90]">模块：</span>{c.module}
+                  </div>
+                  <div className="text-sm text-[#6B6B62]">
+                    <span className="text-[#9B9B90]">讲师：</span>{c.instructor}
+                  </div>
+                  <div className="text-sm text-[#6B6B62]">
+                    <span className="text-[#9B9B90]">地点：</span>{c.location}
+                  </div>
+                  <div className="text-sm text-[#6B6B62]">
+                    <span className="text-[#9B9B90]">Part I：</span>{c.part1}
+                  </div>
+                  <div className="text-sm text-[#6B6B62]">
+                    <span className="text-[#9B9B90]">Part II：</span>{c.part2}
+                  </div>
+                  <div className="text-sm text-[#6B6B62]">
+                    <span className="text-[#9B9B90]">名额：</span>限{c.seats}人
+                  </div>
                 </div>
-                <div className="text-sm text-[#6B6B62]">
-                  <span className="text-[#9B9B90]">讲师：</span>{c.instructor}
-                </div>
-                <div className="text-sm text-[#6B6B62]">
-                  <span className="text-[#9B9B90]">地点：</span>{c.location}
-                </div>
-                <div className="text-sm text-[#6B6B62]">
-                  <span className="text-[#9B9B90]">Part I：</span>{c.part1}
-                </div>
-                <div className="text-sm text-[#6B6B62]">
-                  <span className="text-[#9B9B90]">Part II：</span>{c.part2}
-                </div>
-                <div className="text-sm text-[#6B6B62]">
-                  <span className="text-[#9B9B90]">名额：</span>限{c.seats}人
-                </div>
-              </div>
 
-              <div className="flex flex-wrap items-center gap-4 mb-5">
-                <span className="font-['Playfair_Display',serif] text-2xl font-bold text-accent">
-                  {c.price}
-                </span>
-                <span className="inline-flex px-3 py-1 bg-[#d1fae5] text-[#065f46] text-sm font-semibold rounded">
-                  早鸟价 {c.earlyBird}
-                </span>
-                <span className="text-sm text-[#6B6B62]">剩余名额：{c.seats}</span>
-              </div>
+                <div className="flex flex-wrap items-center gap-4 mb-5">
+                  <span className="font-['Playfair_Display',serif] text-2xl font-bold text-accent">
+                    {c.price}
+                  </span>
+                  <span className="inline-flex px-3 py-1 bg-[#d1fae5] text-[#065f46] text-sm font-semibold rounded">
+                    早鸟价 {c.earlyBird}
+                  </span>
+                  <span className="text-sm text-[#6B6B62]">剩余名额：{c.seats}</span>
+                </div>
 
-              <div className="flex gap-3">
-                <Link
-                  to="/contact"
-                  className={`inline-flex items-center px-5 py-2.5 text-sm font-medium rounded-sm transition-colors duration-200 ${
-                    c.status === "open"
-                      ? "bg-accent text-accent-foreground hover:bg-[#4A7F7B]"
-                      : "border border-border text-[#6B6B62] hover:bg-[#E6E6E0]"
-                  }`}
-                >
-                  {c.status === "open" ? "立即报名" : "即将开放报名"}
-                </Link>
+                <div className="flex gap-3">
+                  {c.status === "closed" ? (
+                    <span className={`inline-flex items-center px-5 py-2.5 text-sm font-medium rounded-sm ${action.className}`}>
+                      {action.text}
+                    </span>
+                  ) : (
+                    <Link
+                      to="/contact"
+                      className={`inline-flex items-center px-5 py-2.5 text-sm font-medium rounded-sm transition-colors duration-200 ${action.className}`}
+                    >
+                      {action.text}
+                    </Link>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </div>
     </section>
