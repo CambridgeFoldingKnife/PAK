@@ -1,5 +1,6 @@
 import { useState } from "react"
 import Navbar from "@/app/components/Navbar"
+import { submitConsult } from "@/lib/consult"
 
 // ─── CTA Form ─────────────────────────────────────────────────────────────────
 function CTAForm() {
@@ -11,13 +12,31 @@ function CTAForm() {
     message: "",
   })
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const occupations = ["物理治疗师", "整脊医生", "自然疗法师", "全科医生", "运动康复师", "其他医疗专业人士"]
   const courses = ["PAK Part I · 基础培训", "PAK Part II · 进阶培训", "两阶段连续报名", "暂未决定，希望咨询"]
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSubmitted(true)
+    setSubmitting(true)
+    setError(null)
+
+    try {
+      await submitConsult({
+        name: form.name,
+        phone: form.phone,
+        occupation: form.occupation,
+        course: form.course,
+        message: form.message,
+      })
+      setSubmitted(true)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "提交失败，请稍后重试")
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -145,11 +164,18 @@ function CTAForm() {
                 />
               </div>
 
+              {error && (
+                <p className="font-['Inter',sans-serif] text-sm text-red-600 text-center">
+                  {error}
+                </p>
+              )}
+
               <button
                 type="submit"
-                className="w-full bg-accent text-accent-foreground font-['Inter',sans-serif] text-sm font-medium py-4 rounded-sm hover:bg-[#4A7F7B] transition-colors duration-200 mt-2"
+                disabled={submitting}
+                className="w-full bg-accent text-accent-foreground font-['Inter',sans-serif] text-sm font-medium py-4 rounded-sm hover:bg-[#4A7F7B] transition-colors duration-200 mt-2 disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                获取课程资料
+                {submitting ? "提交中…" : "获取课程资料"}
               </button>
 
               <p className="font-['Inter',sans-serif] text-xs text-[#9B9B90] text-center">
