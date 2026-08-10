@@ -37,7 +37,7 @@ export default function Marquee() {
     <div className="flex shrink-0 items-center">
       {TERMS.map((t) => (
         <span key={t} className="flex items-center">
-          <span className="font-['Inter',sans-serif] text-sm tracking-[0.25em] uppercase text-[#4A4A45] whitespace-nowrap">
+          <span className="font-['Noto_Sans_SC',sans-serif] text-sm tracking-[0.25em] uppercase text-[#4A4A45] whitespace-nowrap">
             {t}
           </span>
           <span className="mx-8 text-[#4A7F7B]">✦</span>

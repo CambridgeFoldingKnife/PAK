@@ -55,13 +55,13 @@ export default function FaqSection() {
     <section id="faq" className="max-w-[1200px] mx-auto px-6 py-24 lg:py-36">
       {/* Header */}
       <div className="mb-14">
-        <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
+        <p className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
           常见问题
         </p>
-        <h2 className="font-['Playfair_Display',serif] text-4xl lg:text-5xl font-semibold leading-[1.15] text-foreground mb-5">
+        <h2 className="font-['Noto_Serif_SC',serif] text-4xl lg:text-5xl font-semibold leading-[1.15] text-foreground mb-5">
           关于 PAK，你想知道的都在这里
         </h2>
-        <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] leading-relaxed max-w-[560px]">
+        <p className="font-['Noto_Sans_SC',sans-serif] text-base text-[#6B6B62] leading-relaxed max-w-[560px]">
           从基础概念到认证路径，从临床技术到报名咨询——
           我们整理了学员最常问的问题，帮助你快速了解应用肌动学。
         </p>
@@ -81,7 +81,7 @@ export default function FaqSection() {
           placeholder="搜索问题关键词，如：认证、肌肉测试、费用..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-11 h-12 bg-[#EEEEE9] border-border text-sm font-['Inter',sans-serif] placeholder:text-[#9B9B90] focus-visible:ring-accent rounded-sm"
+          className="pl-11 h-12 bg-[#EEEEE9] border-border text-sm font-['Noto_Sans_SC',sans-serif] placeholder:text-[#9B9B90] focus-visible:ring-accent rounded-sm"
         />
       </div>
 
@@ -91,7 +91,7 @@ export default function FaqSection() {
           <button
             key={cat.id}
             onClick={() => { setActiveCategory(cat.id); setSearchQuery("") }}
-            className={`px-4 py-2 font-['Inter',sans-serif] text-sm rounded-sm transition-colors duration-200 ${
+            className={`px-4 py-2 font-['Noto_Sans_SC',sans-serif] text-sm rounded-sm transition-colors duration-200 ${
               activeCategory === cat.id
                 ? "bg-foreground text-[#F5F5F0]"
                 : "text-[#6B6B62] hover:text-foreground hover:bg-[#E6E6E0]"
@@ -104,14 +104,14 @@ export default function FaqSection() {
 
       {/* Category desc */}
       {!searchQuery.trim() && (
-        <p className="font-['Inter',sans-serif] text-sm text-[#6B6B62] mb-8">
+        <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#6B6B62] mb-8">
           {currentCategory.description}
         </p>
       )}
 
       {/* Search result count */}
       {searchQuery.trim() && (
-        <p className="font-['Inter',sans-serif] text-sm text-[#6B6B62] mb-8">
+        <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#6B6B62] mb-8">
           搜索 "{searchQuery}" 找到 {filteredItems.length} 个相关问题
           {filteredItems.length === 0 && "，请尝试其他关键词"}
         </p>
@@ -127,7 +127,7 @@ export default function FaqSection() {
         >
           {filteredItems.map((item) => (
             <AccordionItem key={item.id} value={item.id} className="border-0">
-              <AccordionTrigger className="px-8 py-5 hover:bg-[#E6E6E0]/50 transition-colors duration-150 font-['Inter',sans-serif] text-base font-medium text-foreground hover:no-underline data-[state=open]:bg-[#E6E6E0]/40">
+              <AccordionTrigger className="px-8 py-5 hover:bg-[#E6E6E0]/50 transition-colors duration-150 font-['Noto_Sans_SC',sans-serif] text-base font-medium text-foreground hover:no-underline data-[state=open]:bg-[#E6E6E0]/40">
                 <span
                   className="text-left"
                   dangerouslySetInnerHTML={{
@@ -136,7 +136,7 @@ export default function FaqSection() {
                 />
               </AccordionTrigger>
               <AccordionContent className="px-8 pb-6 pt-2">
-                <div className="font-['Inter',sans-serif] text-sm text-[#4A4A45] leading-relaxed whitespace-pre-line">
+                <div className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#4A4A45] leading-relaxed whitespace-pre-line">
                   {item.answer}
                 </div>
 
@@ -146,7 +146,7 @@ export default function FaqSection() {
                     {item.keywords.map((kw) => (
                       <Badge
                         key={kw} variant="secondary"
-                        className="font-['Inter',sans-serif] text-xs cursor-pointer hover:bg-accent/20 transition-colors rounded-sm"
+                        className="font-['Noto_Sans_SC',sans-serif] text-xs cursor-pointer hover:bg-accent/20 transition-colors rounded-sm"
                         onClick={() => setSearchQuery(kw)}
                       >
                         {kw}
@@ -158,7 +158,7 @@ export default function FaqSection() {
                 {/* Related questions */}
                 {item.related.length > 0 && (
                   <div className="mt-6 pt-4 border-t border-border/60">
-                    <p className="font-['Inter',sans-serif] text-xs font-medium text-[#9B9B90] mb-3">相关问题</p>
+                    <p className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium text-[#9B9B90] mb-3">相关问题</p>
                     <div className="flex flex-wrap gap-2">
                       {item.related.map((rid) => {
                         const related = relatedById.get(rid)
@@ -166,7 +166,7 @@ export default function FaqSection() {
                         return (
                           <button
                             key={rid}
-                            className="font-['Inter',sans-serif] text-xs text-accent hover:text-[#4A7F7B] underline underline-offset-2 transition-colors text-left"
+                            className="font-['Noto_Sans_SC',sans-serif] text-xs text-accent hover:text-[#4A7F7B] underline underline-offset-2 transition-colors text-left"
                             onClick={() => handleRelatedClick(rid)}
                           >
                             {related.question}
@@ -185,10 +185,10 @@ export default function FaqSection() {
       {/* Empty state */}
       {filteredItems.length === 0 && (
         <div className="text-center py-20">
-          <p className="font-['Inter',sans-serif] text-[#9B9B90] text-base mb-4">
+          <p className="font-['Noto_Sans_SC',sans-serif] text-[#9B9B90] text-base mb-4">
             没有找到与 "{searchQuery}" 相关的问题
           </p>
-          <p className="font-['Inter',sans-serif] text-sm text-[#B0B0A8]">
+          <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#B0B0A8]">
             试试搜索：认证、肌肉测试、费用、慢性疼痛
           </p>
         </div>

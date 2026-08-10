@@ -36,16 +36,16 @@ export function DetailModal({
           </button>
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 rounded-full bg-accent/15 flex items-center justify-center flex-shrink-0">
-              <span className="font-['Playfair_Display',serif] text-xl font-semibold text-accent">
+              <span className="font-['Noto_Serif_SC',serif] text-xl font-semibold text-accent">
                 {initials(alumni.name)}
               </span>
             </div>
             <div>
-              <p className="font-['Playfair_Display',serif] text-xl font-semibold text-foreground">
+              <p className="font-['Noto_Serif_SC',serif] text-xl font-semibold text-foreground">
                 {alumni.name}
               </p>
               {alumni.englishName && (
-                <p className="font-['Inter',sans-serif] text-xs text-[#6B6B62] mt-0.5">
+                <p className="font-['Noto_Sans_SC',sans-serif] text-xs text-[#6B6B62] mt-0.5">
                   {alumni.englishName}
                 </p>
               )}
@@ -64,10 +64,10 @@ export function DetailModal({
             alumni.email && { label: "邮箱", value: alumni.email },
           ].filter(Boolean).map((field) => (
             <div key={field!.label} className="flex flex-col gap-1.5">
-              <label className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.05em] text-[#9B9B90]">
+              <label className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.05em] text-[#9B9B90]">
                 {field!.label}
               </label>
-              <p className="font-['Inter',sans-serif] text-sm text-foreground">
+              <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-foreground">
                 {field!.value}
               </p>
             </div>
@@ -78,7 +78,7 @@ export function DetailModal({
         <div className="px-8 py-4 border-t border-border bg-[#EEEEE9]">
           <button
             onClick={onClose}
-            className="w-full bg-foreground text-[#F5F5F0] font-['Inter',sans-serif] text-sm font-medium py-3 rounded-sm hover:bg-[#333330] transition-colors duration-200"
+            className="w-full bg-foreground text-[#F5F5F0] font-['Noto_Sans_SC',sans-serif] text-sm font-medium py-3 rounded-sm hover:bg-[#333330] transition-colors duration-200"
           >
             关闭
           </button>
@@ -98,25 +98,25 @@ export function AlumniCard({ alumni }: { alumni: Alumni }) {
         {/* Avatar + name row */}
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-full bg-accent/15 flex items-center justify-center flex-shrink-0">
-            <span className="font-['Playfair_Display',serif] text-lg font-semibold text-accent">
+            <span className="font-['Noto_Serif_SC',serif] text-lg font-semibold text-accent">
               {initials(alumni.name)}
             </span>
           </div>
           <div className="flex-1 min-w-0">
-            <p className="font-['Inter',sans-serif] text-sm font-semibold text-foreground truncate">
+            <p className="font-['Noto_Sans_SC',sans-serif] text-sm font-semibold text-foreground truncate">
               {alumni.name}
             </p>
-            <p className="font-['Inter',sans-serif] text-xs text-[#6B6B62] truncate">
+            <p className="font-['Noto_Sans_SC',sans-serif] text-xs text-[#6B6B62] truncate">
               {alumni.title}
             </p>
           </div>
-          <span className="font-['Inter',sans-serif] text-[10px] font-medium text-accent bg-accent/10 px-2 py-0.5 rounded-full flex-shrink-0">
+          <span className="font-['Noto_Sans_SC',sans-serif] text-[10px] font-medium text-accent bg-accent/10 px-2 py-0.5 rounded-full flex-shrink-0">
             {courseLabels[alumni.course] ?? alumni.course}
           </span>
         </div>
 
         {/* Bio */}
-        <p className="font-['Inter',sans-serif] text-sm text-[#4A4A45] leading-relaxed flex-1 line-clamp-4">
+        <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#4A4A45] leading-relaxed flex-1 line-clamp-4">
           {alumni.bio}
         </p>
 
@@ -125,7 +125,7 @@ export function AlumniCard({ alumni }: { alumni: Alumni }) {
           {alumni.specialties.map((s) => (
             <span
               key={s}
-              className="font-['Inter',sans-serif] text-[11px] text-[#6B6B62] bg-[#F5F5F0] border border-border/50 px-2 py-0.5 rounded-sm"
+              className="font-['Noto_Sans_SC',sans-serif] text-[11px] text-[#6B6B62] bg-[#F5F5F0] border border-border/50 px-2 py-0.5 rounded-sm"
             >
               {s}
             </span>
@@ -134,14 +134,14 @@ export function AlumniCard({ alumni }: { alumni: Alumni }) {
 
         {/* Meta footer */}
         <div className="flex items-center justify-between pt-2 border-t border-border/40">
-          <div className="flex items-center gap-3 text-[11px] font-['Inter',sans-serif] text-[#9B9B90]">
+          <div className="flex items-center gap-3 text-[11px] font-['Noto_Sans_SC',sans-serif] text-[#9B9B90]">
             <span>{alumni.location}</span>
             <span className="w-px h-3 bg-border" />
             <span>{alumni.graduationYear} 届</span>
           </div>
           <button
             onClick={() => setDetailOpen(true)}
-            className="font-['Inter',sans-serif] text-xs font-medium text-[#6B6B62] hover:text-foreground transition-colors underline underline-offset-2"
+            className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium text-[#6B6B62] hover:text-foreground transition-colors underline underline-offset-2"
           >
             详情
           </button>

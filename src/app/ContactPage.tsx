@@ -45,13 +45,13 @@ function CTAForm() {
       <div className="grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-20 items-start">
         {/* Left headline */}
         <div className="lg:sticky lg:top-28">
-          <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-5">
+          <p className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-5">
             立即咨询
           </p>
-          <h2 className="font-['Playfair_Display',serif] text-4xl lg:text-5xl font-semibold leading-[1.15] text-foreground mb-7">
+          <h2 className="font-['Noto_Serif_SC',serif] text-4xl lg:text-5xl font-semibold leading-[1.15] text-foreground mb-7">
             不只是一门课程，而是职业生涯的跃升
           </h2>
-          <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] leading-relaxed mb-10">
+          <p className="font-['Noto_Sans_SC',sans-serif] text-base text-[#6B6B62] leading-relaxed mb-10">
             填写预约表单，我们的课程顾问将在一个工作日内与你联系，
             为你提供个性化的课程建议与报名指引。
           </p>
@@ -63,7 +63,7 @@ function CTAForm() {
             ].map((item) => (
               <div key={item.text} className="flex items-center gap-3">
                 <span className="text-base">{item.icon}</span>
-                <span className="font-['Inter',sans-serif] text-sm text-[#4A4A45]">{item.text}</span>
+                <span className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#4A4A45]">{item.text}</span>
               </div>
             ))}
           </div>
@@ -78,10 +78,10 @@ function CTAForm() {
                   <path d="M4 11l5 5 9-9" stroke="#5A8F8B" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
-              <h3 className="font-['Playfair_Display',serif] text-2xl font-semibold text-foreground mb-3">
+              <h3 className="font-['Noto_Serif_SC',serif] text-2xl font-semibold text-foreground mb-3">
                 预约已提交
               </h3>
-              <p className="font-['Inter',sans-serif] text-sm text-[#6B6B62]">
+              <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#6B6B62]">
                 感谢您的预约，我们将在一个工作日内通过手机联系您。
               </p>
             </div>
@@ -90,7 +90,7 @@ function CTAForm() {
               {/* Name & Phone */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <label className="block font-['Inter',sans-serif] text-xs font-medium text-[#6B6B62] mb-2 tracking-wide">
+                  <label className="block font-['Noto_Sans_SC',sans-serif] text-xs font-medium text-[#6B6B62] mb-2 tracking-wide">
                     姓名 <span className="text-accent">*</span>
                   </label>
                   <input
@@ -99,11 +99,11 @@ function CTAForm() {
                     placeholder="您的姓名"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full bg-[#F5F5F0] border border-border px-4 py-3 font-['Inter',sans-serif] text-sm text-foreground placeholder:text-[#9B9B90] focus:outline-none focus:border-accent transition-colors duration-200 rounded-sm"
+                    className="w-full bg-[#F5F5F0] border border-border px-4 py-3 font-['Noto_Sans_SC',sans-serif] text-sm text-foreground placeholder:text-[#9B9B90] focus:outline-none focus:border-accent transition-colors duration-200 rounded-sm"
                   />
                 </div>
                 <div>
-                  <label className="block font-['Inter',sans-serif] text-xs font-medium text-[#6B6B62] mb-2 tracking-wide">
+                  <label className="block font-['Noto_Sans_SC',sans-serif] text-xs font-medium text-[#6B6B62] mb-2 tracking-wide">
                     手机 <span className="text-accent">*</span>
                   </label>
                   <input
@@ -112,20 +112,20 @@ function CTAForm() {
                     placeholder="您的手机号"
                     value={form.phone}
                     onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                    className="w-full bg-[#F5F5F0] border border-border px-4 py-3 font-['Inter',sans-serif] text-sm text-foreground placeholder:text-[#9B9B90] focus:outline-none focus:border-accent transition-colors duration-200 rounded-sm"
+                    className="w-full bg-[#F5F5F0] border border-border px-4 py-3 font-['Noto_Sans_SC',sans-serif] text-sm text-foreground placeholder:text-[#9B9B90] focus:outline-none focus:border-accent transition-colors duration-200 rounded-sm"
                   />
                 </div>
               </div>
 
               {/* Occupation */}
               <div>
-                <label className="block font-['Inter',sans-serif] text-xs font-medium text-[#6B6B62] mb-2 tracking-wide">
+                <label className="block font-['Noto_Sans_SC',sans-serif] text-xs font-medium text-[#6B6B62] mb-2 tracking-wide">
                   职业背景
                 </label>
                 <select
                   value={form.occupation}
                   onChange={(e) => setForm({ ...form, occupation: e.target.value })}
-                  className="w-full bg-[#F5F5F0] border border-border px-4 py-3 font-['Inter',sans-serif] text-sm text-foreground focus:outline-none focus:border-accent transition-colors duration-200 rounded-sm appearance-none cursor-pointer"
+                  className="w-full bg-[#F5F5F0] border border-border px-4 py-3 font-['Noto_Sans_SC',sans-serif] text-sm text-foreground focus:outline-none focus:border-accent transition-colors duration-200 rounded-sm appearance-none cursor-pointer"
                 >
                   <option value="" disabled>请选择您的职业</option>
                   {occupations.map((o) => (
@@ -136,13 +136,13 @@ function CTAForm() {
 
               {/* Course */}
               <div>
-                <label className="block font-['Inter',sans-serif] text-xs font-medium text-[#6B6B62] mb-2 tracking-wide">
+                <label className="block font-['Noto_Sans_SC',sans-serif] text-xs font-medium text-[#6B6B62] mb-2 tracking-wide">
                   意向课程
                 </label>
                 <select
                   value={form.course}
                   onChange={(e) => setForm({ ...form, course: e.target.value })}
-                  className="w-full bg-[#F5F5F0] border border-border px-4 py-3 font-['Inter',sans-serif] text-sm text-foreground focus:outline-none focus:border-accent transition-colors duration-200 rounded-sm appearance-none cursor-pointer"
+                  className="w-full bg-[#F5F5F0] border border-border px-4 py-3 font-['Noto_Sans_SC',sans-serif] text-sm text-foreground focus:outline-none focus:border-accent transition-colors duration-200 rounded-sm appearance-none cursor-pointer"
                 >
                   <option value="" disabled>请选择意向课程</option>
                   {courses.map((c) => (
@@ -153,7 +153,7 @@ function CTAForm() {
 
               {/* Message */}
               <div>
-                <label className="block font-['Inter',sans-serif] text-xs font-medium text-[#6B6B62] mb-2 tracking-wide">
+                <label className="block font-['Noto_Sans_SC',sans-serif] text-xs font-medium text-[#6B6B62] mb-2 tracking-wide">
                   咨询内容
                 </label>
                 <textarea
@@ -161,12 +161,12 @@ function CTAForm() {
                   placeholder="请描述您的问题或希望了解的内容…"
                   value={form.message}
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
-                  className="w-full bg-[#F5F5F0] border border-border px-4 py-3 font-['Inter',sans-serif] text-sm text-foreground placeholder:text-[#9B9B90] focus:outline-none focus:border-accent transition-colors duration-200 rounded-sm resize-none"
+                  className="w-full bg-[#F5F5F0] border border-border px-4 py-3 font-['Noto_Sans_SC',sans-serif] text-sm text-foreground placeholder:text-[#9B9B90] focus:outline-none focus:border-accent transition-colors duration-200 rounded-sm resize-none"
                 />
               </div>
 
               {error && (
-                <p className="font-['Inter',sans-serif] text-sm text-red-600 text-center">
+                <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-red-600 text-center">
                   {error}
                 </p>
               )}
@@ -174,12 +174,12 @@ function CTAForm() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full bg-accent text-accent-foreground font-['Inter',sans-serif] text-sm font-medium py-4 rounded-sm hover:bg-[#4A7F7B] transition-colors duration-200 mt-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                className="w-full bg-accent text-accent-foreground font-['Noto_Sans_SC',sans-serif] text-sm font-medium py-4 rounded-sm hover:bg-[#4A7F7B] transition-colors duration-200 mt-2 disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {submitting ? "提交中…" : "获取课程资料"}
               </button>
 
-              <p className="font-['Inter',sans-serif] text-xs text-[#9B9B90] text-center">
+              <p className="font-['Noto_Sans_SC',sans-serif] text-xs text-[#9B9B90] text-center">
                 提交即表示您同意我们的隐私政策。我们不会将您的信息用于商业用途。
               </p>
             </form>
@@ -193,7 +193,7 @@ function CTAForm() {
 // ─── Root ─────────────────────────────────────────────────────────────────────
 export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground font-['Inter',sans-serif] overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground font-['Noto_Sans_SC',sans-serif] overflow-x-hidden">
       <Navbar />
       <main className="pt-16">
         <CTAForm />

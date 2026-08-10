@@ -88,22 +88,22 @@ export default function StudentScenesPage() {
   }, [])
 
   return (
-    <div ref={pageRef} className="min-h-screen bg-background text-foreground font-['Inter',sans-serif] overflow-x-hidden">
+    <div ref={pageRef} className="min-h-screen bg-background text-foreground font-['Noto_Sans_SC',sans-serif] overflow-x-hidden">
       <Navbar />
 
       <main>
         {/* Hero */}
         <section className="pt-32 lg:pt-40 pb-16">
           <div className="max-w-[1200px] mx-auto px-6">
-            <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-6">
+            <p className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-6">
               学员目录 · 课堂实录
             </p>
-            <h1 className="font-['Playfair_Display',serif] text-5xl lg:text-6xl font-semibold leading-[1.12] text-foreground mb-6">
+            <h1 className="font-['Noto_Serif_SC',serif] text-5xl lg:text-6xl font-semibold leading-[1.12] text-foreground mb-6">
               走进 PAK
               <br />
               课堂现场
             </h1>
-            <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] leading-relaxed max-w-[620px]">
+            <p className="font-['Noto_Sans_SC',sans-serif] text-base text-[#6B6B62] leading-relaxed max-w-[620px]">
               60% 实操 + 40% 理论，每天下午真实患者演示。
               在这里你能看到学员们如何从理论走向临床实践。
             </p>
@@ -120,11 +120,11 @@ export default function StudentScenesPage() {
                 { value: "30", unit: "人", label: "每期限额" },
               ].map((s) => (
                 <div key={s.label} className="bg-[#EEEEE9] px-6 py-7 text-center">
-                  <p className="font-['Playfair_Display',serif] text-3xl lg:text-4xl font-semibold text-accent mb-1">
+                  <p className="font-['Noto_Serif_SC',serif] text-3xl lg:text-4xl font-semibold text-accent mb-1">
                     {s.value}
                     <span className="text-lg font-normal text-[#9B9B90] ml-1">{s.unit}</span>
                   </p>
-                  <p className="font-['Inter',sans-serif] text-xs text-[#6B6B62]">{s.label}</p>
+                  <p className="font-['Noto_Sans_SC',sans-serif] text-xs text-[#6B6B62]">{s.label}</p>
                 </div>
               ))}
             </div>
@@ -146,7 +146,7 @@ export default function StudentScenesPage() {
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#1C1C1A]/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <p className="absolute bottom-4 left-4 font-['Inter',sans-serif] text-sm text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-1 group-hover:translate-y-0">
+                  <p className="absolute bottom-4 left-4 font-['Noto_Sans_SC',sans-serif] text-sm text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-1 group-hover:translate-y-0">
                     {s.label}
                   </p>
                 </div>
@@ -160,13 +160,13 @@ export default function StudentScenesPage() {
         <section className="bg-[#EEEEE9] py-24 lg:py-36">
           <div className="max-w-[1200px] mx-auto px-6">
             <div className="mb-14">
-              <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
+              <p className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
                 学员评价
               </p>
-              <h2 className="font-['Playfair_Display',serif] text-4xl lg:text-5xl font-semibold leading-[1.15] text-foreground mb-5">
+              <h2 className="font-['Noto_Serif_SC',serif] text-4xl lg:text-5xl font-semibold leading-[1.15] text-foreground mb-5">
                 来自学员朋友圈的真实分享
               </h2>
-              <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] leading-relaxed max-w-[600px]">
+              <p className="font-['Noto_Sans_SC',sans-serif] text-base text-[#6B6B62] leading-relaxed max-w-[600px]">
                 每一条评价都来自学员的真实朋友圈，是他们课堂体验与学习成果的第一手记录。
               </p>
             </div>
@@ -191,15 +191,15 @@ export default function StudentScenesPage() {
         {/* CTA */}
         <section className="bg-[#E6E6E0] py-20 lg:py-28">
           <div className="max-w-[1200px] mx-auto px-6 text-center">
-            <h2 className="font-['Playfair_Display',serif] text-3xl lg:text-4xl font-semibold leading-[1.2] text-foreground mb-5">
+            <h2 className="font-['Noto_Serif_SC',serif] text-3xl lg:text-4xl font-semibold leading-[1.2] text-foreground mb-5">
               亲临课堂，感受实操魅力
             </h2>
-            <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] mb-10 max-w-[520px] mx-auto leading-relaxed">
+            <p className="font-['Noto_Sans_SC',sans-serif] text-base text-[#6B6B62] mb-10 max-w-[520px] mx-auto leading-relaxed">
               每期限额 30 人，预约课程顾问获取最新开课安排与报名详情。
             </p>
             <a
               href="/contact"
-              className="inline-flex items-center px-8 py-4 bg-accent text-accent-foreground font-['Inter',sans-serif] text-sm font-medium rounded-sm hover:bg-[#4A7F7B] transition-colors duration-200"
+              className="inline-flex items-center px-8 py-4 bg-accent text-accent-foreground font-['Noto_Sans_SC',sans-serif] text-sm font-medium rounded-sm hover:bg-[#4A7F7B] transition-colors duration-200"
             >
               预约课程咨询
             </a>

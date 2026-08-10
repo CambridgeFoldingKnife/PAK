@@ -7,13 +7,13 @@ export default function AlumniSection() {
       <div className="max-w-[1200px] mx-auto px-6">
         {/* Header */}
         <div className="mb-14">
-          <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
+          <p className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
             学员目录
           </p>
-          <h2 className="font-['Playfair_Display',serif] text-4xl lg:text-5xl font-semibold leading-[1.15] text-foreground mb-5">
+          <h2 className="font-['Noto_Serif_SC',serif] text-4xl lg:text-5xl font-semibold leading-[1.15] text-foreground mb-5">
             他们已经在实践中验证了 PAK
           </h2>
-          <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] leading-relaxed max-w-[600px]">
+          <p className="font-['Noto_Sans_SC',sans-serif] text-base text-[#6B6B62] leading-relaxed max-w-[600px]">
             来自不同执业背景的学员，将应用肌动学融入各自的专业领域——
             点击获取联系方式，与同行直接交流，了解 PAK 真实落地效果。
           </p>

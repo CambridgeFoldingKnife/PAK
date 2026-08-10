@@ -38,13 +38,13 @@ function HealthTriangle() {
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-10 mb-16">
           {/* Left: title + description */}
           <div className="max-w-[560px]">
-            <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-5">
+            <p className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-5">
               AK 核心理论
             </p>
-            <h2 className="font-['Playfair_Display',serif] text-4xl lg:text-5xl font-semibold leading-[1.15] text-foreground mb-6">
+            <h2 className="font-['Noto_Serif_SC',serif] text-4xl lg:text-5xl font-semibold leading-[1.15] text-foreground mb-6">
               健康金三角
             </h2>
-            <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] leading-relaxed">
+            <p className="font-['Noto_Sans_SC',sans-serif] text-base text-[#6B6B62] leading-relaxed">
               AK 通过手法肌肉测试，从结构、化学与心理三个维度交叉排查身体失衡的根源。
               这不是三个独立的系统，而是一个相互交织的整体——任何一个维度的失衡都会在其他维度产生连锁反应。
             </p>
@@ -56,20 +56,20 @@ function HealthTriangle() {
               {/* Triangle */}
               <polygon className="triangle-draw" points="140,30 40,220 240,220" fill="none" stroke="#1C1C1A" strokeWidth="2.5" />
               {/* Top: 结构 */}
-              <text className="triangle-label" x="140" y="18" textAnchor="middle" fontSize="13" fontWeight="600" fill="#1C1C1A" fontFamily="Inter, sans-serif">
+              <text className="triangle-label" x="140" y="18" textAnchor="middle" fontSize="13" fontWeight="600" fill="#1C1C1A" fontFamily="Noto Sans SC, sans-serif">
                 结构 Structural
               </text>
               {/* Bottom-left: 化学 */}
-              <text className="triangle-label" x="40" y="248" textAnchor="middle" fontSize="13" fontWeight="600" fill="#5A8F8B" fontFamily="Inter, sans-serif">
+              <text className="triangle-label" x="40" y="248" textAnchor="middle" fontSize="13" fontWeight="600" fill="#5A8F8B" fontFamily="Noto Sans SC, sans-serif">
                 化学 Chemical
               </text>
               {/* Bottom-right: 心理 */}
-              <text className="triangle-label" x="240" y="248" textAnchor="middle" fontSize="13" fontWeight="600" fill="#5A8F8B" fontFamily="Inter, sans-serif">
+              <text className="triangle-label" x="240" y="248" textAnchor="middle" fontSize="13" fontWeight="600" fill="#5A8F8B" fontFamily="Noto Sans SC, sans-serif">
                 心理 Mental
               </text>
               {/* Center circle: 健康 */}
               <circle cx="140" cy="155" r="24" fill="#F5F5F0" stroke="#1C1C1A" strokeWidth="2" />
-              <text x="140" y="160" textAnchor="middle" fontSize="13" fontWeight="600" fill="#1C1C1A" fontFamily="Inter, sans-serif">
+              <text x="140" y="160" textAnchor="middle" fontSize="13" fontWeight="600" fill="#1C1C1A" fontFamily="Noto Sans SC, sans-serif">
                 健康
               </text>
               {/* Dashed lines from center to each vertex */}
@@ -87,14 +87,14 @@ function HealthTriangle() {
               className="tilt-card bg-[#F5F5F0] p-8 flex flex-col gap-5"
             >
               <div>
-                <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.12em] uppercase text-accent mb-2">
+                <p className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.12em] uppercase text-accent mb-2">
                   {d.title}
                 </p>
-                <h3 className="font-['Playfair_Display',serif] text-xl font-semibold text-foreground">
+                <h3 className="font-['Noto_Serif_SC',serif] text-xl font-semibold text-foreground">
                   {d.subtitle}
                 </h3>
               </div>
-              <p className="font-['Inter',sans-serif] text-sm text-[#6B6B62] leading-relaxed">
+              <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#6B6B62] leading-relaxed">
                 {d.desc}
               </p>
               <ul className="flex flex-col gap-2 mt-auto pt-4 border-t border-border/50">
@@ -285,15 +285,15 @@ export default function CoursePage() {
   }, [])
 
   return (
-    <div ref={pageRef} className="min-h-screen bg-background text-foreground font-['Inter',sans-serif] overflow-x-hidden">
+    <div ref={pageRef} className="min-h-screen bg-background text-foreground font-['Noto_Sans_SC',sans-serif] overflow-x-hidden">
       <Navbar />
       <main>
         {/* Hero */}
         <section className="max-w-[900px] mx-auto px-6 pt-32 lg:pt-40 pb-16">
-          <p className="hero-eyebrow font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-6">
+          <p className="hero-eyebrow font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-6">
             应用肌动学入门
           </p>
-          <h1 className="hero-title font-['Playfair_Display',serif] text-5xl lg:text-6xl font-semibold leading-[1.12] text-foreground mb-6">
+          <h1 className="hero-title font-['Noto_Serif_SC',serif] text-5xl lg:text-6xl font-semibold leading-[1.12] text-foreground mb-6">
             {"关于 AK".split("").map((char, i) => (
               <span key={i} className="inline-block overflow-hidden align-bottom">
                 <span className="inline-block hero-char">
@@ -302,7 +302,7 @@ export default function CoursePage() {
               </span>
             ))}
           </h1>
-          <p className="hero-sub font-['Inter',sans-serif] text-base text-[#6B6B62] leading-relaxed max-w-[600px]">
+          <p className="hero-sub font-['Noto_Sans_SC',sans-serif] text-base text-[#6B6B62] leading-relaxed max-w-[600px]">
             应用肌动学（Applied Kinesiology，简称 AK）是现代肌动学体系的源头，
             由美国脊医佐治·古赫特博士（Dr. George Goodheart）于 1964 年正式创立。
           </p>
@@ -319,7 +319,7 @@ export default function CoursePage() {
           >
             您的浏览器不支持 HTML5 视频播放。
           </video>
-          <p className="font-['Inter',sans-serif] text-sm text-[#6B6B62] mt-3">
+          <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#6B6B62] mt-3">
             AK 应用肌动学纪录片
           </p>
         </section>
@@ -334,19 +334,19 @@ export default function CoursePage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-start">
               {/* Left: 什么是应用肌动学 */}
               <div>
-                <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
+                <p className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
                   01 · 定义与核心特征
                 </p>
-                <h2 className="font-['Playfair_Display',serif] text-3xl lg:text-4xl font-semibold leading-[1.15] text-foreground mb-8">
+                <h2 className="font-['Noto_Serif_SC',serif] text-3xl lg:text-4xl font-semibold leading-[1.15] text-foreground mb-8">
                   什么是应用肌动学
                 </h2>
                 <div className="reveal-words prose-custom space-y-7">
-                  <p className="font-['Inter',sans-serif] text-xl text-[#4A4A45] leading-[1.8]">
+                  <p className="font-['Noto_Sans_SC',sans-serif] text-xl text-[#4A4A45] leading-[1.8]">
                     区别于传统研究人体运动系统的运动学（Kinesiology），应用肌动学是一门融合了
                     <strong className="text-foreground font-medium">西方生理学</strong>（神经、肌肉、淋巴、血管系统）与
                     <strong className="text-foreground font-medium">东方能量医学</strong>（经络、穴位理论）的新兴健康科学。
                   </p>
-                  <p className="font-['Inter',sans-serif] text-xl text-[#4A4A45] leading-[1.8]">
+                  <p className="font-['Noto_Sans_SC',sans-serif] text-xl text-[#4A4A45] leading-[1.8]">
                     其最核心的特征是使用<strong className="text-foreground font-medium">肌能检测</strong>作为生物反馈机制。
                     与传统测量肌肉力量的"肌力测试"不同，肌能检测旨在评估神经系统对肌肉的实时控制能力。
                     通过观察肌肉反应（扣紧或松软），获取意识之外的生理和能量失衡信息，从而指导诊断、评估疗效。
@@ -356,10 +356,10 @@ export default function CoursePage() {
 
               {/* Right: 认证体系时间线 */}
               <div className="timeline-card bg-[#F5F5F0] border border-border rounded-sm p-6 lg:p-8">
-                <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-3">
+                <p className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-3">
                   认证体系时间线
                 </p>
-                <h3 className="font-['Playfair_Display',serif] text-xl lg:text-2xl font-semibold text-foreground mb-8">
+                <h3 className="font-['Noto_Serif_SC',serif] text-xl lg:text-2xl font-semibold text-foreground mb-8">
                   AK 六十载发展历程
                 </h3>
                 <div className="relative">
@@ -374,10 +374,10 @@ export default function CoursePage() {
                   ].map((item) => (
                     <div key={item.year} className="timeline-item relative pl-8 pb-8 last:pb-0">
                       <span className="absolute left-[-5px] top-1.5 w-[10px] h-[10px] rounded-full bg-[#4A7F7B]" />
-                      <p className="font-['Inter',sans-serif] text-sm font-semibold text-[#4A7F7B]">
+                      <p className="font-['Noto_Sans_SC',sans-serif] text-sm font-semibold text-[#4A7F7B]">
                         {item.year}
                       </p>
-                      <p className="font-['Inter',sans-serif] text-sm text-[#4A4A45] leading-relaxed mt-1">
+                      <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#4A4A45] leading-relaxed mt-1">
                         {item.text}
                       </p>
                     </div>
@@ -399,25 +399,25 @@ export default function CoursePage() {
 
           {/* 03 开创性起源与理论基石 */}
           <div>
-            <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
+            <p className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
               03 · 开创性起源与理论基石
             </p>
-            <h2 className="font-['Playfair_Display',serif] text-3xl lg:text-4xl font-semibold leading-[1.15] text-foreground mb-8">
+            <h2 className="font-['Noto_Serif_SC',serif] text-3xl lg:text-4xl font-semibold leading-[1.15] text-foreground mb-8">
               从一次临床突破到完整体系
             </h2>
             <div className="prose-custom space-y-5">
-              <p className="font-['Inter',sans-serif] text-base text-[#4A4A45] leading-relaxed">
+              <p className="font-['Noto_Sans_SC',sans-serif] text-base text-[#4A4A45] leading-relaxed">
                 应用肌动学的创立源于一次临床突破。古赫特医生在治疗一位顽固性肩胛骨竖立患者时，
                 发现其前锯肌功能失调。在没有现有方法可用的情况下，他通过按压该肌肉的肌腱附着点，
                 意外恢复了肌肉功能，并使肩胛骨复位。
               </p>
-              <p className="font-['Inter',sans-serif] text-base text-[#4A4A45] leading-relaxed">
+              <p className="font-['Noto_Sans_SC',sans-serif] text-base text-[#4A4A45] leading-relaxed">
                 这一成功促使他将现代运动学中的肌肉检查与<strong className="text-foreground font-medium">查普曼神经淋巴反射点</strong>、
                 <strong className="text-foreground font-medium">贝内特血管反射点</strong>及
                 <strong className="text-foreground font-medium">中医经络穴位理论</strong>相结合，
                 构建了独特的"肌肉-经络-脏器"功能关系模型。
               </p>
-              <p className="font-['Inter',sans-serif] text-base text-[#4A4A45] leading-relaxed">
+              <p className="font-['Noto_Sans_SC',sans-serif] text-base text-[#4A4A45] leading-relaxed">
                 其理论精髓在于：特定肌肉的功能状态（肌能检测结果）可以反映相应经络和内脏器官的健康状况。
                 这一模型为解读人体功能障碍提供了全新的、可验证的视角。
               </p>
@@ -430,10 +430,10 @@ export default function CoursePage() {
               ].map((item) => (
                 <div key={item.title} className="bg-[#F5F5F0] border border-border p-6 rounded-sm">
                   <div className="w-2 h-2 rounded-full bg-accent mb-4" />
-                  <h4 className="font-['Playfair_Display',serif] text-lg font-semibold text-foreground mb-2">
+                  <h4 className="font-['Noto_Serif_SC',serif] text-lg font-semibold text-foreground mb-2">
                     {item.title}
                   </h4>
-                  <p className="font-['Inter',sans-serif] text-sm text-[#6B6B62] leading-relaxed">
+                  <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#6B6B62] leading-relaxed">
                     {item.desc}
                   </p>
                 </div>
@@ -447,10 +447,10 @@ export default function CoursePage() {
 
           {/* 04 关键人物 */}
           <div>
-            <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
+            <p className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
               04 · 关键人物
             </p>
-            <h2 className="font-['Playfair_Display',serif] text-3xl lg:text-4xl font-semibold leading-[1.15] text-foreground mb-8">
+            <h2 className="font-['Noto_Serif_SC',serif] text-3xl lg:text-4xl font-semibold leading-[1.15] text-foreground mb-8">
               AK 的奠基者与推动者
             </h2>
 
@@ -480,18 +480,18 @@ export default function CoursePage() {
                   className="tilt-card bg-[#F5F5F0] border border-border rounded-sm p-6 flex gap-5"
                 >
                   <div className="w-14 h-14 rounded-full bg-accent/15 flex items-center justify-center flex-shrink-0">
-                    <span className="font-['Playfair_Display',serif] text-xl font-semibold text-accent">
+                    <span className="font-['Noto_Serif_SC',serif] text-xl font-semibold text-accent">
                       {person.initial}
                     </span>
                   </div>
                   <div>
-                    <h3 className="font-['Playfair_Display',serif] text-lg font-semibold text-foreground mb-1">
+                    <h3 className="font-['Noto_Serif_SC',serif] text-lg font-semibold text-foreground mb-1">
                       {person.name}
                     </h3>
-                    <p className="font-['Inter',sans-serif] text-xs text-accent mb-3">
+                    <p className="font-['Noto_Sans_SC',sans-serif] text-xs text-accent mb-3">
                       {person.role}
                     </p>
-                    <p className="font-['Inter',sans-serif] text-sm text-[#4A4A45] leading-relaxed">
+                    <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#4A4A45] leading-relaxed">
                       {person.desc}
                     </p>
                   </div>
@@ -506,10 +506,10 @@ export default function CoursePage() {
 
           {/* 05 功效与应用范围 */}
           <div>
-            <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
+            <p className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
               05 · 功效与应用范围
             </p>
-            <h2 className="font-['Playfair_Display',serif] text-3xl lg:text-4xl font-semibold leading-[1.15] text-foreground mb-8">
+            <h2 className="font-['Noto_Serif_SC',serif] text-3xl lg:text-4xl font-semibold leading-[1.15] text-foreground mb-8">
               显著的临床功效
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-border">
@@ -521,10 +521,10 @@ export default function CoursePage() {
               ].map((item) => (
                 <div key={item.title} className="bg-[#F5F5F0] p-7 flex flex-col gap-3">
                   <div className="w-2 h-2 rounded-full bg-accent" />
-                  <h4 className="font-['Playfair_Display',serif] text-lg font-semibold text-foreground">
+                  <h4 className="font-['Noto_Serif_SC',serif] text-lg font-semibold text-foreground">
                     {item.title}
                   </h4>
-                  <p className="font-['Inter',sans-serif] text-sm text-[#6B6B62] leading-relaxed flex-1">
+                  <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#6B6B62] leading-relaxed flex-1">
                     {item.desc}
                   </p>
                 </div>
@@ -538,13 +538,13 @@ export default function CoursePage() {
 
           {/* 06 新模式的演进 */}
           <div>
-            <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
+            <p className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
               06 · 新模式的演进
             </p>
-            <h2 className="font-['Playfair_Display',serif] text-3xl lg:text-4xl font-semibold leading-[1.15] text-foreground mb-4">
+            <h2 className="font-['Noto_Serif_SC',serif] text-3xl lg:text-4xl font-semibold leading-[1.15] text-foreground mb-4">
               从治疗模型到教育模型
             </h2>
-            <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] leading-relaxed mb-8 max-w-[600px]">
+            <p className="font-['Noto_Sans_SC',sans-serif] text-base text-[#6B6B62] leading-relaxed mb-8 max-w-[600px]">
               应用肌动学在发展中分化出了多个经典的"新模式"，代表了从"治疗疾病"到"赋能个体"的理念变迁。
             </p>
             <div className="flex flex-col gap-6">
@@ -576,18 +576,18 @@ export default function CoursePage() {
               ].map((model) => (
                 <div key={model.title} className="border border-border rounded-sm overflow-hidden">
                   <div className="bg-[#F5F5F0] px-7 py-5 border-b border-border">
-                    <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] text-accent mb-1">
+                    <p className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.15em] text-accent mb-1">
                       {model.tag}
                     </p>
-                    <p className="font-['Playfair_Display',serif] text-lg font-semibold text-foreground">
+                    <p className="font-['Noto_Serif_SC',serif] text-lg font-semibold text-foreground">
                       {model.title}
                     </p>
                   </div>
                   <div className="px-7 py-6 space-y-4">
                     {model.items.map((item) => (
                       <div key={item.label}>
-                        <p className="font-['Inter',sans-serif] text-sm font-medium text-foreground mb-1">{item.label}</p>
-                        <p className="font-['Inter',sans-serif] text-sm text-[#6B6B62] leading-relaxed">
+                        <p className="font-['Noto_Sans_SC',sans-serif] text-sm font-medium text-foreground mb-1">{item.label}</p>
+                        <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#6B6B62] leading-relaxed">
                           {item.text}
                         </p>
                       </div>
@@ -604,16 +604,16 @@ export default function CoursePage() {
 
           {/* 07 AK与PAK的区别 */}
           <div>
-            <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
+            <p className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
               07 · 概念辨析
             </p>
-            <h2 className="font-['Playfair_Display',serif] text-3xl lg:text-4xl font-semibold leading-[1.15] text-foreground mb-8">
+            <h2 className="font-['Noto_Serif_SC',serif] text-3xl lg:text-4xl font-semibold leading-[1.15] text-foreground mb-8">
               AK 与 PAK 的区别
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="bg-[#F5F5F0] border border-border rounded-sm p-6">
-                <h3 className="font-['Playfair_Display',serif] text-lg font-semibold text-foreground mb-4">
+                <h3 className="font-['Noto_Serif_SC',serif] text-lg font-semibold text-foreground mb-4">
                   Applied Kinesiology (AK)
                 </h3>
                 <ul className="space-y-2.5">
@@ -633,7 +633,7 @@ export default function CoursePage() {
               </div>
 
               <div className="bg-[#F5F5F0] border border-border rounded-sm p-6">
-                <h3 className="font-['Playfair_Display',serif] text-lg font-semibold text-foreground mb-4">
+                <h3 className="font-['Noto_Serif_SC',serif] text-lg font-semibold text-foreground mb-4">
                   Professional Applied Kinesiology (PAK)
                 </h3>
                 <ul className="space-y-2.5">
@@ -660,10 +660,10 @@ export default function CoursePage() {
 
           {/* 08 DÄGAK课程体系 */}
           <div>
-            <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
+            <p className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
               08 · 课程体系
             </p>
-            <h2 className="font-['Playfair_Display',serif] text-3xl lg:text-4xl font-semibold leading-[1.15] text-foreground mb-8">
+            <h2 className="font-['Noto_Serif_SC',serif] text-3xl lg:text-4xl font-semibold leading-[1.15] text-foreground mb-8">
               DÄGAK 课程体系 — 4 阶段进阶路径
             </h2>
 
@@ -676,8 +676,8 @@ export default function CoursePage() {
               ].map((s, i, arr) => (
                 <div key={s.title} className="flex items-center gap-3 sm:gap-0 flex-1">
                   <div className={`flex-1 border-2 p-4 rounded-sm text-center ${s.active ? "border-accent bg-accent/5" : "border-border"}`}>
-                    <p className="font-['Inter',sans-serif] text-sm font-semibold text-foreground">{s.title}</p>
-                    <p className="font-['Inter',sans-serif] text-xs text-[#6B6B62] mt-1">{s.desc}</p>
+                    <p className="font-['Noto_Sans_SC',sans-serif] text-sm font-semibold text-foreground">{s.title}</p>
+                    <p className="font-['Noto_Sans_SC',sans-serif] text-xs text-[#6B6B62] mt-1">{s.desc}</p>
                   </div>
                   {i < arr.length - 1 && (
                     <span className="hidden sm:block text-[#9B9B90] mx-2 flex-shrink-0">→</span>
@@ -686,7 +686,7 @@ export default function CoursePage() {
               ))}
             </div>
 
-            <p className="font-['Inter',sans-serif] text-sm text-[#6B6B62] mb-4">
+            <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#6B6B62] mb-4">
               <span data-count="12">12</span> 个课程模块覆盖 AK 完整知识体系：
             </p>
             <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2">
@@ -699,7 +699,7 @@ export default function CoursePage() {
                   key={m}
                   className="bg-[#F5F5F0] border border-border px-3 py-2.5 rounded-sm text-center"
                 >
-                  <span className="font-['Inter',sans-serif] text-xs text-[#4A4A45]">{m}</span>
+                  <span className="font-['Noto_Sans_SC',sans-serif] text-xs text-[#4A4A45]">{m}</span>
                 </div>
               ))}
             </div>
