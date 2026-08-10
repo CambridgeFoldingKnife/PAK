@@ -1,12 +1,29 @@
-import Navbar from "@/app/components/Navbar"
+﻿import Navbar from "@/app/components/Navbar"
+import Footer from "@/app/components/Footer"
 
 const scenes = [
-  { label: "课堂实景 · 理论讲授", src: "/assets/1.jpg" },
-  { label: "实操演示 · 徒手肌肉测试", src: "/assets/3.jpeg" },
-  { label: "讲师指导 · 逐组纠错", src: "/assets/4.png" },
-  { label: "小组讨论 · 病例分析", src: "/assets/5.png" },
-  { label: "结业合影 · 证书颁发", src: "/assets/6.png" },
-  { label: "课堂花絮 · 学习氛围", src: "/assets/2.jpeg" },
+  { label: "Day 1", src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/student-showcase/day1_IMG_9489.JPG" },
+  { label: "Day 1", src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/student-showcase/day1_IMG_9491.JPG" },
+  { label: "Day 2", src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/student-showcase/day2_IMG_0001.JPG" },
+  { label: "Day 2", src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/student-showcase/day2_IMG_0003.JPG" },
+  { label: "Day 3", src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/student-showcase/day3_IMG_0082.JPG" },
+  { label: "Day 3", src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/student-showcase/day3_IMG_0083.JPG" },
+  { label: "Day 4", src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/student-showcase/day4_IMG_0436.JPG" },
+  { label: "Day 4", src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/student-showcase/day4_IMG_0438.JPG" },
+  { label: "Day 5", src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/student-showcase/day5_IMG_0657.JPG" },
+  { label: "Day 5", src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/student-showcase/day5_IMG_0660.JPG" },
+  { label: "Day 6", src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/student-showcase/day6_IMG_8867.JPG" },
+  { label: "Day 6", src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/student-showcase/day6_IMG_8868.JPG" },
+]
+
+const reviews = [
+  { src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/student-reviews/review1.jpg" },
+  { src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/student-reviews/review2.jpg" },
+  { src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/student-reviews/review3.jpg" },
+  { src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/student-reviews/review4.jpg" },
+  { src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/student-reviews/review5.jpg" },
+  { src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/student-reviews/review6.jpg" },
+  { src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/student-reviews/review7.jpg" },
 ]
 
 export default function StudentScenesPage() {
@@ -79,6 +96,38 @@ export default function StudentScenesPage() {
           </div>
         </section>
 
+        {/* Student reviews */}
+        <section className="bg-[#EEEEE9] py-24 lg:py-36">
+          <div className="max-w-[1200px] mx-auto px-6">
+            <div className="mb-14">
+              <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
+                学员评价
+              </p>
+              <h2 className="font-['Playfair_Display',serif] text-4xl lg:text-5xl font-semibold leading-[1.15] text-foreground mb-5">
+                来自学员朋友圈的真实分享
+              </h2>
+              <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] leading-relaxed max-w-[600px]">
+                每一条评价都来自学员的真实朋友圈，是他们课堂体验与学习成果的第一手记录。
+              </p>
+            </div>
+
+            <div className="columns-1 sm:columns-2 lg:columns-3 gap-5 space-y-5">
+              {reviews.map((r, i) => (
+                <figure
+                  key={i}
+                  className="break-inside-avoid bg-[#E6E6E0] border border-border rounded-sm p-3 group hover:border-accent/40 transition-colors duration-200"
+                >
+                  <img
+                    src={r.src}
+                    alt={`学员评价 ${i + 1}`}
+                    className="w-full h-auto rounded-sm"
+                  />
+                </figure>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* CTA */}
         <section className="bg-[#E6E6E0] py-20 lg:py-28">
           <div className="max-w-[1200px] mx-auto px-6 text-center">
@@ -97,14 +146,7 @@ export default function StudentScenesPage() {
           </div>
         </section>
       </main>
-
-      <footer className="bg-[#1C1C1A] py-10">
-        <div className="max-w-[1200px] mx-auto px-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <p className="font-['Inter',sans-serif] text-xs text-[#4A4A45]">
-            © 2026 PAK 健衡学园. 保留所有权利。
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

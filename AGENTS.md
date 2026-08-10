@@ -7,11 +7,18 @@ PAK 健衡学园 landing page. React 18 + Vite 6 + TypeScript + Tailwind CSS v4.
 ## Commands
 
 ```bash
-npm run dev      # dev server on http://localhost:5173
-npm run build    # production build → dist/
+npm run vercel:dev   # (推荐) dev server → http://localhost:3000，会执行 api/ 里的 Serverless 函数（含飞书接口）
+npm run dev          # 纯 Vite dev server → http://localhost:5173，不运行 api/ 函数
+npm run build        # production build → dist/
 ```
 
 No lint, typecheck, or test scripts exist.
+
+> **⚠️ 本地开发请用 `vercel:dev`（即 `vercel dev`），不要用纯 `npm run dev`。**
+> `vite.config.ts` 里 `/api` 代理到 `http://localhost:3000`，但纯 Vite 不会启动这个后端；
+> 只有 `vercel dev` 才会真正执行 `api/*.ts` 里的 Serverless 函数并注入 `.env` 环境变量。
+> 如果直接用 `npm run dev`，`/api/courses`、`/api/consult`（飞书接口）会连到 localhost:3000 而失败。
+> 详情见 `api/courses.ts`、`api/consult.ts`。
 
 ## Tailwind v4 — Not the old setup
 

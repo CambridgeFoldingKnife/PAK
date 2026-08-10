@@ -1,17 +1,32 @@
-import { useState } from "react"
+﻿import { useState } from "react"
 import { Link } from "react-router"
 import Navbar from "@/app/components/Navbar"
+import Footer from "@/app/components/Footer"
 import ScrollReveal from "@/app/components/ScrollReveal"
 
 const tabs = [
   { key: "all", label: "全部" },
-  { key: "book", label: "AK经典教材" },
-  { key: "note", label: "PAK课程讲义" },
-  { key: "manual", label: "AK科普手册" },
   { key: "video", label: "教学视频" },
-  { key: "chart", label: "挂图/图谱" },
-  { key: "recommend", label: "推荐书单" },
   { key: "ima", label: "ima知识库" },
+]
+
+const videos = [
+  {
+    title: "AK早期历史",
+    src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/videos/ak_early_history.mp4",
+  },
+  {
+    title: "AK患者受益案例",
+    src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/videos/ak_patient_benefits.mp4",
+  },
+  {
+    title: "Goodheart谈AK起源",
+    src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/videos/goodheart_origins.mp4",
+  },
+  {
+    title: "ICAK介绍",
+    src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/videos/icak_intro.mp4",
+  },
 ]
 
 const imaImages = [
@@ -19,60 +34,9 @@ const imaImages = [
   { src: "/assets/【PAK专业应用肌动学文献】知识码.png", alt: "PAK专业应用肌动学文献知识码" },
 ]
 
-const resources = [
-  {
-    type: "manual",
-    typeLabel: "PDF",
-    title: "ICAK-USA Status Statement",
-    source: "ICAK-USA",
-    action: "下载",
-  },
-  {
-    type: "book",
-    typeLabel: "教材",
-    title: "AK 100-Hour Course教材",
-    source: "ICAK-USA",
-    action: "下载",
-  },
-  {
-    type: "note",
-    typeLabel: "讲义",
-    title: "DÄGAK课程讲义",
-    source: "DÄGAK",
-    action: "下载",
-  },
-  {
-    type: "book",
-    typeLabel: "教材",
-    title: "Applied Kinesiology Synopsis",
-    source: "David Walther",
-    action: "购买",
-  },
-  {
-    type: "chart",
-    typeLabel: "图谱",
-    title: "AK肌肉测试挂图",
-    source: "ICAK-USA",
-    action: "下载",
-  },
-]
-
-const typeStyles: Record<string, string> = {
-  PDF: "bg-[#fee2e2] text-[#991b1b]",
-  教材: "bg-[#dbeafe] text-[#1e40af]",
-  讲义: "bg-[#fef3c7] text-[#92400e]",
-  视频: "bg-[#d1fae5] text-[#065f46]",
-  图谱: "bg-[#e0e7ff] text-[#3730a3]",
-  书单: "bg-[#f3e8ff] text-[#6b21a8]",
-}
-
 export default function LiteraturePage() {
   const [activeTab, setActiveTab] = useState("all")
-
-  const filtered =
-    activeTab === "all"
-      ? resources
-      : resources.filter((r) => r.type === activeTab)
+  const [playingVideo, setPlayingVideo] = useState<string | null>(null)
 
   return (
     <div className="min-h-screen bg-background text-foreground font-['Inter',sans-serif] overflow-x-hidden">
@@ -87,10 +51,10 @@ export default function LiteraturePage() {
                 Learning Resources
               </p>
               <h1 className="font-['Playfair_Display',serif] text-5xl lg:text-6xl font-semibold leading-[1.12] text-foreground mb-6">
-                学习资源
+                学习资料
               </h1>
               <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] leading-relaxed max-w-[620px]">
-                教材、讲义、图谱与推荐书单
+                教学视频与 ima 知识库
               </p>
             </div>
           </section>
@@ -118,56 +82,111 @@ export default function LiteraturePage() {
             </ScrollReveal>
 
             {activeTab === "ima" ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                {imaImages.map((img, i) => (
-                  <ScrollReveal key={img.src} delay={i * 0.05}>
-                    <a
-                      href={img.src}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block bg-[#F5F5F0] border border-border rounded-sm overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-1"
-                    >
-                      <div className="aspect-[4/3] w-full bg-[#E6E6E0] flex items-center justify-center p-4">
-                        <img
-                          src={img.src}
-                          alt={img.alt}
-                          className="max-w-full max-h-full object-contain"
-                        />
-                      </div>
-                      <p className="px-4 py-3 font-['Inter',sans-serif] text-sm text-[#6B6B62] text-center">
-                        {img.alt}
-                      </p>
-                    </a>
-                  </ScrollReveal>
-                ))}
+              <div className="max-w-[1000px] mx-auto text-center">
+                <ScrollReveal>
+                  <h2 className="font-['Playfair_Display',serif] text-4xl lg:text-5xl font-semibold leading-[1.15] text-foreground mb-5">
+                    AK 学习资料库 · 随身知识助手
+                  </h2>
+                  <p className="font-['Inter',sans-serif] text-xl lg:text-2xl text-accent mb-12">
+                    把 AK 经典教材与 22 册科普读物装进你的口袋
+                  </p>
+                </ScrollReveal>
+
+                <ScrollReveal delay={0.05}>
+                  <div className="text-left bg-[#F5F5F0] border border-border rounded-sm p-10 lg:p-14 mb-8">
+                    <h3 className="font-['Playfair_Display',serif] text-2xl lg:text-3xl font-semibold text-foreground mb-5">
+                      什么是 ima 知识库
+                    </h3>
+                    <p className="font-['Inter',sans-serif] text-lg lg:text-xl text-[#6B6B62] leading-relaxed mb-8">
+                      ima 是腾讯出品的 AI 智能知识管理助手。我们已将健衡学园的全部课程资料整理入库，
+                      你可以直接用「问答」的方式向 AI 提问，也可以随时翻阅、检索原文档——学 AK，不用再翻箱倒柜找资料。
+                    </p>
+
+                    <h3 className="font-['Playfair_Display',serif] text-2xl lg:text-3xl font-semibold text-foreground mb-5">
+                      里面有什么
+                    </h3>
+                    <p className="font-['Inter',sans-serif] text-lg lg:text-xl text-[#6B6B62] leading-relaxed mb-4">
+                      <strong className="text-foreground font-semibold">AK 经典教材</strong>
+                      —— 体系化的专业教材，从理论基础到临床方法，逐章可查；
+                    </p>
+                    <p className="font-['Inter',sans-serif] text-lg lg:text-xl text-[#6B6B62] leading-relaxed mb-10">
+                      <strong className="text-foreground font-semibold">AK 科普手册</strong>
+                      —— 22 本 PDF 科普读物，用通俗的语言讲清肌肉测试、结构与治疗逻辑，零基础也能读得懂。
+                    </p>
+
+                    <ul className="flex flex-col gap-4 font-['Inter',sans-serif] text-lg lg:text-xl text-[#4A4A45]">
+                      <li>教材 + 科普 一站式整理，专业与入门都能覆盖</li>
+                      <li>AI 智能问答，随时解答你的 AK 疑问</li>
+                      <li>手机/电脑随手查，学习资料常伴左右</li>
+                    </ul>
+                  </div>
+                </ScrollReveal>
+
+                <ScrollReveal delay={0.1}>
+                  <p className="font-['Playfair_Display',serif] text-xl lg:text-2xl text-foreground mb-10">
+                    扫码加入知识库，开启你的 AK 学习之旅
+                  </p>
+                </ScrollReveal>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
+                  {imaImages.map((img, i) => (
+                    <ScrollReveal key={img.src} delay={i * 0.05}>
+                      <a
+                        href={img.src}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block bg-[#F5F5F0] border border-border rounded-sm overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-1"
+                      >
+                        <div className="aspect-[4/3] w-full bg-[#E6E6E0] flex items-center justify-center p-6">
+                          <img
+                            src={img.src}
+                            alt={img.alt}
+                            className="max-w-full max-h-full object-contain"
+                          />
+                        </div>
+                        <p className="px-5 py-4 font-['Inter',sans-serif] text-base lg:text-lg text-[#6B6B62] text-center">
+                          {img.alt}
+                        </p>
+                      </a>
+                    </ScrollReveal>
+                  ))}
+                </div>
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filtered.map((item, i) => (
-                  <ScrollReveal key={item.title} delay={i * 0.05}>
-                    <div className="bg-[#F5F5F0] border border-border rounded-sm p-6 transition-all duration-300 hover:shadow-md hover:-translate-y-1">
-                      <span
-                        className={`inline-block px-2.5 py-1 rounded text-xs font-semibold mb-4 ${
-                          typeStyles[item.typeLabel] || "bg-[#EEEEE9] text-[#4A4A45]"
-                        }`}
-                      >
-                        {item.typeLabel}
-                      </span>
-                      <h3 className="font-['Playfair_Display',serif] text-lg font-semibold text-foreground mb-2">
-                        {item.title}
-                      </h3>
-                      <p className="font-['Inter',sans-serif] text-sm text-[#9B9B90] mb-6">
-                        来源：{item.source}
-                      </p>
-                      <button className="inline-flex items-center px-4 py-2 border border-accent text-accent font-['Inter',sans-serif] text-sm font-medium rounded-sm hover:bg-accent hover:text-accent-foreground transition-colors duration-200">
-                        {item.action}
-                      </button>
-                    </div>
+                {videos.map((video, i) => (
+                  <ScrollReveal key={video.title} delay={i * 0.05}>
+                    <button
+                      onClick={() => setPlayingVideo(video.src)}
+                      className="w-full text-left bg-[#F5F5F0] border border-border rounded-sm overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-1"
+                    >
+                      <div className="relative aspect-video w-full bg-[#E6E6E0] overflow-hidden">
+                        <video
+                          src={`${video.src}#t=0.5`}
+                          muted
+                          playsInline
+                          preload="metadata"
+                          className="w-full h-full object-cover"
+                        />
+                        <span className="absolute inset-0 flex items-center justify-center bg-black/0 hover:bg-black/10 transition-colors duration-300">
+                          <span className="w-14 h-14 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-md">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                              <path d="M8 5v14l11-7z" />
+                            </svg>
+                          </span>
+                        </span>
+                      </div>
+                      <div className="px-5 py-4">
+                        <h3 className="font-['Playfair_Display',serif] text-lg font-semibold text-foreground mb-1">
+                          {video.title}
+                        </h3>
+                        <p className="font-['Inter',sans-serif] text-sm text-[#9B9B90]">来源：ICAK</p>
+                      </div>
+                    </button>
                   </ScrollReveal>
                 ))}
               </div>
             )}
-
           </div>
         </section>
 
@@ -190,13 +209,30 @@ export default function LiteraturePage() {
         </section>
       </main>
 
-      <footer className="bg-[#1C1C1A] py-10">
-        <div className="max-w-[1200px] mx-auto px-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <p className="font-['Inter',sans-serif] text-xs text-[#4A4A45]">
-            © 2026 PAK 健衡学园. 保留所有权利。
-          </p>
+      {/* Video Player Modal */}
+      {playingVideo && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#1C1C1A]/70 backdrop-blur-sm p-6"
+          onClick={() => setPlayingVideo(null)}
+        >
+          <div
+            className="relative w-full max-w-4xl bg-[#1C1C1A] rounded-lg overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setPlayingVideo(null)}
+              aria-label="关闭视频"
+              className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-[#1C1C1A]/70 text-[#F5F5F0] flex items-center justify-center hover:bg-[#1C1C1A] transition-colors duration-200"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+            <video src={playingVideo} controls autoPlay className="w-full aspect-video" />
+          </div>
         </div>
-      </footer>
+      )}
+      <Footer />
     </div>
   )
 }

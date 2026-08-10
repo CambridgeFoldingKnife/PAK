@@ -1,5 +1,6 @@
-import { useMemo, useState } from "react"
+﻿import { useMemo, useState } from "react"
 import Navbar from "@/app/components/Navbar"
+import Footer from "@/app/components/Footer"
 import ScrollReveal from "@/app/components/ScrollReveal"
 import {
   Accordion,
@@ -140,14 +141,7 @@ export default function KnowledgePage() {
           </div>
         </section>
       </main>
-
-      <footer className="bg-[#1C1C1A] py-10">
-        <div className="max-w-[1200px] mx-auto px-6">
-          <p className="font-['Inter',sans-serif] text-xs text-[#4A4A45]">
-            © 2026 PAK 健衡学园. 保留所有权利。
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

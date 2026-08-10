@@ -1,5 +1,6 @@
 import { useState } from "react"
 import Navbar from "@/app/components/Navbar"
+import Footer from "@/app/components/Footer"
 import { submitConsult } from "@/lib/consult"
 
 // ─── CTA Form ─────────────────────────────────────────────────────────────────
@@ -197,6 +198,7 @@ export default function ContactPage() {
       <main className="pt-16">
         <CTAForm />
       </main>
+      <Footer />
     </div>
   )
 }
