@@ -23,30 +23,30 @@ export default function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-[4fr_2fr_2fr_2fr] gap-8 mb-10">
           {/* Brand */}
           <div>
-            <p className="font-['Playfair_Display',serif] text-base font-semibold text-[#F5F5F0] mb-3">
+            <p className="font-['Noto_Serif_SC',serif] text-base font-semibold text-[#F5F5F0] mb-3">
               PAK · 健衡学园
             </p>
-            <p className="font-['Inter',sans-serif] text-sm text-[#6B6B62] leading-relaxed max-w-[280px]">
+            <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#6B6B62] leading-relaxed max-w-[280px]">
               ICAK 亚太地区官方合作伙伴，提供德国 DÄGAK 认证的应用肌动学培训课程。
             </p>
             <div className="flex gap-4 mt-4">
               <div className="flex flex-col items-center gap-1.5">
                 <img src="/assets/微信公众号.png" alt="微信公众号" className="h-20 w-auto rounded-sm" />
-                <span className="font-['Inter',sans-serif] text-xs text-[#6B6B62]">微信公众号</span>
+                <span className="font-['Noto_Sans_SC',sans-serif] text-xs text-[#6B6B62]">微信公众号</span>
               </div>
               <div className="flex flex-col items-center gap-1.5">
                 <img src="/assets/Theratools公众号.png" alt="Theratools" className="h-20 w-auto rounded-sm" />
-                <span className="font-['Inter',sans-serif] text-xs text-[#6B6B62]">Theratools</span>
+                <span className="font-['Noto_Sans_SC',sans-serif] text-xs text-[#6B6B62]">Theratools</span>
               </div>
             </div>
           </div>
 
           {/* Contact */}
           <div>
-            <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.12em] uppercase text-[#9B9B90] mb-4">
+            <p className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.12em] uppercase text-[#9B9B90] mb-4">
               联系方式
             </p>
-            <ul className="flex flex-col gap-2 font-['Inter',sans-serif] text-sm text-[#6B6B62]">
+            <ul className="flex flex-col gap-2 font-['Noto_Sans_SC',sans-serif] text-sm text-[#6B6B62]">
               <li>
                 <span className="block text-[#9B9B90] mb-1">电话</span>
                 <a href="tel:037158532216" className="hover:text-[#9B9B90] transition-colors duration-200">
@@ -71,7 +71,7 @@ export default function Footer() {
 
           {footerCols.map((col) => (
             <div key={col.title}>
-              <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.12em] uppercase text-[#9B9B90] mb-4">
+              <p className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.12em] uppercase text-[#9B9B90] mb-4">
                 {col.title}
               </p>
               <ul className="flex flex-col gap-2">
@@ -79,7 +79,7 @@ export default function Footer() {
                   <li key={link.label}>
                     <a
                       href={link.href}
-                      className="font-['Inter',sans-serif] text-sm text-[#6B6B62] hover:text-[#9B9B90] transition-colors duration-200"
+                      className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#6B6B62] hover:text-[#9B9B90] transition-colors duration-200"
                     >{link.label}
                     </a>
                   </li>
@@ -90,7 +90,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-[#333330] pt-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-          <p className="font-['Inter',sans-serif] text-xs text-[#4A4A45]">
+          <p className="font-['Noto_Sans_SC',sans-serif] text-xs text-[#4A4A45]">
             © 2026 PAK（应用肌动学） 健衡学园. 保留所有权利。
           </p>
           <div className="flex gap-5">
@@ -98,7 +98,7 @@ export default function Footer() {
               <a
                 key={l}
                 href="#"
-                className="font-['Inter',sans-serif] text-xs text-[#4A4A45] hover:text-[#6B6B62] transition-colors duration-200"
+                className="font-['Noto_Sans_SC',sans-serif] text-xs text-[#4A4A45] hover:text-[#6B6B62] transition-colors duration-200"
               >{l}
               </a>
             ))}

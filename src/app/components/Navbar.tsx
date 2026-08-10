@@ -50,7 +50,7 @@ export default function Navbar() {
               <Link
                 key={link.label}
                 to={link.href}
-                className={`text-sm font-['Inter',sans-serif] font-normal transition-colors duration-200 ${
+                className={`text-sm font-['Noto_Sans_SC',sans-serif] font-normal transition-colors duration-200 ${
                   isActive(link.href)
                     ? "text-foreground"
                     : "text-[#6B6B62] hover:text-foreground"
@@ -62,7 +62,7 @@ export default function Navbar() {
               <a
                 key={link.label}
                 href={link.href}
-                className="text-sm font-['Inter',sans-serif] font-normal text-[#6B6B62] hover:text-foreground transition-colors duration-200"
+                className="text-sm font-['Noto_Sans_SC',sans-serif] font-normal text-[#6B6B62] hover:text-foreground transition-colors duration-200"
               >
                 {link.label}
               </a>
@@ -75,7 +75,7 @@ export default function Navbar() {
           <Magnetic>
             <Link
               to="/contact"
-              className={`inline-flex items-center px-5 py-2.5 text-sm font-['Inter',sans-serif] font-medium rounded-sm transition-colors duration-200 ${
+              className={`inline-flex items-center px-5 py-2.5 text-sm font-['Noto_Sans_SC',sans-serif] font-medium rounded-sm transition-colors duration-200 ${
                 isActive("/contact")
                   ? "bg-[#4A7F7B] text-accent-foreground"
                   : "bg-accent text-accent-foreground hover:bg-[#4A7F7B]"
@@ -118,7 +118,7 @@ export default function Navbar() {
                 key={link.label}
                 to={link.href}
                 onClick={() => setOpen(false)}
-                className={`text-sm font-['Inter',sans-serif] transition-colors duration-200 ${
+                className={`text-sm font-['Noto_Sans_SC',sans-serif] transition-colors duration-200 ${
                   isActive(link.href)
                     ? "text-foreground font-medium"
                     : "text-[#6B6B62]"
@@ -130,7 +130,7 @@ export default function Navbar() {
               <a
                 key={link.label}
                 href={link.href}
-                className="text-sm font-['Inter',sans-serif] text-[#6B6B62]"
+                className="text-sm font-['Noto_Sans_SC',sans-serif] text-[#6B6B62]"
               >
                 {link.label}
               </a>
@@ -139,7 +139,7 @@ export default function Navbar() {
           <Link
             to="/contact"
             onClick={() => setOpen(false)}
-            className="inline-flex items-center justify-center px-5 py-2.5 bg-accent text-accent-foreground text-sm font-['Inter',sans-serif] font-medium rounded-sm"
+            className="inline-flex items-center justify-center px-5 py-2.5 bg-accent text-accent-foreground text-sm font-['Noto_Sans_SC',sans-serif] font-medium rounded-sm"
           >
             课程咨询
           </Link>

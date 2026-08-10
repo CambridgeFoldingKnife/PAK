@@ -5,7 +5,7 @@ import Footer from "@/app/components/Footer"
 // ─── Root ─────────────────────────────────────────────────────────────────────
 export default function FaqPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground font-['Inter',sans-serif] overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground font-['Noto_Sans_SC',sans-serif] overflow-x-hidden">
       <Navbar />
       <main className="pt-16">
         <FaqSection />

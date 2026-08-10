@@ -27,7 +27,7 @@ export default function KnowledgePage() {
   }, [category, query])
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-['Inter',sans-serif] overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground font-['Noto_Sans_SC',sans-serif] overflow-x-hidden">
       <Navbar />
 
       <main>
@@ -35,13 +35,13 @@ export default function KnowledgePage() {
         <ScrollReveal>
           <section className="pt-32 lg:pt-40 pb-16">
             <div className="max-w-[1200px] mx-auto px-6">
-              <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-6">
+              <p className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-6">
                 AK Knowledge Base
               </p>
-              <h1 className="font-['Playfair_Display',serif] text-5xl lg:text-6xl font-semibold leading-[1.12] text-foreground mb-6">
+              <h1 className="font-['Noto_Serif_SC',serif] text-5xl lg:text-6xl font-semibold leading-[1.12] text-foreground mb-6">
                 AK知识库
               </h1>
-              <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] leading-relaxed max-w-[620px]">
+              <p className="font-['Noto_Sans_SC',sans-serif] text-base text-[#6B6B62] leading-relaxed max-w-[620px]">
                 45种常见病症的AK诊疗方法
               </p>
             </div>
@@ -58,7 +58,7 @@ export default function KnowledgePage() {
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="搜索疾病名称..."
-                  className="w-full px-5 py-3 bg-[#F5F5F0] border border-border rounded-sm font-['Inter',sans-serif] text-sm text-foreground placeholder:text-[#9B9B90] focus:outline-none focus:border-accent transition-colors"
+                  className="w-full px-5 py-3 bg-[#F5F5F0] border border-border rounded-sm font-['Noto_Sans_SC',sans-serif] text-sm text-foreground placeholder:text-[#9B9B90] focus:outline-none focus:border-accent transition-colors"
                 />
               </div>
             </ScrollReveal>
@@ -91,7 +91,7 @@ export default function KnowledgePage() {
           <div className="max-w-[1200px] mx-auto px-6">
             <ScrollReveal>
               {filteredItems.length === 0 ? (
-                <div className="text-center py-16 text-[#9B9B90] font-['Inter',sans-serif] text-sm">
+                <div className="text-center py-16 text-[#9B9B90] font-['Noto_Sans_SC',sans-serif] text-sm">
                   没有找到匹配的疾病
                 </div>
               ) : (
@@ -104,7 +104,7 @@ export default function KnowledgePage() {
                         value={name}
                         className="bg-[#F5F5F0] border border-border rounded-sm px-6 data-[state=open]:shadow-sm"
                       >
-                        <AccordionTrigger className="font-['Playfair_Display',serif] text-base font-semibold text-foreground hover:no-underline py-4">
+                        <AccordionTrigger className="font-['Noto_Serif_SC',serif] text-base font-semibold text-foreground hover:no-underline py-4">
                           {name}
                         </AccordionTrigger>
                         <AccordionContent>
@@ -133,7 +133,7 @@ export default function KnowledgePage() {
 
             <ScrollReveal>
               <div className="mt-12 p-6 bg-[#fef3c7] border border-[#fde68a] rounded-sm text-center">
-                <p className="font-['Inter',sans-serif] text-sm text-[#92400e] leading-relaxed">
+                <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#92400e] leading-relaxed">
                   AK应用肌动学为辅助诊断与治疗方法，不能替代专业医疗诊断。如有健康问题，请咨询专业医生。
                 </p>
               </div>
@@ -149,10 +149,10 @@ export default function KnowledgePage() {
 function Field({ label, text }: { label: string; text: string }) {
   return (
     <div>
-      <h4 className="font-['Inter',sans-serif] text-sm font-semibold text-accent mb-1">
+      <h4 className="font-['Noto_Sans_SC',sans-serif] text-sm font-semibold text-accent mb-1">
         {label}
       </h4>
-      <p className="font-['Inter',sans-serif] text-sm text-[#4A4A45] leading-relaxed">
+      <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#4A4A45] leading-relaxed">
         {text}
       </p>
     </div>

@@ -21,15 +21,15 @@ function Section({
 function Hero() {
   return (
     <Section className="pt-32 lg:pt-40 pb-24">
-      <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-6">
+      <p className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-6">
         PAK Part I · 3 天入门证书课程
       </p>
-      <h1 className="font-['Playfair_Display',serif] text-5xl lg:text-6xl font-semibold leading-[1.12] text-foreground mb-6">
+      <h1 className="font-['Noto_Serif_SC',serif] text-5xl lg:text-6xl font-semibold leading-[1.12] text-foreground mb-6">
         AK 导论 +
         <br />
         代谢系统 IRT
       </h1>
-      <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] leading-relaxed max-w-[600px]">
+      <p className="font-['Noto_Sans_SC',sans-serif] text-base text-[#6B6B62] leading-relaxed max-w-[600px]">
         大陆首场官方授权落地的 DÄGAK-PAK 初阶课程第一板块。
         从应用肌动学底层逻辑切入，搭建结构-生化-心理 健康金三角核心思维。
       </p>
@@ -58,10 +58,10 @@ function CourseContent() {
 
   return (
     <Section alt>
-      <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
+      <p className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
         课程内容
       </p>
-      <h2 className="font-['Playfair_Display',serif] text-3xl lg:text-4xl font-semibold leading-[1.15] text-foreground mb-12">
+      <h2 className="font-['Noto_Serif_SC',serif] text-3xl lg:text-4xl font-semibold leading-[1.15] text-foreground mb-12">
         Part I 核心模块
       </h2>
 
@@ -69,20 +69,20 @@ function CourseContent() {
         {modules.map((m, i) => (
           <div key={m.title} className="border border-border rounded-sm overflow-hidden">
             <div className="bg-[#F5F5F0] px-7 py-5 border-b border-border flex items-center gap-4">
-              <span className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] text-accent">
+              <span className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.15em] text-accent">
                 0{i + 1}
               </span>
-              <p className="font-['Playfair_Display',serif] text-lg font-semibold text-foreground">
+              <p className="font-['Noto_Serif_SC',serif] text-lg font-semibold text-foreground">
                 {m.title}
               </p>
             </div>
             <div className="px-7 py-6">
-              <p className="font-['Inter',sans-serif] text-sm text-[#4A4A45] leading-relaxed mb-5">
+              <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#4A4A45] leading-relaxed mb-5">
                 {m.desc}
               </p>
               <ul className="flex flex-col gap-2">
                 {m.topics.map((t) => (
-                  <li key={t} className="font-['Inter',sans-serif] text-sm text-[#6B6B62] flex items-start gap-2.5">
+                  <li key={t} className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#6B6B62] flex items-start gap-2.5">
                     <span className="mt-2 w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" />
                     {t}
                   </li>
@@ -99,22 +99,22 @@ function CourseContent() {
 function Certification() {
   return (
     <Section>
-      <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
+      <p className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
         证书与学分
       </p>
-      <h2 className="font-['Playfair_Display',serif] text-3xl lg:text-4xl font-semibold leading-[1.15] text-foreground mb-6">
+      <h2 className="font-['Noto_Serif_SC',serif] text-3xl lg:text-4xl font-semibold leading-[1.15] text-foreground mb-6">
         官方学时认证
       </h2>
       <div className="prose-custom space-y-5">
-        <p className="font-['Inter',sans-serif] text-base text-[#4A4A45] leading-relaxed">
+        <p className="font-['Noto_Sans_SC',sans-serif] text-base text-[#4A4A45] leading-relaxed">
           完成 Part I 课程后，可获得 DÄGAK 官方颁发的<strong className="text-foreground font-medium">学时证书</strong>。
           此证书是未来申请正式 ICAK-DÄGAK PAK 认证所需的核心课时证明。
         </p>
-        <p className="font-['Inter',sans-serif] text-base text-[#4A4A45] leading-relaxed">
+        <p className="font-['Noto_Sans_SC',sans-serif] text-base text-[#4A4A45] leading-relaxed">
           本次 Part I 课程共计 <strong className="text-foreground font-medium">26 官方学时</strong>，
           计入 PAK 国际执业认证考核所需 100 学时档案。
         </p>
-        <p className="font-['Inter',sans-serif] text-sm text-[#6B6B62] leading-relaxed border-l-2 border-accent pl-4 mt-6">
+        <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#6B6B62] leading-relaxed border-l-2 border-accent pl-4 mt-6">
           重要说明：完成 Part I 课程不等同于获得 PAK 认证。获得正式 PAK 认证文凭，
           需完成 Part I + Part II 共计 100 课时要求且通过考核。
         </p>
@@ -127,15 +127,15 @@ function CTA() {
   return (
     <Section alt>
       <div className="text-center">
-        <h2 className="font-['Playfair_Display',serif] text-3xl lg:text-4xl font-semibold leading-[1.2] text-foreground mb-5">
+        <h2 className="font-['Noto_Serif_SC',serif] text-3xl lg:text-4xl font-semibold leading-[1.2] text-foreground mb-5">
           开启你的 PAK 学习之旅
         </h2>
-        <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] mb-10 max-w-[520px] mx-auto leading-relaxed">
+        <p className="font-['Noto_Sans_SC',sans-serif] text-base text-[#6B6B62] mb-10 max-w-[520px] mx-auto leading-relaxed">
           每期限额 30 人，预约课程顾问获取最新开课安排与报名详情。
         </p>
         <Link
           to="/contact"
-          className="inline-flex items-center px-8 py-4 bg-accent text-accent-foreground font-['Inter',sans-serif] text-sm font-medium rounded-sm hover:bg-[#4A7F7B] transition-colors duration-200"
+          className="inline-flex items-center px-8 py-4 bg-accent text-accent-foreground font-['Noto_Sans_SC',sans-serif] text-sm font-medium rounded-sm hover:bg-[#4A7F7B] transition-colors duration-200"
         >
           预约课程咨询
         </Link>
@@ -146,7 +146,7 @@ function CTA() {
 
 export default function Part1Page() {
   return (
-    <div className="min-h-screen bg-background text-foreground font-['Inter',sans-serif] overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground font-['Noto_Sans_SC',sans-serif] overflow-x-hidden">
       <Navbar />
       <main>
         <Hero />

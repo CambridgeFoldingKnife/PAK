@@ -28,34 +28,34 @@ function TherapistCard({ therapist }: { therapist: typeof therapists[0] }) {
         {/* Avatar + name row */}
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-full bg-accent/15 flex items-center justify-center flex-shrink-0">
-            <span className="font-['Playfair_Display',serif] text-lg font-semibold text-accent">
+            <span className="font-['Noto_Serif_SC',serif] text-lg font-semibold text-accent">
               {therapist.name.slice(0, 1)}
             </span>
           </div>
           <div className="flex-1 min-w-0">
-            <p className="font-['Inter',sans-serif] text-sm font-semibold text-foreground truncate">
+            <p className="font-['Noto_Sans_SC',sans-serif] text-sm font-semibold text-foreground truncate">
               {therapist.name}
             </p>
-            <p className="font-['Inter',sans-serif] text-xs text-[#6B6B62] truncate">
+            <p className="font-['Noto_Sans_SC',sans-serif] text-xs text-[#6B6B62] truncate">
               {therapist.business || "—"}{therapist.city ? ` · ${therapist.city}` : ""}
             </p>
           </div>
         </div>
 
         {/* Unit as bio */}
-        <p className="font-['Inter',sans-serif] text-sm text-[#4A4A45] leading-relaxed flex-1 line-clamp-4">
+        <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#4A4A45] leading-relaxed flex-1 line-clamp-4">
           {therapist.unit || "暂无单位信息"}
         </p>
 
         {/* Tags */}
         <div className="flex flex-wrap gap-1.5">
           {therapist.city && (
-            <span className="font-['Inter',sans-serif] text-[11px] text-[#6B6B62] bg-[#F5F5F0] border border-border/50 px-2 py-0.5 rounded-sm">
+            <span className="font-['Noto_Sans_SC',sans-serif] text-[11px] text-[#6B6B62] bg-[#F5F5F0] border border-border/50 px-2 py-0.5 rounded-sm">
               {therapist.city}
             </span>
           )}
           {therapist.business && (
-            <span className="font-['Inter',sans-serif] text-[11px] text-[#6B6B62] bg-[#F5F5F0] border border-border/50 px-2 py-0.5 rounded-sm">
+            <span className="font-['Noto_Sans_SC',sans-serif] text-[11px] text-[#6B6B62] bg-[#F5F5F0] border border-border/50 px-2 py-0.5 rounded-sm">
               {therapist.business}
             </span>
           )}
@@ -63,7 +63,7 @@ function TherapistCard({ therapist }: { therapist: typeof therapists[0] }) {
 
         {/* Footer */}
         <div className="flex items-center justify-between pt-2 border-t border-border/40">
-          <div className="flex items-center gap-3 text-[11px] font-['Inter',sans-serif] text-[#9B9B90]">
+          <div className="flex items-center gap-3 text-[11px] font-['Noto_Sans_SC',sans-serif] text-[#9B9B90]">
             {therapist.phone ? (
               <a href={`tel:${therapist.phone}`} className="hover:text-foreground transition-colors">
                 {therapist.phone}
@@ -74,7 +74,7 @@ function TherapistCard({ therapist }: { therapist: typeof therapists[0] }) {
           </div>
           <button
             onClick={() => setDetailOpen(true)}
-            className="font-['Inter',sans-serif] text-xs font-medium text-[#6B6B62] hover:text-foreground transition-colors underline underline-offset-2"
+            className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium text-[#6B6B62] hover:text-foreground transition-colors underline underline-offset-2"
           >
             详情
           </button>
@@ -97,16 +97,16 @@ function TherapistCard({ therapist }: { therapist: typeof therapists[0] }) {
               </button>
               <div className="flex items-center gap-4">
                 <div className="w-14 h-14 rounded-full bg-accent/15 flex items-center justify-center flex-shrink-0">
-                  <span className="font-['Playfair_Display',serif] text-xl font-semibold text-accent">
+                  <span className="font-['Noto_Serif_SC',serif] text-xl font-semibold text-accent">
                     {therapist.name.slice(0, 1)}
                   </span>
                 </div>
                 <div>
-                  <p className="font-['Playfair_Display',serif] text-xl font-semibold text-foreground">
+                  <p className="font-['Noto_Serif_SC',serif] text-xl font-semibold text-foreground">
                     {therapist.name}
                   </p>
                   {therapist.business && (
-                    <p className="font-['Inter',sans-serif] text-xs text-[#6B6B62] mt-0.5">
+                    <p className="font-['Noto_Sans_SC',sans-serif] text-xs text-[#6B6B62] mt-0.5">
                       {therapist.business}{therapist.city ? ` · ${therapist.city}` : ""}
                     </p>
                   )}
@@ -124,19 +124,19 @@ function TherapistCard({ therapist }: { therapist: typeof therapists[0] }) {
                 therapist.email && { label: "邮箱", value: therapist.email },
               ].filter(Boolean).map((field) => (
                 <div key={field!.label} className="flex flex-col gap-1.5">
-                  <label className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.05em] text-[#9B9B90]">
+                  <label className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.05em] text-[#9B9B90]">
                     {field!.label}
                   </label>
                   {field!.label === "联系电话" && field!.value ? (
-                    <a href={`tel:${field!.value}`} className="font-['Inter',sans-serif] text-sm text-accent hover:text-[#4A7F7B] transition-colors">
+                    <a href={`tel:${field!.value}`} className="font-['Noto_Sans_SC',sans-serif] text-sm text-accent hover:text-[#4A7F7B] transition-colors">
                       {field!.value}
                     </a>
                   ) : field!.label === "邮箱" && field!.value ? (
-                    <a href={`mailto:${field!.value}`} className="font-['Inter',sans-serif] text-sm text-accent hover:text-[#4A7F7B] transition-colors break-all">
+                    <a href={`mailto:${field!.value}`} className="font-['Noto_Sans_SC',sans-serif] text-sm text-accent hover:text-[#4A7F7B] transition-colors break-all">
                       {field!.value}
                     </a>
                   ) : (
-                    <p className="font-['Inter',sans-serif] text-sm text-foreground">{field!.value}</p>
+                    <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-foreground">{field!.value}</p>
                   )}
                 </div>
               ))}
@@ -145,7 +145,7 @@ function TherapistCard({ therapist }: { therapist: typeof therapists[0] }) {
             <div className="px-8 py-4 border-t border-border bg-[#EEEEE9]">
               <button
                 onClick={() => setDetailOpen(false)}
-                className="w-full bg-foreground text-[#F5F5F0] font-['Inter',sans-serif] text-sm font-medium py-3 rounded-sm hover:bg-[#333330] transition-colors duration-200"
+                className="w-full bg-foreground text-[#F5F5F0] font-['Noto_Sans_SC',sans-serif] text-sm font-medium py-3 rounded-sm hover:bg-[#333330] transition-colors duration-200"
               >
                 关闭
               </button>
@@ -183,22 +183,22 @@ export default function AlumniPage() {
   }, [search, cityFilter])
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-['Inter',sans-serif] overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground font-['Noto_Sans_SC',sans-serif] overflow-x-hidden">
       <Navbar />
 
       <main>
         {/* Hero */}
         <section className="pt-32 lg:pt-40 pb-16">
           <div className="max-w-[1200px] mx-auto px-6">
-            <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-6">
+            <p className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-6">
               PAK 联盟 · 治疗师目录
             </p>
-            <h1 className="font-['Playfair_Display',serif] text-5xl lg:text-6xl font-semibold leading-[1.12] text-foreground mb-6">
+            <h1 className="font-['Noto_Serif_SC',serif] text-5xl lg:text-6xl font-semibold leading-[1.12] text-foreground mb-6">
               全国 AK 认证治疗师
               <br />
               专业目录
             </h1>
-            <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] leading-relaxed max-w-[620px]">
+            <p className="font-['Noto_Sans_SC',sans-serif] text-base text-[#6B6B62] leading-relaxed max-w-[620px]">
               来自不同执业背景的治疗师将应用肌动学融入各自的专业领域。
               点击任意卡片查看详情，健衡学园将作为中间人为你对接——
               既是同行交流，也为往期学员带来更多获客机会。
@@ -215,13 +215,13 @@ export default function AlumniPage() {
                   key={s.label}
                   className="bg-[#EEEEE9] px-6 py-7 text-center"
                 >
-                  <p className="font-['Playfair_Display',serif] text-3xl lg:text-4xl font-semibold text-accent mb-1">
+                  <p className="font-['Noto_Serif_SC',serif] text-3xl lg:text-4xl font-semibold text-accent mb-1">
                     {s.value}
                     <span className="text-lg font-normal text-[#9B9B90] ml-1">
                       {s.unit}
                     </span>
                   </p>
-                  <p className="font-['Inter',sans-serif] text-xs text-[#6B6B62]">
+                  <p className="font-['Noto_Sans_SC',sans-serif] text-xs text-[#6B6B62]">
                     {s.label}
                   </p>
                 </div>
@@ -239,12 +239,12 @@ export default function AlumniPage() {
                 placeholder="搜索姓名、城市或执业领域..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="flex-1 min-w-0 bg-white border border-border px-4 py-3 font-['Inter',sans-serif] text-sm text-foreground placeholder:text-[#9B9B90] focus:outline-none focus:border-accent transition-colors rounded-sm"
+                className="flex-1 min-w-0 bg-white border border-border px-4 py-3 font-['Noto_Sans_SC',sans-serif] text-sm text-foreground placeholder:text-[#9B9B90] focus:outline-none focus:border-accent transition-colors rounded-sm"
               />
               <select
                 value={cityFilter}
                 onChange={(e) => setCityFilter(e.target.value)}
-                className="bg-white border border-border px-4 py-3 font-['Inter',sans-serif] text-sm text-foreground focus:outline-none focus:border-accent transition-colors rounded-sm min-w-[140px]"
+                className="bg-white border border-border px-4 py-3 font-['Noto_Sans_SC',sans-serif] text-sm text-foreground focus:outline-none focus:border-accent transition-colors rounded-sm min-w-[140px]"
               >
                 <option value="">全部城市</option>
                 {cities.map((c) => (
@@ -252,7 +252,7 @@ export default function AlumniPage() {
                 ))}
               </select>
             </div>
-            <p className="font-['Inter',sans-serif] text-xs text-[#9B9B90] mb-4">
+            <p className="font-['Noto_Sans_SC',sans-serif] text-xs text-[#9B9B90] mb-4">
               共 {filteredTherapists.length} 位治疗师
             </p>
           </div>
@@ -277,16 +277,16 @@ export default function AlumniPage() {
         {/* CTA */}
         <section className="bg-[#E6E6E0] py-20 lg:py-28">
           <div className="max-w-[1200px] mx-auto px-6 text-center">
-            <h2 className="font-['Playfair_Display',serif] text-3xl lg:text-4xl font-semibold leading-[1.2] text-foreground mb-5">
+            <h2 className="font-['Noto_Serif_SC',serif] text-3xl lg:text-4xl font-semibold leading-[1.2] text-foreground mb-5">
               成为下一个故事的主角
             </h2>
-            <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] mb-10 max-w-[520px] mx-auto leading-relaxed">
+            <p className="font-['Noto_Sans_SC',sans-serif] text-base text-[#6B6B62] mb-10 max-w-[520px] mx-auto leading-relaxed">
               加入 AK 认证培训，与全国数百位优秀从业者一起，
               用应用肌动学为你的临床工作打开新的可能。
             </p>
             <Link
               to="/contact"
-              className="inline-flex items-center px-8 py-4 bg-accent text-accent-foreground font-['Inter',sans-serif] text-sm font-medium rounded-sm hover:bg-[#4A7F7B] transition-colors duration-200"
+              className="inline-flex items-center px-8 py-4 bg-accent text-accent-foreground font-['Noto_Sans_SC',sans-serif] text-sm font-medium rounded-sm hover:bg-[#4A7F7B] transition-colors duration-200"
             >
               预约课程咨询
             </Link>

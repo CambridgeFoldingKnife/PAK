@@ -10,13 +10,13 @@ function Hero() {
   return (
     <section className="pt-32 lg:pt-40 pb-16 bg-[#E6E6E0]">
       <div className="max-w-[900px] mx-auto px-6">
-        <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-6">
+        <p className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-6">
           课程中心
         </p>
-        <h1 className="font-['Playfair_Display',serif] text-5xl lg:text-6xl font-semibold leading-[1.12] text-foreground mb-6">
+        <h1 className="font-['Noto_Serif_SC',serif] text-5xl lg:text-6xl font-semibold leading-[1.12] text-foreground mb-6">
           2027 年线下课程排期
         </h1>
-        <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] leading-relaxed max-w-[600px]">
+        <p className="font-['Noto_Sans_SC',sans-serif] text-base text-[#6B6B62] leading-relaxed max-w-[600px]">
           线下实操与线上理论学习，系统掌握 AK 技术。每期限额 30 人，选择适合你的城市与班次。
         </p>
       </div>
@@ -52,7 +52,7 @@ function LoadingState() {
       <div className="max-w-[900px] mx-auto px-6 flex justify-center">
         <div className="flex items-center gap-3 text-[#6B6B62]">
           <span className="inline-block w-5 h-5 border-2 border-accent border-t-transparent rounded-full animate-spin" />
-          <span className="font-['Inter',sans-serif] text-sm">课程加载中…</span>
+          <span className="font-['Noto_Sans_SC',sans-serif] text-sm">课程加载中…</span>
         </div>
       </div>
     </section>
@@ -63,7 +63,7 @@ function ErrorState() {
   return (
     <section className="py-24 lg:py-32">
       <div className="max-w-[900px] mx-auto px-6 text-center">
-        <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] mb-6">
+        <p className="font-['Noto_Sans_SC',sans-serif] text-base text-[#6B6B62] mb-6">
           课程加载失败，请联系咨询。
         </p>
         <div className="relative inline-block group">
@@ -94,7 +94,7 @@ function EmptyState() {
   return (
     <section className="py-24 lg:py-32">
       <div className="max-w-[900px] mx-auto px-6 text-center">
-        <p className="font-['Inter',sans-serif] text-base text-[#6B6B62]">
+        <p className="font-['Noto_Sans_SC',sans-serif] text-base text-[#6B6B62]">
           暂无开放课程，敬请期待。
         </p>
       </div>
@@ -146,7 +146,7 @@ function CourseSchedule() {
                 className="bg-[#F5F5F0] border border-border rounded-sm p-6 hover:shadow-sm transition-shadow"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-                  <h3 className="font-['Playfair_Display',serif] text-lg font-semibold text-foreground">
+                  <h3 className="font-['Noto_Serif_SC',serif] text-lg font-semibold text-foreground">
                     {c.name}
                   </h3>
                   <span
@@ -178,7 +178,7 @@ function CourseSchedule() {
                 </div>
 
                 <div className="flex flex-wrap items-center gap-4 mb-5">
-                  <span className="font-['Playfair_Display',serif] text-2xl font-bold text-accent">
+                  <span className="font-['Noto_Serif_SC',serif] text-2xl font-bold text-accent">
                     {c.price}
                   </span>
                   <span className="inline-flex px-3 py-1 bg-[#d1fae5] text-[#065f46] text-sm font-semibold rounded">
@@ -212,7 +212,7 @@ function CourseSchedule() {
 
 export default function CourseCenterPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground font-['Inter',sans-serif] overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground font-['Noto_Sans_SC',sans-serif] overflow-x-hidden">
       <Navbar />
       <main>
         <ScrollReveal>

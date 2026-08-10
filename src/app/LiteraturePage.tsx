@@ -39,7 +39,7 @@ export default function LiteraturePage() {
   const [playingVideo, setPlayingVideo] = useState<string | null>(null)
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-['Inter',sans-serif] overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground font-['Noto_Sans_SC',sans-serif] overflow-x-hidden">
       <Navbar />
 
       <main>
@@ -47,13 +47,13 @@ export default function LiteraturePage() {
         <ScrollReveal>
           <section className="pt-32 lg:pt-40 pb-16">
             <div className="max-w-[1200px] mx-auto px-6">
-              <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-6">
+              <p className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-6">
                 Learning Resources
               </p>
-              <h1 className="font-['Playfair_Display',serif] text-5xl lg:text-6xl font-semibold leading-[1.12] text-foreground mb-6">
+              <h1 className="font-['Noto_Serif_SC',serif] text-5xl lg:text-6xl font-semibold leading-[1.12] text-foreground mb-6">
                 学习资料
               </h1>
-              <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] leading-relaxed max-w-[620px]">
+              <p className="font-['Noto_Sans_SC',sans-serif] text-base text-[#6B6B62] leading-relaxed max-w-[620px]">
                 教学视频与 ima 知识库
               </p>
             </div>
@@ -84,37 +84,37 @@ export default function LiteraturePage() {
             {activeTab === "ima" ? (
               <div className="max-w-[1000px] mx-auto text-center">
                 <ScrollReveal>
-                  <h2 className="font-['Playfair_Display',serif] text-4xl lg:text-5xl font-semibold leading-[1.15] text-foreground mb-5">
+                  <h2 className="font-['Noto_Serif_SC',serif] text-4xl lg:text-5xl font-semibold leading-[1.15] text-foreground mb-5">
                     AK 学习资料库 · 随身知识助手
                   </h2>
-                  <p className="font-['Inter',sans-serif] text-xl lg:text-2xl text-accent mb-12">
+                  <p className="font-['Noto_Sans_SC',sans-serif] text-xl lg:text-2xl text-accent mb-12">
                     把 AK 经典教材与 22 册科普读物装进你的口袋
                   </p>
                 </ScrollReveal>
 
                 <ScrollReveal delay={0.05}>
                   <div className="text-left bg-[#F5F5F0] border border-border rounded-sm p-10 lg:p-14 mb-8">
-                    <h3 className="font-['Playfair_Display',serif] text-2xl lg:text-3xl font-semibold text-foreground mb-5">
+                    <h3 className="font-['Noto_Serif_SC',serif] text-2xl lg:text-3xl font-semibold text-foreground mb-5">
                       什么是 ima 知识库
                     </h3>
-                    <p className="font-['Inter',sans-serif] text-lg lg:text-xl text-[#6B6B62] leading-relaxed mb-8">
+                    <p className="font-['Noto_Sans_SC',sans-serif] text-lg lg:text-xl text-[#6B6B62] leading-relaxed mb-8">
                       ima 是腾讯出品的 AI 智能知识管理助手。我们已将健衡学园的全部课程资料整理入库，
                       你可以直接用「问答」的方式向 AI 提问，也可以随时翻阅、检索原文档——学 AK，不用再翻箱倒柜找资料。
                     </p>
 
-                    <h3 className="font-['Playfair_Display',serif] text-2xl lg:text-3xl font-semibold text-foreground mb-5">
+                    <h3 className="font-['Noto_Serif_SC',serif] text-2xl lg:text-3xl font-semibold text-foreground mb-5">
                       里面有什么
                     </h3>
-                    <p className="font-['Inter',sans-serif] text-lg lg:text-xl text-[#6B6B62] leading-relaxed mb-4">
+                    <p className="font-['Noto_Sans_SC',sans-serif] text-lg lg:text-xl text-[#6B6B62] leading-relaxed mb-4">
                       <strong className="text-foreground font-semibold">AK 经典教材</strong>
                       —— 体系化的专业教材，从理论基础到临床方法，逐章可查；
                     </p>
-                    <p className="font-['Inter',sans-serif] text-lg lg:text-xl text-[#6B6B62] leading-relaxed mb-10">
+                    <p className="font-['Noto_Sans_SC',sans-serif] text-lg lg:text-xl text-[#6B6B62] leading-relaxed mb-10">
                       <strong className="text-foreground font-semibold">AK 科普手册</strong>
                       —— 22 本 PDF 科普读物，用通俗的语言讲清肌肉测试、结构与治疗逻辑，零基础也能读得懂。
                     </p>
 
-                    <ul className="flex flex-col gap-4 font-['Inter',sans-serif] text-lg lg:text-xl text-[#4A4A45]">
+                    <ul className="flex flex-col gap-4 font-['Noto_Sans_SC',sans-serif] text-lg lg:text-xl text-[#4A4A45]">
                       <li>教材 + 科普 一站式整理，专业与入门都能覆盖</li>
                       <li>AI 智能问答，随时解答你的 AK 疑问</li>
                       <li>手机/电脑随手查，学习资料常伴左右</li>
@@ -123,7 +123,7 @@ export default function LiteraturePage() {
                 </ScrollReveal>
 
                 <ScrollReveal delay={0.1}>
-                  <p className="font-['Playfair_Display',serif] text-xl lg:text-2xl text-foreground mb-10">
+                  <p className="font-['Noto_Serif_SC',serif] text-xl lg:text-2xl text-foreground mb-10">
                     扫码加入知识库，开启你的 AK 学习之旅
                   </p>
                 </ScrollReveal>
@@ -144,7 +144,7 @@ export default function LiteraturePage() {
                             className="max-w-full max-h-full object-contain"
                           />
                         </div>
-                        <p className="px-5 py-4 font-['Inter',sans-serif] text-base lg:text-lg text-[#6B6B62] text-center">
+                        <p className="px-5 py-4 font-['Noto_Sans_SC',sans-serif] text-base lg:text-lg text-[#6B6B62] text-center">
                           {img.alt}
                         </p>
                       </a>
@@ -177,10 +177,10 @@ export default function LiteraturePage() {
                         </span>
                       </div>
                       <div className="px-5 py-4">
-                        <h3 className="font-['Playfair_Display',serif] text-lg font-semibold text-foreground mb-1">
+                        <h3 className="font-['Noto_Serif_SC',serif] text-lg font-semibold text-foreground mb-1">
                           {video.title}
                         </h3>
-                        <p className="font-['Inter',sans-serif] text-sm text-[#9B9B90]">来源：ICAK</p>
+                        <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#9B9B90]">来源：ICAK</p>
                       </div>
                     </button>
                   </ScrollReveal>
@@ -193,15 +193,15 @@ export default function LiteraturePage() {
         {/* CTA */}
         <section className="bg-[#E6E6E0] py-20 lg:py-28">
           <div className="max-w-[1200px] mx-auto px-6 text-center">
-            <h2 className="font-['Playfair_Display',serif] text-3xl lg:text-4xl font-semibold leading-[1.2] text-foreground mb-5">
+            <h2 className="font-['Noto_Serif_SC',serif] text-3xl lg:text-4xl font-semibold leading-[1.2] text-foreground mb-5">
               需要更多学习支持？
             </h2>
-            <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] mb-10 max-w-[520px] mx-auto leading-relaxed">
+            <p className="font-['Noto_Sans_SC',sans-serif] text-base text-[#6B6B62] mb-10 max-w-[520px] mx-auto leading-relaxed">
               联系课程顾问，获取推荐书单与配套学习资料。
             </p>
             <Link
               to="/contact"
-              className="inline-flex items-center px-8 py-4 bg-accent text-accent-foreground font-['Inter',sans-serif] text-sm font-medium rounded-sm hover:bg-[#4A7F7B] transition-colors duration-200"
+              className="inline-flex items-center px-8 py-4 bg-accent text-accent-foreground font-['Noto_Sans_SC',sans-serif] text-sm font-medium rounded-sm hover:bg-[#4A7F7B] transition-colors duration-200"
             >
               课程咨询
             </Link>

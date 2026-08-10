@@ -13,7 +13,7 @@ No lint, typecheck, or test scripts exist in `package.json`.
 
 ## Tech Stack
 
-React 18 + Vite 6 + TypeScript + Tailwind CSS v4. Package manager is pnpm (see `pnpm-workspace.yaml` and `pnpm.overrides` in `package.json`).
+React 18 + Vite 6 + TypeScript + Tailwind CSS v4. Animation: **GSAP** (`gsap` + `@gsap/react` + `lenis` for smooth scroll). Package manager is **npm** in practice (`package-lock.json` is gitignored; `pnpm-workspace.yaml` also exists but is not used for installs).
 
 ## Path Alias
 
@@ -29,55 +29,80 @@ React 18 + Vite 6 + TypeScript + Tailwind CSS v4. Package manager is pnpm (see `
 ## Entry & Routing
 
 - Entry: `index.html` → `/src/main.tsx` → `BrowserRouter` with `Routes`.
-- Routes:
+- **Code splitting**: `main.tsx` lazy-loads every page via `React.lazy` wrapped in `<Suspense>` (fallback = `PageLoader`). Each route is an independent chunk, loaded on demand.
+- `main.tsx` also mounts global singletons: `ScrollToTop` (scroll to top on route change + `history.scrollRestoration = "manual"`), `SmoothScroll` (global Lenis), `CustomCursor`.
+
+Routes:
 
 | Path | Page | Component |
 | --- | --- | --- |
 | `/` | Home (landing) | `App.tsx` |
-| `/course` | Course detail | `CoursePage.tsx` |
+| `/course` | Course detail / 关于AK | `CoursePage.tsx` |
 | `/course/part1` | Course Part 1 | `Part1Page.tsx` |
 | `/course/part2` | Course Part 2 | `Part2Page.tsx` |
-| `/intro` | Course intro | `IntroPage.tsx` |
-| `/pak-union` | Alumni list | `AlumniPage.tsx` |
+| `/pak-union` | Alumni / 治疗师目录 | `AlumniPage.tsx` |
 | `/faq` | FAQ page | `FaqPage.tsx` |
 | `/contact` | Contact form | `ContactPage.tsx` |
+| `/research` | Literature | `LiteraturePage.tsx` |
+| `/student-scenes` | 学员课堂 | `StudentScenesPage.tsx` |
+| `/course-center` | 课程中心 | `CourseCenterPage.tsx` |
+| `/knowledge` | AK知识库 | `KnowledgePage.tsx` |
+
+(`/intro` was removed — navigation "关于AK" maps to `/course`, see `Navbar.tsx` links.)
 
 ## Architecture
 
 ### Pages (`src/app/`)
 
-All page components are single-file React components at the top of `src/app/`. Most are self-contained SFCs without extracted sub-components. `App.tsx` is the largest (~16KB) — it contains the landing page with Navbar, Hero, course sections, instructor section, and Footer all inline.
+Single-file React components at the top of `src/app/`. Most are self-contained SFCs. `App.tsx` and `CoursePage.tsx` are the largest, each with a root-level `useGSAP` block driving scroll/entrance animations.
 
-### Design System & Components (`src/app/components/`)
+### Components (`src/app/components/`)
 
-- `ui/` — 40+ shadcn/ui components (Radix UI primitives wrapped with styling). These are source-in-repo (not node_modules), customizable directly. Includes: accordion, alert-dialog, avatar, button, card, chart, checkbox, dialog, dropdown-menu, form, input, popover, select, table, tabs, tooltip, and more.
-- `alumni/` — AlumniCard, AlumniSection components for `/pak-union`.
-- `faq/` — FaqSection accordion-based component for `/faq`.
-- `figma/` — ImageWithFallback component for handling `figma:asset/` imports.
+- `ui/` — 40+ shadcn/ui components (Radix UI primitives wrapped with styling). Source-in-repo.
+- `alumni/`, `faq/`, `figma/` — as before.
+- Animation utilities:
+  - `ScrollReveal.tsx` — framer-motion reveal-on-scroll wrapper (used by pages without GSAP).
+  - `CustomCursor.tsx` — global trailing cursor ring (mounted in `main.tsx`).
+  - `Magnetic.tsx` — magnetic-hover wrapper for CTA buttons (plain `useEffect` pattern — **the reference implementation for hover effects**).
+  - `Marquee.tsx` — infinite keyword marquee (uses `useGSAP` for a direct loop tween).
+  - `SmoothScroll.tsx` — global Lenis smooth scroll (mounted in `main.tsx`).
 
-The `cn()` utility (from `@/lib/utils` or similar) combines `tailwind-merge`, `clsx`, and `cva` for className merging — this is the standard shadcn/ui pattern.
+The `cn()` utility (from `@/lib/utils` or similar) combines `tailwind-merge`, `clsx`, and `cva` — the standard shadcn/ui pattern.
 
 ### Data Layer (`src/data/`)
 
-All content is static TypeScript modules — no API calls, no database. Pages import data directly:
-- `alumni.ts` — Alumni array + `Alumni` type definition.
-- `faq.ts` — Aggregates all FAQ category files into a single `faqItems` export.
-- `faq-*.ts` (8 files) — FAQ content split by topic (about, course, certification, clinical, comparison, instructor, learning, registration).
-- `faq-types.ts` — Shared `FAQItem` interface.
+Static TypeScript modules — no API calls, no database. Includes `alumni.ts`, `faq.ts` (aggregates `faq-*.ts` category files), `faq-types.ts`. Content is also duplicated inline in some page components (e.g. `CoursePage.tsx` has large inline arrays).
 
 ### Styles (`src/styles/`)
 
-CSS loading chain: `index.css` → imports `fonts.css`, `tailwind.css`, `theme.css`.
-- `fonts.css` — Playfair Display (headings/logo) and Inter (body/UI).
-- `tailwind.css` — Tailwind entry with `@source` scan directive.
-- `theme.css` — CSS custom properties for design tokens, `@theme inline` block for Tailwind v4 integration, and global typography rules.
+CSS loading chain: `index.css` → imports `fonts.css`, `tailwind.css`, `theme.css`. `index.css` also has the recommended **Lenis** CSS.
 
-### Figma Asset Resolver
+**Fonts** (in `fonts.css`): 思源宋体 `Noto Serif SC` for headings + 思源黑体 `Noto Sans SC` for body, loaded via `fonts.loli.net` (Google Fonts China mirror — do not revert to `fonts.googleapis.com`, it's slow/blocked in mainland China). Applied per-element via Tailwind arbitrary classes `font-['Noto_Serif_SC',serif]` / `font-['Noto_Sans_SC',sans-serif]`.
+
+## GSAP Conventions — READ BEFORE WRITING ANIMATIONS
+
+GSAP + ScrollTrigger + Lenis are installed and used across pages. Two hard rules:
+
+1. **Scroll / entrance animations** → use `useGSAP(() => {...}, { scope: ref })` with direct `gsap.from/to` + `scrollTrigger` config. **This works.** Register plugins at module top: `gsap.registerPlugin(useGSAP, ScrollTrigger)`.
+
+2. **Hover / event-driven effects (mousemove, click, etc.) → use plain `useEffect` with `addEventListener` + `gsap.to`, and remove listeners in cleanup.** ⚠️ **Do NOT use `useGSAP` + `contextSafe()` / `context.add()` for event listeners** — in this environment the useGSAP context is reverted immediately after mount, which silently removes the listeners (no console errors, hover effects just never fire). Reference: `src/app/components/Magnetic.tsx` and the moments-card effect in `StudentScenesPage.tsx`.
+
+Additional conventions:
+- All animations respect `prefers-reduced-motion`: guard with `if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return`.
+- `data-count` + `data-suffix` attributes drive number count-up animations (see `App.tsx` / `CoursePage.tsx`).
+- Debugging GSAP: after dispatching events / scrolling, read `getComputedStyle` **after a tick** (animations start on the next RAF — reading synchronously shows the pre-animation value).
+
+## Figma Asset Resolver
 
 A custom Vite plugin (`figmaAssetResolver()` in `vite.config.ts`) resolves `figma:asset/<filename>` import paths to `src/assets/<filename>`. This is a Figma export artifact — do not remove it unless removing all `figma:asset/` imports.
+
+## Git
+
+Two remotes: `gitee` (https://gitee.com/feifei-001/pakfront.git) and `github` (https://github.com/CambridgeFoldingKnife/PAK.git). Current dev branch: `feature-web2` (tracks `github/feature-web2`). Push to GitHub with `git push`, PRs via `gh pr create`.
 
 ## Common Gotchas
 
 - **HMR not reliable**: If styles break or the page looks broken, hard-refresh (`Ctrl+Shift+R`) or restart the dev server. Do not assume a style change is wrong until you've ruled out stale HMR.
-- **`guidelines/Guidelines.md`** is a placeholder template from Figma export — it is not active project instructions.
+- **Lazy-loaded routes**: editing a page triggers HMR; a full reload may be needed to pick up `main.tsx` route changes.
+- **`guidelines/Guidelines.md`** is a placeholder template from Figma export — not active project instructions.
 - **`ATTRIBUTIONS.md`** documents shadcn/ui and Unsplash licensing for Figma-exported assets.
