@@ -8,7 +8,7 @@ const links = [
   { label: "课程中心", href: "/course-center" },
   { label: "学员课堂", href: "/student-scenes" },
   { label: "AK知识库", href: "/knowledge" },
-  { label: "PAK联盟", href: "/pak-union" },
+  { label: "AK治疗师目录", href: "/pak-union" },
   { label: "学习资料", href: "/research" },
   { label: "FAQ问答", href: "/faq" },
 ]
