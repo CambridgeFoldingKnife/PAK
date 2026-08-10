@@ -10,12 +10,20 @@
 # 安装依赖
 npm install
 
-# 启动开发服务器（http://localhost:5173）
+# 启动开发服务器（推荐，http://localhost:3000，会执行 api/ 下的 Serverless 函数，含飞书接口）
+npm run vercel:dev
+
+# 纯 Vite dev server（http://localhost:5173，不执行 api/ 函数，飞书接口不可用）
 npm run dev
 
 # 构建生产版本（输出到 dist/）
 npm run build
 ```
+
+> **⚠️ 本地开发请使用 `vercel:dev`（即 `vercel dev`）**，不要用纯 `npm run dev`。
+> 项目在 `api/` 目录下有 Vercel Serverless 函数（`api/courses.ts` 课程中心、`api/consult.ts` 咨询表单，均对接飞书多维表格）。
+> 纯 Vite 不会执行这些函数：`vite.config.ts` 的 `/api` 代理指向 `http://localhost:3000`，只有 `vercel dev` 才会启动该端口、真正运行函数并注入 `.env` 环境变量。
+> 若直接用 `npm run dev`，课程中心会显示"连不上飞书"。
 
 ---
 
@@ -42,6 +50,10 @@ front/
 ├── index.html
 ├── package.json
 ├── vite.config.ts            # Vite 配置（@tailwindcss/vite、figma 资源解析）
+├── api/                      # Vercel Serverless 函数（vercel dev 本地也会执行）
+│   ├── courses.ts              # 课程中心：读取飞书多维表格课程数据（GET /api/courses）
+│   └── consult.ts              # 咨询表单：写入飞书多维表格（POST /api/consult）
+├── .env                      # 飞书应用凭证（FEISHU_APP_ID/SECRET、APP_TOKEN、TABLE_ID 等）
 └── src/
     ├── main.tsx              # 路由入口
     │
@@ -50,7 +62,6 @@ front/
     │   ├── CoursePage.tsx       # 课程介绍总览（/course）
     │   ├── Part1Page.tsx        # Part I 课程详情（/course/part1）
     │   ├── Part2Page.tsx        # Part II 课程详情（/course/part2）
-    │   ├── IntroPage.tsx        # 应用肌动学入门（/intro）
     │   ├── AlumniPage.tsx       # PAK 联盟 / 学员展示（/pak-union）
     │   ├── FaqPage.tsx          # FAQ 问答（/faq）
     │   ├── ContactPage.tsx      # 课程咨询表单（/contact）
@@ -92,7 +103,6 @@ front/
 | `/course` | 课程介绍总览 | `CoursePage.tsx` |
 | `/course/part1` | Part I 基础培训 | `Part1Page.tsx` |
 | `/course/part2` | Part II 进阶培训 | `Part2Page.tsx` |
-| `/intro` | 应用肌动学入门 | `IntroPage.tsx` |
 | `/pak-union` | PAK 联盟 | `AlumniPage.tsx` |
 | `/faq` | FAQ 问答 | `FaqPage.tsx` |
 | `/contact` | 课程咨询 | `ContactPage.tsx` |

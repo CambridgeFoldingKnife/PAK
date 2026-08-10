@@ -6,7 +6,8 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite",
-    "vercel:dev": "vercel dev"
+    "vercel:dev": "vercel dev",
+    "local:dev": "node scripts/dev.mjs"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",

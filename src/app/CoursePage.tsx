@@ -1,4 +1,5 @@
-import Navbar from "@/app/components/Navbar"
+﻿import Navbar from "@/app/components/Navbar"
+import Footer from "@/app/components/Footer"
 import ScrollReveal from "@/app/components/ScrollReveal"
 
 // ─── Health Triangle (from home page) ─────────────────────────────────────────
@@ -127,28 +128,79 @@ export default function CoursePage() {
           </section>
         </ScrollReveal>
 
+        {/* AK 纪录片视频 */}
+        <ScrollReveal>
+          <section className="max-w-[900px] mx-auto px-6 pb-16">
+            <video
+              className="w-full aspect-video bg-black rounded-sm shadow-sm"
+              controls
+              playsInline
+              preload="metadata"
+              src="https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/videos/ak_documentary.mp4"
+            >
+              您的浏览器不支持 HTML5 视频播放。
+            </video>
+            <p className="font-['Inter',sans-serif] text-sm text-[#6B6B62] mt-3">
+              AK 应用肌动学纪录片
+            </p>
+          </section>
+        </ScrollReveal>
+
         {/* Content */}
         <section className="max-w-[900px] mx-auto px-6 pb-32 space-y-16">
           {/* 01 定义与核心特征 */}
           <ScrollReveal>
-            <div>
-              <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
-                01 · 定义与核心特征
-              </p>
-              <h2 className="font-['Playfair_Display',serif] text-3xl lg:text-4xl font-semibold leading-[1.15] text-foreground mb-8">
-                什么是应用肌动学
-              </h2>
-              <div className="prose-custom space-y-5">
-                <p className="font-['Inter',sans-serif] text-base text-[#4A4A45] leading-relaxed">
-                  区别于传统研究人体运动系统的运动学（Kinesiology），应用肌动学是一门融合了
-                  <strong className="text-foreground font-medium">西方生理学</strong>（神经、肌肉、淋巴、血管系统）与
-                  <strong className="text-foreground font-medium">东方能量医学</strong>（经络、穴位理论）的新兴健康科学。
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-start">
+              {/* Left: 什么是应用肌动学 */}
+              <div>
+                <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-4">
+                  01 · 定义与核心特征
                 </p>
-                <p className="font-['Inter',sans-serif] text-base text-[#4A4A45] leading-relaxed">
-                  其最核心的特征是使用<strong className="text-foreground font-medium">肌能检测</strong>作为生物反馈机制。
-                  与传统测量肌肉力量的"肌力测试"不同，肌能检测旨在评估神经系统对肌肉的实时控制能力。
-                  通过观察肌肉反应（扣紧或松软），获取意识之外的生理和能量失衡信息，从而指导诊断、评估疗效。
+                <h2 className="font-['Playfair_Display',serif] text-3xl lg:text-4xl font-semibold leading-[1.15] text-foreground mb-8">
+                  什么是应用肌动学
+                </h2>
+                <div className="prose-custom space-y-7">
+                  <p className="font-['Inter',sans-serif] text-xl text-[#4A4A45] leading-[1.8]">
+                    区别于传统研究人体运动系统的运动学（Kinesiology），应用肌动学是一门融合了
+                    <strong className="text-foreground font-medium">西方生理学</strong>（神经、肌肉、淋巴、血管系统）与
+                    <strong className="text-foreground font-medium">东方能量医学</strong>（经络、穴位理论）的新兴健康科学。
+                  </p>
+                  <p className="font-['Inter',sans-serif] text-xl text-[#4A4A45] leading-[1.8]">
+                    其最核心的特征是使用<strong className="text-foreground font-medium">肌能检测</strong>作为生物反馈机制。
+                    与传统测量肌肉力量的"肌力测试"不同，肌能检测旨在评估神经系统对肌肉的实时控制能力。
+                    通过观察肌肉反应（扣紧或松软），获取意识之外的生理和能量失衡信息，从而指导诊断、评估疗效。
+                  </p>
+                </div>
+              </div>
+
+              {/* Right: 认证体系时间线 */}
+              <div className="bg-[#F5F5F0] border border-border rounded-sm p-6 lg:p-8">
+                <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-3">
+                  认证体系时间线
                 </p>
+                <h3 className="font-['Playfair_Display',serif] text-xl lg:text-2xl font-semibold text-foreground mb-8">
+                  AK 六十载发展历程
+                </h3>
+                <div className="relative border-l border-[#4A7F7B]/30">
+                  {[
+                    { year: "1964", text: "Dr. Goodheart 创立应用肌动学" },
+                    { year: "1974", text: "ICAK 国际应用肌动学学院成立" },
+                    { year: "1976", text: "首个 AK 标准化教学大纲发布" },
+                    { year: "1992", text: "Dr. Hans Garten 获 DIBAK 认证" },
+                    { year: "2000+", text: "AK 进入中国，多家培训机构开展中文教学" },
+                    { year: "2026", text: "健衡学园引入 Hans Garten 官方中文课程" },
+                  ].map((item) => (
+                    <div key={item.year} className="relative pl-8 pb-8 last:pb-0">
+                      <span className="absolute left-[-5px] top-1.5 w-[10px] h-[10px] rounded-full bg-[#4A7F7B]" />
+                      <p className="font-['Inter',sans-serif] text-sm font-semibold text-[#4A7F7B]">
+                        {item.year}
+                      </p>
+                      <p className="font-['Inter',sans-serif] text-sm text-[#4A4A45] leading-relaxed mt-1">
+                        {item.text}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </ScrollReveal>
@@ -473,13 +525,7 @@ export default function CoursePage() {
           </ScrollReveal>
         </section>
       </main>
-      <footer className="bg-[#1C1C1A] py-10">
-        <div className="max-w-[1200px] mx-auto px-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <p className="font-['Inter',sans-serif] text-xs text-[#4A4A45]">
-            © 2026 PAK 健衡学园. 保留所有权利。
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

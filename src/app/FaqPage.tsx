@@ -1,5 +1,6 @@
 import FaqSection from "@/app/components/faq/FaqSection"
 import Navbar from "@/app/components/Navbar"
+import Footer from "@/app/components/Footer"
 
 // ─── Root ─────────────────────────────────────────────────────────────────────
 export default function FaqPage() {
@@ -9,6 +10,7 @@ export default function FaqPage() {
       <main className="pt-16">
         <FaqSection />
       </main>
+      <Footer />
     </div>
   )
 }

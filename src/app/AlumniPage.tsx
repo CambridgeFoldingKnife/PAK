@@ -1,22 +1,13 @@
-import { useState, useMemo } from "react"
+﻿import { useState, useMemo } from "react"
 import { Link } from "react-router"
-import alumniData from "@/data/alumni"
 import therapists from "@/data/therapists"
-import { AlumniCard } from "@/app/components/alumni/AlumniCard"
 import Navbar from "@/app/components/Navbar"
-
-const alumniFilters = [
-  { key: "all", label: "全部学员" },
-  { key: "physio", label: "物理治疗与康复" },
-  { key: "health", label: "健康管理" },
-  { key: "holistic", label: "自然疗法" },
-  { key: "sports", label: "运动与体能" },
-]
+import Footer from "@/app/components/Footer"
 
 const stats = [
-  { value: therapists.length + alumniData.length, unit: "位", label: "已结业学员" },
+  { value: therapists.length, unit: "位", label: "认证治疗师" },
   {
-    value: new Set(therapists.map((t) => t.city).filter(Boolean)).size + new Set(alumniData.map((a) => a.location)).size,
+    value: new Set(therapists.map((t) => t.city).filter(Boolean)).size,
     unit: "座",
     label: "覆盖城市",
   },
@@ -27,15 +18,7 @@ const stats = [
   },
 ]
 
-function classify(occupation: string): string {
-  if (/物理治疗|康复|整脊|正骨/.test(occupation)) return "physio"
-  if (/健康管理/.test(occupation)) return "health"
-  if (/自然疗法|中医|针灸/.test(occupation)) return "holistic"
-  if (/运动|体能|教练|运动员|ACSM|培训师/.test(occupation)) return "sports"
-  return "other"
-}
-
-// ─── Therapist Card (与学员名片风格一致) ──────────────────────────────────────
+// ─── Therapist Card ───────────────────────────────────────────────────────────
 function TherapistCard({ therapist }: { therapist: typeof therapists[0] }) {
   const [detailOpen, setDetailOpen] = useState(false)
 
@@ -176,16 +159,8 @@ function TherapistCard({ therapist }: { therapist: typeof therapists[0] }) {
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function AlumniPage() {
-  const [activeTab, setActiveTab] = useState<"alumni" | "directory">("directory")
-  const [activeFilter, setActiveFilter] = useState("all")
   const [search, setSearch] = useState("")
   const [cityFilter, setCityFilter] = useState("")
-
-  // Alumni filtered data
-  const filteredAlumni = useMemo(() => {
-    if (activeFilter === "all") return alumniData
-    return alumniData.filter((a) => classify(a.title) === activeFilter)
-  }, [activeFilter])
 
   // Therapist cities
   const cities = useMemo(() => {
@@ -219,12 +194,12 @@ export default function AlumniPage() {
               PAK 联盟 · 治疗师目录
             </p>
             <h1 className="font-['Playfair_Display',serif] text-5xl lg:text-6xl font-semibold leading-[1.12] text-foreground mb-6">
-              全国 PAK 认证学员
+              全国 AK 认证治疗师
               <br />
-              与治疗师专业目录
+              专业目录
             </h1>
             <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] leading-relaxed max-w-[620px]">
-              来自不同执业背景的学员将应用肌动学融入各自的专业领域。
+              来自不同执业背景的治疗师将应用肌动学融入各自的专业领域。
               点击任意卡片查看详情，健衡学园将作为中间人为你对接——
               既是同行交流，也为往期学员带来更多获客机会。
             </p>
@@ -255,105 +230,47 @@ export default function AlumniPage() {
           </div>
         </section>
 
-        {/* Tab switcher */}
+        {/* Filters */}
         <section className="pb-6">
           <div className="max-w-[1200px] mx-auto px-6">
-            <div className="flex gap-2 mb-6">
-              {[
-                { key: "directory" as const, label: "治疗师目录" },
-                { key: "alumni" as const, label: "学员目录" },
-              ].map((tab) => (
-                <button
-                  key={tab.key}
-                  onClick={() => setActiveTab(tab.key)}
-                  className={`px-6 py-2.5 font-['Inter',sans-serif] text-sm rounded-sm transition-colors duration-200 ${
-                    activeTab === tab.key
-                      ? "bg-foreground text-[#F5F5F0]"
-                      : "text-[#6B6B62] hover:text-foreground hover:bg-[#E6E6E0]"
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
+            <div className="flex flex-col sm:flex-row gap-3 mb-4">
+              <input
+                type="text"
+                placeholder="搜索姓名、城市或执业领域..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="flex-1 min-w-0 bg-white border border-border px-4 py-3 font-['Inter',sans-serif] text-sm text-foreground placeholder:text-[#9B9B90] focus:outline-none focus:border-accent transition-colors rounded-sm"
+              />
+              <select
+                value={cityFilter}
+                onChange={(e) => setCityFilter(e.target.value)}
+                className="bg-white border border-border px-4 py-3 font-['Inter',sans-serif] text-sm text-foreground focus:outline-none focus:border-accent transition-colors rounded-sm min-w-[140px]"
+              >
+                <option value="">全部城市</option>
+                {cities.map((c) => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
             </div>
-
-            {/* Directory tab */}
-            {activeTab === "directory" && (
-              <>
-                <div className="flex flex-col sm:flex-row gap-3 mb-4">
-                  <input
-                    type="text"
-                    placeholder="搜索姓名、城市或执业领域..."
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    className="flex-1 min-w-0 bg-white border border-border px-4 py-3 font-['Inter',sans-serif] text-sm text-foreground placeholder:text-[#9B9B90] focus:outline-none focus:border-accent transition-colors rounded-sm"
-                  />
-                  <select
-                    value={cityFilter}
-                    onChange={(e) => setCityFilter(e.target.value)}
-                    className="bg-white border border-border px-4 py-3 font-['Inter',sans-serif] text-sm text-foreground focus:outline-none focus:border-accent transition-colors rounded-sm min-w-[140px]"
-                  >
-                    <option value="">全部城市</option>
-                    {cities.map((c) => (
-                      <option key={c} value={c}>{c}</option>
-                    ))}
-                  </select>
-                </div>
-                <p className="font-['Inter',sans-serif] text-xs text-[#9B9B90] mb-4">
-                  共 {filteredTherapists.length} 位治疗师
-                </p>
-              </>
-            )}
-
-            {/* Alumni tab */}
-            {activeTab === "alumni" && (
-              <>
-                <div className="flex flex-wrap gap-2">
-                  {alumniFilters.map((f) => (
-                    <button
-                      key={f.key}
-                      onClick={() => setActiveFilter(f.key)}
-                      className={`px-5 py-2.5 font-['Inter',sans-serif] text-sm rounded-sm transition-colors duration-200 ${
-                        activeFilter === f.key
-                          ? "bg-foreground text-[#F5F5F0]"
-                          : "text-[#6B6B62] hover:text-foreground hover:bg-[#E6E6E0]"
-                      }`}
-                    >
-                      {f.label}
-                    </button>
-                  ))}
-                </div>
-                <p className="font-['Inter',sans-serif] text-xs text-[#9B9B90] mt-4">
-                  共 {filteredAlumni.length} 位学员
-                </p>
-              </>
-            )}
+            <p className="font-['Inter',sans-serif] text-xs text-[#9B9B90] mb-4">
+              共 {filteredTherapists.length} 位治疗师
+            </p>
           </div>
         </section>
 
         {/* Content */}
         <section className="pb-24 lg:pb-36">
           <div className="max-w-[1200px] mx-auto px-6">
-            {activeTab === "directory" && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {filteredTherapists.map((t) => (
-                  <TherapistCard key={t.id} therapist={t} />
-                ))}
-                {filteredTherapists.length === 0 && (
-                  <div className="col-span-full text-center py-12 text-[#9B9B90] text-sm">
-                    没有找到匹配的治疗师
-                  </div>
-                )}
-              </div>
-            )}
-
-            {activeTab === "alumni" && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredAlumni.map((a) => (
-                  <AlumniCard key={a.id} alumni={a} />
-                ))}
-              </div>
-            )}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {filteredTherapists.map((t) => (
+                <TherapistCard key={t.id} therapist={t} />
+              ))}
+              {filteredTherapists.length === 0 && (
+                <div className="col-span-full text-center py-12 text-[#9B9B90] text-sm">
+                  没有找到匹配的治疗师
+                </div>
+              )}
+            </div>
           </div>
         </section>
 
@@ -364,7 +281,7 @@ export default function AlumniPage() {
               成为下一个故事的主角
             </h2>
             <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] mb-10 max-w-[520px] mx-auto leading-relaxed">
-              加入 PAK 认证培训，与全国数百位优秀从业者一起，
+              加入 AK 认证培训，与全国数百位优秀从业者一起，
               用应用肌动学为你的临床工作打开新的可能。
             </p>
             <Link
@@ -376,14 +293,7 @@ export default function AlumniPage() {
           </div>
         </section>
       </main>
-
-      <footer className="bg-[#1C1C1A] py-10">
-        <div className="max-w-[1200px] mx-auto px-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <p className="font-['Inter',sans-serif] text-xs text-[#4A4A45]">
-            © 2026 PAK 健衡学园. 保留所有权利。
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }
