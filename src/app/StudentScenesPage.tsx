@@ -1,5 +1,7 @@
-﻿import Navbar from "@/app/components/Navbar"
+﻿import { useEffect, useRef } from "react"
+import Navbar from "@/app/components/Navbar"
 import Footer from "@/app/components/Footer"
+import gsap from "gsap"
 
 const scenes = [
   { label: "Day 1", src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/student-showcase/day1_IMG_9489.JPG" },
@@ -27,8 +29,66 @@ const reviews = [
 ]
 
 export default function StudentScenesPage() {
+  const pageRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    // 尊重系统「减弱动态效果」设置：跳过动画
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
+    // 朋友圈图片：鼠标悬浮时 3D 倾斜 + 上浮 + 阴影 + 图片放大
+    const cards = gsap.utils.toArray<HTMLElement>(".moments-card", pageRef.current)
+    const handlers: Array<[HTMLElement, (e: MouseEvent) => void, () => void]> = []
+
+    cards.forEach((card) => {
+      const img = card.querySelector("img")
+
+      const tilt = (e: MouseEvent) => {
+        const rect = card.getBoundingClientRect()
+        const px = (e.clientX - rect.left) / rect.width - 0.5
+        const py = (e.clientY - rect.top) / rect.height - 0.5
+        gsap.to(card, {
+          rotationY: px * 8,
+          rotationX: -py * 8,
+          transformPerspective: 900,
+          scale: 1.02,
+          y: -4,
+          boxShadow: "0 20px 45px rgba(0,0,0,0.16)",
+          duration: 0.4,
+          ease: "power2.out",
+        })
+        if (img) {
+          gsap.to(img, { scale: 1.07, duration: 0.4, ease: "power2.out" })
+        }
+      }
+      const reset = () => {
+        gsap.to(card, {
+          rotationX: 0,
+          rotationY: 0,
+          scale: 1,
+          y: 0,
+          boxShadow: "0 0 0 rgba(0,0,0,0)",
+          duration: 0.6,
+          ease: "elastic.out(1, 0.5)",
+        })
+        if (img) {
+          gsap.to(img, { scale: 1, duration: 0.6, ease: "elastic.out(1, 0.5)" })
+        }
+      }
+      card.addEventListener("mousemove", tilt)
+      card.addEventListener("mouseleave", reset)
+      handlers.push([card, tilt, reset])
+    })
+
+    return () => {
+      handlers.forEach(([card, tilt, reset]) => {
+        card.removeEventListener("mousemove", tilt)
+        card.removeEventListener("mouseleave", reset)
+      })
+    }
+  }, [])
+
   return (
-    <div className="min-h-screen bg-background text-foreground font-['Inter',sans-serif] overflow-x-hidden">
+    <div ref={pageRef} className="min-h-screen bg-background text-foreground font-['Inter',sans-serif] overflow-x-hidden">
       <Navbar />
 
       <main>
@@ -115,7 +175,7 @@ export default function StudentScenesPage() {
               {reviews.map((r, i) => (
                 <figure
                   key={i}
-                  className="break-inside-avoid bg-[#E6E6E0] border border-border rounded-sm p-3 group hover:border-accent/40 transition-colors duration-200"
+                  className="moments-card break-inside-avoid bg-[#E6E6E0] border border-border rounded-sm p-3 group hover:border-accent/40 transition-colors duration-200"
                 >
                   <img
                     src={r.src}

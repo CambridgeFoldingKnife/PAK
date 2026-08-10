@@ -1,6 +1,13 @@
-﻿import Navbar from "@/app/components/Navbar"
+﻿import { useEffect, useRef } from "react"
+import Navbar from "@/app/components/Navbar"
 import Footer from "@/app/components/Footer"
 import ScrollReveal from "@/app/components/ScrollReveal"
+import Marquee from "@/app/components/Marquee"
+import { useGSAP } from "@gsap/react"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+
+gsap.registerPlugin(useGSAP, ScrollTrigger)
 
 // ─── Health Triangle (from home page) ─────────────────────────────────────────
 function HealthTriangle() {
@@ -45,19 +52,19 @@ function HealthTriangle() {
 
           {/* Right: triangle diagram */}
           <div className="flex-shrink-0 hidden lg:block">
-            <svg width="300" height="270" viewBox="-10 0 300 270" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg className="triangle-svg" width="300" height="270" viewBox="-10 0 300 270" fill="none" xmlns="http://www.w3.org/2000/svg">
               {/* Triangle */}
-              <polygon points="140,30 40,220 240,220" fill="none" stroke="#1C1C1A" strokeWidth="2.5" />
+              <polygon className="triangle-draw" points="140,30 40,220 240,220" fill="none" stroke="#1C1C1A" strokeWidth="2.5" />
               {/* Top: 结构 */}
-              <text x="140" y="18" textAnchor="middle" fontSize="13" fontWeight="600" fill="#1C1C1A" fontFamily="Inter, sans-serif">
+              <text className="triangle-label" x="140" y="18" textAnchor="middle" fontSize="13" fontWeight="600" fill="#1C1C1A" fontFamily="Inter, sans-serif">
                 结构 Structural
               </text>
               {/* Bottom-left: 化学 */}
-              <text x="40" y="248" textAnchor="middle" fontSize="13" fontWeight="600" fill="#5A8F8B" fontFamily="Inter, sans-serif">
+              <text className="triangle-label" x="40" y="248" textAnchor="middle" fontSize="13" fontWeight="600" fill="#5A8F8B" fontFamily="Inter, sans-serif">
                 化学 Chemical
               </text>
               {/* Bottom-right: 心理 */}
-              <text x="240" y="248" textAnchor="middle" fontSize="13" fontWeight="600" fill="#5A8F8B" fontFamily="Inter, sans-serif">
+              <text className="triangle-label" x="240" y="248" textAnchor="middle" fontSize="13" fontWeight="600" fill="#5A8F8B" fontFamily="Inter, sans-serif">
                 心理 Mental
               </text>
               {/* Center circle: 健康 */}
@@ -66,9 +73,9 @@ function HealthTriangle() {
                 健康
               </text>
               {/* Dashed lines from center to each vertex */}
-              <line x1="140" y1="131" x2="140" y2="30" stroke="#9B9B90" strokeWidth="1" strokeDasharray="4 3" />
-              <line x1="122" y1="168" x2="40" y2="220" stroke="#9B9B90" strokeWidth="1" strokeDasharray="4 3" />
-              <line x1="158" y1="168" x2="240" y2="220" stroke="#9B9B90" strokeWidth="1" strokeDasharray="4 3" />
+              <line className="triangle-draw" x1="140" y1="131" x2="140" y2="30" stroke="#9B9B90" strokeWidth="1" strokeDasharray="4 3" />
+              <line className="triangle-draw" x1="122" y1="168" x2="40" y2="220" stroke="#9B9B90" strokeWidth="1" strokeDasharray="4 3" />
+              <line className="triangle-draw" x1="158" y1="168" x2="240" y2="220" stroke="#9B9B90" strokeWidth="1" strokeDasharray="4 3" />
             </svg>
           </div>
         </div>
@@ -77,7 +84,7 @@ function HealthTriangle() {
           {dims.map((d) => (
             <div
               key={d.title}
-              className="bg-[#F5F5F0] p-8 flex flex-col gap-5"
+              className="tilt-card bg-[#F5F5F0] p-8 flex flex-col gap-5"
             >
               <div>
                 <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.12em] uppercase text-accent mb-2">
@@ -108,43 +115,217 @@ function HealthTriangle() {
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function CoursePage() {
+  const pageRef = useRef<HTMLDivElement>(null)
+
+  useGSAP(
+    () => {
+      // 尊重系统「减弱动态效果」设置：跳过所有动画
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      if (reduceMotion) return
+
+      // 1. Hero 进场：小标浮入 → 标题逐字遮罩展开 → 正文浮入
+      const heroTl = gsap.timeline({ defaults: { ease: "power4.out" } })
+      heroTl
+        .from(".hero-eyebrow", { y: 24, opacity: 0, duration: 0.6 })
+        .from(".hero-char", { yPercent: 120, duration: 0.9, stagger: 0.06 }, "-=0.2")
+        .from(".hero-sub", { y: 24, opacity: 0, duration: 0.6 }, "-=0.5")
+
+      // 2. 纪录片视频入场：滚入视口时轻微放大 + 淡入
+      gsap.from(".video-wrap", {
+        opacity: 0,
+        scale: 0.95,
+        y: 20,
+        duration: 0.9,
+        ease: "power2.out",
+        scrollTrigger: { trigger: ".video-wrap", start: "top 85%" },
+      })
+
+      // 3. 认证体系时间线：随滚动进度逐一点亮（scroll-scrub，可回滚）
+      const timelineTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".timeline-card",
+          start: "top 82%",
+          end: "top 15%",
+          scrub: 1,
+        },
+      })
+      timelineTl
+        .from(".timeline-line", {
+          scaleY: 0,
+          transformOrigin: "top",
+          ease: "none",
+          duration: 0.5,
+        })
+        .from(
+          ".timeline-item",
+          { opacity: 0, y: 16, ease: "none", stagger: 0.35, duration: 0.5 },
+          "+=0.15"
+        )
+
+      // 4. 健康金三角：边框线随滚动自动描画，标签淡入
+      const svg = pageRef.current?.querySelector(".triangle-svg")
+      if (svg) {
+        svg.querySelectorAll(".triangle-draw").forEach((el) => {
+          const path = el as SVGGeometryElement
+          const len = path.getTotalLength()
+          const originalDash = path.getAttribute("stroke-dasharray")
+          gsap.set(path, { strokeDasharray: len, strokeDashoffset: len })
+          gsap.to(path, {
+            strokeDashoffset: 0,
+            duration: 1.1,
+            ease: "power2.inOut",
+            onComplete: () => {
+              // 虚线元素绘制完成后恢复原有的虚线样式
+              if (originalDash) path.setAttribute("stroke-dasharray", originalDash)
+            },
+            scrollTrigger: { trigger: ".triangle-svg", start: "top 80%" },
+          })
+        })
+        gsap.from(".triangle-label", {
+          opacity: 0,
+          duration: 0.6,
+          stagger: 0.15,
+          ease: "power2.out",
+          scrollTrigger: { trigger: ".triangle-svg", start: "top 80%" },
+        })
+      }
+
+      // 5. 数字滚动计数：滚入视口时从 0 滚动到目标值
+      gsap.utils.toArray<HTMLElement>("[data-count]", pageRef.current).forEach((el) => {
+        const target = parseFloat(el.dataset.count || "0")
+        const suffix = el.dataset.suffix || ""
+        const obj = { val: 0 }
+        gsap.to(obj, {
+          val: target,
+          duration: 1.6,
+          ease: "power2.out",
+          scrollTrigger: { trigger: el, start: "top 85%" },
+          onUpdate: () => {
+            el.textContent = Math.round(obj.val) + suffix
+          },
+        })
+      })
+      // 7. 文字逐词显现：把 .reveal-words 内的文字运行时拆成字/词并随滚动逐一亮起
+      gsap.utils.toArray<HTMLElement>(".reveal-words", pageRef.current).forEach((block) => {
+        const walker = document.createTreeWalker(block, NodeFilter.SHOW_TEXT)
+        const textNodes: Text[] = []
+        let cur: Node | null
+        while ((cur = walker.nextNode())) textNodes.push(cur as Text)
+        textNodes.forEach((node) => {
+          const frag = document.createDocumentFragment()
+          node.textContent!.split(/(\s+)/).forEach((part) => {
+            if (!part) return
+            if (/^\s+$/.test(part)) {
+              frag.appendChild(document.createTextNode(" "))
+              return
+            }
+            // 中文字按单字、拉丁词/数字按整词拆分，保留 <strong> 标签
+            const units =
+              part.match(
+                /[一-鿿]|[　-〿＀-￯]|[A-Za-z0-9]+|[^\s一-鿿　-〿＀-￯]+/g
+              ) || [part]
+            units.forEach((u) => {
+              const mask = document.createElement("span")
+              mask.className = "inline-block overflow-hidden align-bottom"
+              const inner = document.createElement("span")
+              inner.className = "inline-block word-item"
+              inner.textContent = u
+              mask.appendChild(inner)
+              frag.appendChild(mask)
+            })
+          })
+          node.replaceWith(frag)
+        })
+
+        gsap.from(block.querySelectorAll<HTMLElement>(".word-item"), {
+          yPercent: 110,
+          opacity: 0,
+          duration: 0.5,
+          stagger: 0.012,
+          ease: "power3.out",
+          scrollTrigger: { trigger: block, start: "top 85%" },
+        })
+      })
+    },
+    { scope: pageRef }
+  )
+
+  // 3D 鼠标倾斜卡片：用普通 useEffect 实现（useGSAP 的 context 在此环境会被立即 revert，改用 useEffect 保证监听常驻）
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
+    const cards = gsap.utils.toArray<HTMLElement>(".tilt-card", pageRef.current)
+    const handlers: Array<[HTMLElement, (e: MouseEvent) => void, () => void]> = []
+    cards.forEach((card) => {
+      const onMove = (e: MouseEvent) => {
+        const rect = card.getBoundingClientRect()
+        const px = (e.clientX - rect.left) / rect.width - 0.5
+        const py = (e.clientY - rect.top) / rect.height - 0.5
+        gsap.to(card, {
+          rotationY: px * 10,
+          rotationX: -py * 10,
+          transformPerspective: 900,
+          duration: 0.4,
+          ease: "power2.out",
+        })
+      }
+      const onLeave = () => {
+        gsap.to(card, { rotationX: 0, rotationY: 0, duration: 0.6, ease: "power2.out" })
+      }
+      card.addEventListener("mousemove", onMove)
+      card.addEventListener("mouseleave", onLeave)
+      handlers.push([card, onMove, onLeave])
+    })
+    return () => {
+      handlers.forEach(([card, onMove, onLeave]) => {
+        card.removeEventListener("mousemove", onMove)
+        card.removeEventListener("mouseleave", onLeave)
+      })
+    }
+  }, [])
+
   return (
-    <div className="min-h-screen bg-background text-foreground font-['Inter',sans-serif] overflow-x-hidden">
+    <div ref={pageRef} className="min-h-screen bg-background text-foreground font-['Inter',sans-serif] overflow-x-hidden">
       <Navbar />
       <main>
         {/* Hero */}
-        <ScrollReveal>
-          <section className="max-w-[900px] mx-auto px-6 pt-32 lg:pt-40 pb-16">
-            <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-6">
-              应用肌动学入门
-            </p>
-            <h1 className="font-['Playfair_Display',serif] text-5xl lg:text-6xl font-semibold leading-[1.12] text-foreground mb-6">
-              关于 AK
-            </h1>
-            <p className="font-['Inter',sans-serif] text-base text-[#6B6B62] leading-relaxed max-w-[600px]">
-              应用肌动学（Applied Kinesiology，简称 AK）是现代肌动学体系的源头，
-              由美国脊医佐治·古赫特博士（Dr. George Goodheart）于 1964 年正式创立。
-            </p>
-          </section>
-        </ScrollReveal>
+        <section className="max-w-[900px] mx-auto px-6 pt-32 lg:pt-40 pb-16">
+          <p className="hero-eyebrow font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-6">
+            应用肌动学入门
+          </p>
+          <h1 className="hero-title font-['Playfair_Display',serif] text-5xl lg:text-6xl font-semibold leading-[1.12] text-foreground mb-6">
+            {"关于 AK".split("").map((char, i) => (
+              <span key={i} className="inline-block overflow-hidden align-bottom">
+                <span className="inline-block hero-char">
+                  {char === " " ? " " : char}
+                </span>
+              </span>
+            ))}
+          </h1>
+          <p className="hero-sub font-['Inter',sans-serif] text-base text-[#6B6B62] leading-relaxed max-w-[600px]">
+            应用肌动学（Applied Kinesiology，简称 AK）是现代肌动学体系的源头，
+            由美国脊医佐治·古赫特博士（Dr. George Goodheart）于 1964 年正式创立。
+          </p>
+        </section>
 
         {/* AK 纪录片视频 */}
-        <ScrollReveal>
-          <section className="max-w-[900px] mx-auto px-6 pb-16">
-            <video
-              className="w-full aspect-video bg-black rounded-sm shadow-sm"
-              controls
-              playsInline
-              preload="metadata"
-              src="https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/videos/ak_documentary.mp4"
-            >
-              您的浏览器不支持 HTML5 视频播放。
-            </video>
-            <p className="font-['Inter',sans-serif] text-sm text-[#6B6B62] mt-3">
-              AK 应用肌动学纪录片
-            </p>
-          </section>
-        </ScrollReveal>
+        <section className="video-wrap max-w-[900px] mx-auto px-6 pb-16">
+          <video
+            className="w-full aspect-video bg-black rounded-sm shadow-sm"
+            controls
+            playsInline
+            preload="metadata"
+            src="https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/videos/ak_documentary.mp4"
+          >
+            您的浏览器不支持 HTML5 视频播放。
+          </video>
+          <p className="font-['Inter',sans-serif] text-sm text-[#6B6B62] mt-3">
+            AK 应用肌动学纪录片
+          </p>
+        </section>
+
+        {/* 关键词跑马灯 */}
+        <Marquee />
 
         {/* Content */}
         <section className="max-w-[900px] mx-auto px-6 pb-32 space-y-16">
@@ -159,7 +340,7 @@ export default function CoursePage() {
                 <h2 className="font-['Playfair_Display',serif] text-3xl lg:text-4xl font-semibold leading-[1.15] text-foreground mb-8">
                   什么是应用肌动学
                 </h2>
-                <div className="prose-custom space-y-7">
+                <div className="reveal-words prose-custom space-y-7">
                   <p className="font-['Inter',sans-serif] text-xl text-[#4A4A45] leading-[1.8]">
                     区别于传统研究人体运动系统的运动学（Kinesiology），应用肌动学是一门融合了
                     <strong className="text-foreground font-medium">西方生理学</strong>（神经、肌肉、淋巴、血管系统）与
@@ -174,14 +355,15 @@ export default function CoursePage() {
               </div>
 
               {/* Right: 认证体系时间线 */}
-              <div className="bg-[#F5F5F0] border border-border rounded-sm p-6 lg:p-8">
+              <div className="timeline-card bg-[#F5F5F0] border border-border rounded-sm p-6 lg:p-8">
                 <p className="font-['Inter',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-3">
                   认证体系时间线
                 </p>
                 <h3 className="font-['Playfair_Display',serif] text-xl lg:text-2xl font-semibold text-foreground mb-8">
                   AK 六十载发展历程
                 </h3>
-                <div className="relative border-l border-[#4A7F7B]/30">
+                <div className="relative">
+                  <div className="timeline-line absolute left-0 top-0 bottom-0 w-px bg-[#4A7F7B]/30" />
                   {[
                     { year: "1964", text: "Dr. Goodheart 创立应用肌动学" },
                     { year: "1974", text: "ICAK 国际应用肌动学学院成立" },
@@ -190,7 +372,7 @@ export default function CoursePage() {
                     { year: "2000+", text: "AK 进入中国，多家培训机构开展中文教学" },
                     { year: "2026", text: "健衡学园引入 Hans Garten 官方中文课程" },
                   ].map((item) => (
-                    <div key={item.year} className="relative pl-8 pb-8 last:pb-0">
+                    <div key={item.year} className="timeline-item relative pl-8 pb-8 last:pb-0">
                       <span className="absolute left-[-5px] top-1.5 w-[10px] h-[10px] rounded-full bg-[#4A7F7B]" />
                       <p className="font-['Inter',sans-serif] text-sm font-semibold text-[#4A7F7B]">
                         {item.year}
@@ -295,7 +477,7 @@ export default function CoursePage() {
               ].map((person) => (
                 <div
                   key={person.name}
-                  className="bg-[#F5F5F0] border border-border rounded-sm p-6 flex gap-5"
+                  className="tilt-card bg-[#F5F5F0] border border-border rounded-sm p-6 flex gap-5"
                 >
                   <div className="w-14 h-14 rounded-full bg-accent/15 flex items-center justify-center flex-shrink-0">
                     <span className="font-['Playfair_Display',serif] text-xl font-semibold text-accent">
@@ -488,7 +670,7 @@ export default function CoursePage() {
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-0 sm:items-center sm:justify-between mb-10">
               {[
                 { title: "入门阶段", desc: "Part I & II 基础课程", active: true },
-                { title: "基础文凭", desc: "256学时认证", active: false },
+                { title: "基础文凭", desc: <><span data-count="256">256</span>学时认证</>, active: false },
                 { title: "正式文凭", desc: "高级课程认证", active: false },
                 { title: "ICAK Diplomate", desc: "国际最高认证", active: false },
               ].map((s, i, arr) => (
@@ -505,7 +687,7 @@ export default function CoursePage() {
             </div>
 
             <p className="font-['Inter',sans-serif] text-sm text-[#6B6B62] mb-4">
-              12 个课程模块覆盖 AK 完整知识体系：
+              <span data-count="12">12</span> 个课程模块覆盖 AK 完整知识体系：
             </p>
             <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2">
               {[

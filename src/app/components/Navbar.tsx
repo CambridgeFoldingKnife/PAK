@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Link, useLocation } from "react-router"
+import Magnetic from "@/app/components/Magnetic"
 
 const links = [
   { label: "首页", href: "/" },
@@ -71,16 +72,18 @@ export default function Navbar() {
 
         {/* CTA */}
         <div className="hidden md:block">
-          <Link
-            to="/contact"
-            className={`inline-flex items-center px-5 py-2.5 text-sm font-['Inter',sans-serif] font-medium rounded-sm transition-colors duration-200 ${
-              isActive("/contact")
-                ? "bg-[#4A7F7B] text-accent-foreground"
-                : "bg-accent text-accent-foreground hover:bg-[#4A7F7B]"
-            }`}
-          >
-            课程咨询
-          </Link>
+          <Magnetic>
+            <Link
+              to="/contact"
+              className={`inline-flex items-center px-5 py-2.5 text-sm font-['Inter',sans-serif] font-medium rounded-sm transition-colors duration-200 ${
+                isActive("/contact")
+                  ? "bg-[#4A7F7B] text-accent-foreground"
+                  : "bg-accent text-accent-foreground hover:bg-[#4A7F7B]"
+              }`}
+            >
+              课程咨询
+            </Link>
+          </Magnetic>
         </div>
 
         {/* Mobile hamburger */}
