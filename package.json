@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
+    "postbuild": "node scripts/sitemap.mjs",
     "dev": "vite",
     "vercel:dev": "vercel dev",
     "local:dev": "node scripts/dev.mjs"

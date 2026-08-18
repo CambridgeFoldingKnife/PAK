@@ -618,7 +618,7 @@ export default function CoursePage() {
                 </h3>
                 <ul className="space-y-2.5">
                   {[
-                    "面向所有医疗专业人员",
+                    "面向所有医疗从业人员",
                     "诊断与治疗系统",
                     "结构-化学-心理三维度评估",
                     "ICAK 国际认证体系",
@@ -664,15 +664,25 @@ export default function CoursePage() {
               08 · 课程体系
             </p>
             <h2 className="font-['Noto_Serif_SC',serif] text-3xl lg:text-4xl font-semibold leading-[1.15] text-foreground mb-8">
-              DÄGAK 课程体系 — 4 阶段进阶路径
+              DÄGAK 认证课程体系 — 6 大模块 · 240 学时
             </h2>
+
+            <div className="prose-custom space-y-5 mb-10">
+              <p className="font-['Noto_Sans_SC',sans-serif] text-base text-[#4A4A45] leading-relaxed">
+                全系列 AK 认证课程共 <strong className="text-foreground font-medium">6 大模块</strong>，
+                合计 <strong className="text-foreground font-medium">240 学时</strong>（含线上预习、线下实操、复训与作业）。
+                每个模块 <strong className="text-foreground font-medium">3 天面授</strong>，教学主题由 DÄGAK 认证讲师安排。
+              </p>
+              <p className="font-['Noto_Sans_SC',sans-serif] text-base text-[#4A4A45] leading-relaxed">
+                课程面向医疗从业人员开放：全科、牙科、康复、物理治疗、功能医学等方向的临床工作者均可报名。
+              </p>
+            </div>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-0 sm:items-center sm:justify-between mb-10">
               {[
-                { title: "入门阶段", desc: "Part I & II 基础课程", active: true },
-                { title: "基础文凭", desc: <><span data-count="256">256</span>学时认证</>, active: false },
-                { title: "正式文凭", desc: "高级课程认证", active: false },
-                { title: "ICAK Diplomate", desc: "国际最高认证", active: false },
+                { title: "模块 1–2", desc: "当前开放", active: true },
+                { title: "模块 3–4", desc: "后续开设", active: false },
+                { title: "模块 5–6", desc: "后续开设", active: false },
               ].map((s, i, arr) => (
                 <div key={s.title} className="flex items-center gap-3 sm:gap-0 flex-1">
                   <div className={`flex-1 border-2 p-4 rounded-sm text-center ${s.active ? "border-accent bg-accent/5" : "border-border"}`}>
@@ -686,22 +696,10 @@ export default function CoursePage() {
               ))}
             </div>
 
-            <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#6B6B62] mb-4">
-              <span data-count="12">12</span> 个课程模块覆盖 AK 完整知识体系：
-            </p>
-            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2">
-              {[
-                "M1 基础原理", "M2 肌肉测试", "M3 脊柱调整", "M4 极性系统",
-                "M5 营养化学", "M6 情绪技术", "M7 神经淋巴", "M8 神经血管",
-                "M9 颅骨技术", "M10 肌筋膜", "M11 关节技术", "M12 综合诊疗",
-              ].map((m) => (
-                <div
-                  key={m}
-                  className="bg-[#F5F5F0] border border-border px-3 py-2.5 rounded-sm text-center"
-                >
-                  <span className="font-['Noto_Sans_SC',sans-serif] text-xs text-[#4A4A45]">{m}</span>
-                </div>
-              ))}
+            <div className="bg-[#F5F5F0] border border-border rounded-sm p-6">
+              <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#6B6B62] leading-relaxed">
+                模块 1–2 已开放报名，模块 3–6 将陆续开设。完成全部 6 大模块，即完成 AK 认证课程体系的学习。
+              </p>
             </div>
           </div>
           </ScrollReveal>

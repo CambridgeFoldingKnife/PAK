@@ -5,8 +5,7 @@ export interface Course {
   status: CourseStatus
   module: string
   instructor: string
-  part1: string
-  part2: string
+  time: string
   location: string
   seats: number
   price: string

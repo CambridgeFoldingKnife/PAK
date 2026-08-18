@@ -7,8 +7,7 @@ interface Course {
   status: CourseStatus
   module: string
   instructor: string
-  part1: string
-  part2: string
+  time: string
   location: string
   seats: number
   price: string
@@ -127,11 +126,10 @@ function mapCourse(fields: Record<string, unknown>): Course | null {
     status,
     module: getText(fields["模块"]),
     instructor: getText(fields["讲师"]),
-    part1: getText(fields["Part I 时间"]),
-    part2: getText(fields["Part II 时间"]),
+    time: getText(fields["开课时间"]),
     location: getText(fields["地点"]),
-    seats: getNumber(fields["名额"]) || 30,
-    price: formatPrice(fields["原价"]),
+    seats: getNumber(fields["名额"]) || 24,
+    price: formatPrice(fields["价格"]),
     earlyBird: formatPrice(fields["早鸟价"]),
   }
 }
