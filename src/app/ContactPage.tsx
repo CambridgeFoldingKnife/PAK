@@ -16,8 +16,8 @@ function CTAForm() {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const occupations = ["物理治疗师", "整脊医生", "自然疗法师", "全科医生", "运动康复师", "其他医疗专业人士"]
-  const courses = ["PAK Part I · 基础培训", "PAK Part II · 进阶培训", "两阶段连续报名", "暂未决定，希望咨询"]
+  const occupations = ["物理治疗师", "整脊医生", "自然疗法师", "全科医生", "牙科医生", "运动康复师", "其他医疗专业人士"]
+  const courses = ["模块 1–2（两模块课程）", "单模块", "暂未决定，希望咨询"]
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

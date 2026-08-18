@@ -1,0 +1,39 @@
+# 健衡学园官网 robots.txt
+# 允许所有搜索引擎与 AI 爬虫收录
+
+User-agent: *
+Allow: /
+
+# ── 国内 AI 引擎爬虫 ──
+User-agent: Baiduspider
+Allow: /
+
+User-agent: ByteSpider
+Allow: /
+
+User-agent: DeepSeek
+Allow: /
+
+User-agent: MoonshotBot
+Allow: /
+
+User-agent: KimiBot
+Allow: /
+
+# ── 海外 AI 引擎爬虫 ──
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: https://icak.com.cn/sitemap.xml

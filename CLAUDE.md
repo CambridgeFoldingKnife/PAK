@@ -38,8 +38,6 @@ Routes:
 | --- | --- | --- |
 | `/` | Home (landing) | `App.tsx` |
 | `/course` | Course detail / 关于AK | `CoursePage.tsx` |
-| `/course/part1` | Course Part 1 | `Part1Page.tsx` |
-| `/course/part2` | Course Part 2 | `Part2Page.tsx` |
 | `/pak-union` | Alumni / 治疗师目录 | `AlumniPage.tsx` |
 | `/faq` | FAQ page | `FaqPage.tsx` |
 | `/contact` | Contact form | `ContactPage.tsx` |
@@ -48,7 +46,7 @@ Routes:
 | `/course-center` | 课程中心 | `CourseCenterPage.tsx` |
 | `/knowledge` | AK知识库 | `KnowledgePage.tsx` |
 
-(`/intro` was removed — navigation "关于AK" maps to `/course`, see `Navbar.tsx` links.)
+(`/intro` was removed — navigation "关于AK" maps to `/course`, see `Navbar.tsx` links. `/course/part1` and `/course/part2` were removed (course system migrated to 6 modules / 240 学时) — `Part1Page.tsx` / `Part2Page.tsx` still exist on disk but are no longer routed/imported.)
 
 ## Architecture
 

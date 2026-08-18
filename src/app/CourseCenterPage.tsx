@@ -17,7 +17,11 @@ function Hero() {
           2027 年线下课程排期
         </h1>
         <p className="font-['Noto_Sans_SC',sans-serif] text-base text-[#6B6B62] leading-relaxed max-w-[600px]">
-          线下实操与线上理论学习，系统掌握 AK 技术。每期限额 30 人，选择适合你的城市与班次。
+          线下实操与线上理论学习，系统掌握 AK 技术。每期限额 24 人，选择适合你的城市与班次。
+        </p>
+        <p className="mt-4 inline-flex items-center gap-2 bg-white/60 border border-border rounded-sm px-4 py-2.5 text-sm font-['Noto_Sans_SC',sans-serif] text-[#4A4A45]">
+          <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" />
+          所有课程支持单模块、双模块、四模块组合报名，具体详情请填写课程咨询单获取详情。
         </p>
       </div>
     </section>
@@ -167,10 +171,7 @@ function CourseSchedule() {
                     <span className="text-[#9B9B90]">地点：</span>{c.location}
                   </div>
                   <div className="text-sm text-[#6B6B62]">
-                    <span className="text-[#9B9B90]">Part I：</span>{c.part1}
-                  </div>
-                  <div className="text-sm text-[#6B6B62]">
-                    <span className="text-[#9B9B90]">Part II：</span>{c.part2}
+                    <span className="text-[#9B9B90]">开课时间：</span>{c.time}
                   </div>
                   <div className="text-sm text-[#6B6B62]">
                     <span className="text-[#9B9B90]">名额：</span>限{c.seats}人
@@ -181,9 +182,16 @@ function CourseSchedule() {
                   <span className="font-['Noto_Serif_SC',serif] text-2xl font-bold text-accent">
                     {c.price}
                   </span>
-                  <span className="inline-flex px-3 py-1 bg-[#d1fae5] text-[#065f46] text-sm font-semibold rounded">
-                    早鸟价 {c.earlyBird}
-                  </span>
+                  {c.singlePrice && (
+                    <span className="text-sm text-[#6B6B62]">
+                      单模块 {c.singlePrice}
+                    </span>
+                  )}
+                  {c.earlyBird && (
+                    <span className="inline-flex px-3 py-1 bg-[#d1fae5] text-[#065f46] text-sm font-semibold rounded">
+                      早鸟价 {c.earlyBird}
+                    </span>
+                  )}
                   <span className="text-sm text-[#6B6B62]">剩余名额：{c.seats}</span>
                 </div>
 
