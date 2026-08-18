@@ -23,6 +23,28 @@ function Hero() {
           <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" />
           所有课程支持单模块、双模块、四模块组合报名，具体详情请填写课程咨询单获取详情。
         </p>
+
+        <div className="mt-6 bg-white/60 border border-border rounded-sm px-6 py-5">
+          <p className="font-['Noto_Sans_SC',sans-serif] text-xs font-medium tracking-[0.15em] uppercase text-accent mb-3">
+            报名权益
+          </p>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
+            <div className="flex items-start gap-3 flex-1">
+              <span className="mt-1 w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" />
+              <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#4A4A45] leading-relaxed">
+                <strong className="text-foreground font-medium">报名即送价值 16000 元线上预习课程（共 7 小时）</strong>，
+                计入 AK 认证课程 240 学时体系，面授前打好理论根基。
+              </p>
+            </div>
+            <div className="flex items-start gap-3 flex-1">
+              <span className="mt-1 w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" />
+              <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#4A4A45] leading-relaxed">
+                <strong className="text-foreground font-medium">报名即送中译文肌肉测试书籍</strong>，
+                配套预习与面授学习使用。
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   )
@@ -150,9 +172,16 @@ function CourseSchedule() {
                 className="bg-[#F5F5F0] border border-border rounded-sm p-6 hover:shadow-sm transition-shadow"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-                  <h3 className="font-['Noto_Serif_SC',serif] text-lg font-semibold text-foreground">
-                    {c.name}
-                  </h3>
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <h3 className="font-['Noto_Serif_SC',serif] text-lg font-semibold text-foreground">
+                      {c.name}
+                    </h3>
+                    {c.module && (
+                      <span className="inline-flex px-3 py-1 rounded-sm bg-[#4A7F7B] text-white text-xs font-semibold whitespace-nowrap">
+                        {c.module}
+                      </span>
+                    )}
+                  </div>
                   <span
                     className={`inline-flex self-start px-3 py-1 rounded-full text-xs font-semibold ${badge.className}`}
                   >
@@ -161,9 +190,6 @@ function CourseSchedule() {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-5">
-                  <div className="text-sm text-[#6B6B62]">
-                    <span className="text-[#9B9B90]">模块：</span>{c.module}
-                  </div>
                   <div className="text-sm text-[#6B6B62]">
                     <span className="text-[#9B9B90]">讲师：</span>{c.instructor}
                   </div>
