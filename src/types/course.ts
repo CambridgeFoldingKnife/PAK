@@ -9,6 +9,7 @@ export interface Course {
   location: string
   seats: number
   price: string
+  singlePrice: string
   earlyBird: string
 }
 

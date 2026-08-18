@@ -178,6 +178,11 @@ function CourseSchedule() {
                   <span className="font-['Noto_Serif_SC',serif] text-2xl font-bold text-accent">
                     {c.price}
                   </span>
+                  {c.singlePrice && (
+                    <span className="text-sm text-[#6B6B62]">
+                      单模块 {c.singlePrice}
+                    </span>
+                  )}
                   {c.earlyBird && (
                     <span className="inline-flex px-3 py-1 bg-[#d1fae5] text-[#065f46] text-sm font-semibold rounded">
                       早鸟价 {c.earlyBird}

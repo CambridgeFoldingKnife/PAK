@@ -11,6 +11,7 @@ interface Course {
   location: string
   seats: number
   price: string
+  singlePrice: string
   earlyBird: string
 }
 
@@ -121,15 +122,20 @@ function mapCourse(fields: Record<string, unknown>): Course | null {
 
   if (!name || !status || status === "cancelled") return null
 
+  const time1 = getText(fields["开课时间1"])
+  const time2 = getText(fields["开课时间2"])
+  const time = [time1, time2].filter(Boolean).join(" + ")
+
   return {
     name,
     status,
     module: getText(fields["模块"]),
     instructor: getText(fields["讲师"]),
-    time: getText(fields["开课时间"]),
+    time,
     location: getText(fields["地点"]),
     seats: getNumber(fields["名额"]) || 24,
-    price: formatPrice(fields["价格"]),
+    price: formatPrice(fields["双课程模块价格"]),
+    singlePrice: formatPrice(fields["单课程模块价格"]),
     earlyBird: formatPrice(fields["早鸟价"]),
   }
 }
