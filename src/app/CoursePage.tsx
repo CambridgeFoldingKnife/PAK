@@ -696,6 +696,12 @@ export default function CoursePage() {
               ))}
             </div>
 
+            <div className="bg-[#F5F5F0] border border-border rounded-sm p-6 mb-4">
+              <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#6B6B62] leading-relaxed">
+                所有课程支持单模块、双模块、四模块组合报名，具体详情请填写课程咨询单获取详情。
+              </p>
+            </div>
+
             <div className="bg-[#F5F5F0] border border-border rounded-sm p-6">
               <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#6B6B62] leading-relaxed">
                 模块 1–2 已开放报名，模块 3–6 将陆续开设。完成全部 6 大模块，即完成 AK 认证课程体系的学习。

@@ -122,8 +122,8 @@ function mapCourse(fields: Record<string, unknown>): Course | null {
 
   if (!name || !status || status === "cancelled") return null
 
-  const time1 = getText(fields["开课时间1"])
-  const time2 = getText(fields["开课时间2"])
+  const time1 = getText(fields["模块1/模块3 时间"])
+  const time2 = getText(fields["模块2/模块4 时间"])
   const time = [time1, time2].filter(Boolean).join(" + ")
 
   return {
