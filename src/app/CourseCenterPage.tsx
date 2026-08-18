@@ -19,6 +19,10 @@ function Hero() {
         <p className="font-['Noto_Sans_SC',sans-serif] text-base text-[#6B6B62] leading-relaxed max-w-[600px]">
           线下实操与线上理论学习，系统掌握 AK 技术。每期限额 24 人，选择适合你的城市与班次。
         </p>
+        <p className="mt-4 inline-flex items-center gap-2 bg-white/60 border border-border rounded-sm px-4 py-2.5 text-sm font-['Noto_Sans_SC',sans-serif] text-[#4A4A45]">
+          <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" />
+          所有课程支持单模块、双模块、四模块组合报名，具体详情请填写课程咨询单获取详情。
+        </p>
       </div>
     </section>
   )
