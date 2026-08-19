@@ -12,20 +12,16 @@ const tabs = [
 
 const videos = [
   {
-    title: "AK早期历史",
-    src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/videos/ak_early_history.mp4",
+    title: "损伤记忆技术 IRT 第一步",
+    src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/videos/2026-08/%E6%8D%9F%E4%BC%A4%E5%9B%9E%E5%BF%86%E6%8A%80%E6%9C%AFIRT%E7%AC%AC%E4%B8%80%E4%B8%AA%E6%AD%A5%E9%AA%A4.mp4",
   },
   {
-    title: "AK患者受益案例",
-    src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/videos/ak_patient_benefits.mp4",
+    title: "触点",
+    src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/videos/2026-08/%E8%A7%A6%E8%AF%8A%E7%82%B9.mp4",
   },
   {
-    title: "Goodheart谈AK起源",
-    src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/videos/goodheart_origins.mp4",
-  },
-  {
-    title: "ICAK介绍",
-    src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/videos/icak_intro.mp4",
+    title: "膀胱 肾",
+    src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/videos/2026-08/%E8%86%80%E8%83%B1%20%E8%82%BE.mp4",
   },
 ]
 
