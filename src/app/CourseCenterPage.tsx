@@ -32,7 +32,7 @@ function Hero() {
             <div className="flex items-start gap-3 flex-1">
               <span className="mt-1 w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" />
               <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#4A4A45] leading-relaxed">
-                <strong className="text-foreground font-medium">报名即送价值 16000 元线上预习课程（共 7 小时）</strong>，
+                <strong className="text-foreground font-medium">报名即送价值 5000 元线上预习课程（共 7 小时）</strong>，
                 计入 AK 认证课程 240 学时体系，面授前打好理论根基。
               </p>
             </div>
