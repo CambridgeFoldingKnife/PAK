@@ -81,10 +81,10 @@ export default function LiteraturePage() {
               <div className="max-w-[1000px] mx-auto text-center">
                 <ScrollReveal>
                   <h2 className="font-['Noto_Serif_SC',serif] text-4xl lg:text-5xl font-semibold leading-[1.15] text-foreground mb-5">
-                    AK 学习资料库 · 随身知识助手
+                    PAK 学习资料库 · 随身知识助手
                   </h2>
                   <p className="font-['Noto_Sans_SC',sans-serif] text-xl lg:text-2xl text-accent mb-12">
-                    把 AK 经典教材与 22 册科普读物装进你的口袋
+                    把 PAK 经典教材与 22 册科普读物装进你的口袋
                   </p>
                 </ScrollReveal>
 
@@ -95,24 +95,24 @@ export default function LiteraturePage() {
                     </h3>
                     <p className="font-['Noto_Sans_SC',sans-serif] text-lg lg:text-xl text-[#6B6B62] leading-relaxed mb-8">
                       ima 是腾讯出品的 AI 智能知识管理助手。我们已将健衡学园的全部课程资料整理入库，
-                      你可以直接用「问答」的方式向 AI 提问，也可以随时翻阅、检索原文档——学 AK，不用再翻箱倒柜找资料。
+                      你可以直接用「问答」的方式向 AI 提问，也可以随时翻阅、检索原文档——学 PAK，不用再翻箱倒柜找资料。
                     </p>
 
                     <h3 className="font-['Noto_Serif_SC',serif] text-2xl lg:text-3xl font-semibold text-foreground mb-5">
                       里面有什么
                     </h3>
                     <p className="font-['Noto_Sans_SC',sans-serif] text-lg lg:text-xl text-[#6B6B62] leading-relaxed mb-4">
-                      <strong className="text-foreground font-semibold">AK 经典教材</strong>
+                      <strong className="text-foreground font-semibold">PAK 经典教材</strong>
                       —— 体系化的专业教材，从理论基础到临床方法，逐章可查；
                     </p>
                     <p className="font-['Noto_Sans_SC',sans-serif] text-lg lg:text-xl text-[#6B6B62] leading-relaxed mb-10">
-                      <strong className="text-foreground font-semibold">AK 科普手册</strong>
+                      <strong className="text-foreground font-semibold">PAK 科普手册</strong>
                       —— 22 本 PDF 科普读物，用通俗的语言讲清肌肉测试、结构与治疗逻辑，零基础也能读得懂。
                     </p>
 
                     <ul className="flex flex-col gap-4 font-['Noto_Sans_SC',sans-serif] text-lg lg:text-xl text-[#4A4A45]">
                       <li>教材 + 科普 一站式整理，专业与入门都能覆盖</li>
-                      <li>AI 智能问答，随时解答你的 AK 疑问</li>
+                      <li>AI 智能问答，随时解答你的 PAK 疑问</li>
                       <li>手机/电脑随手查，学习资料常伴左右</li>
                     </ul>
                   </div>
@@ -120,7 +120,7 @@ export default function LiteraturePage() {
 
                 <ScrollReveal delay={0.1}>
                   <p className="font-['Noto_Serif_SC',serif] text-xl lg:text-2xl text-foreground mb-10">
-                    扫码加入知识库，开启你的 AK 学习之旅
+                    扫码加入知识库，开启你的 PAK 学习之旅
                   </p>
                 </ScrollReveal>
 
