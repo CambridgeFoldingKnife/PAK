@@ -14,7 +14,12 @@ import path from "node:path"
 import { fileURLToPath, pathToFileURL } from "node:url"
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const root = path.resolve(__dirname, "..")
+// root 指向项目根目录（server.mjs 所在目录，即 front/）
+// 兼容两种部署布局：
+//   A) 代码 clone 到 /www/pakfront/front，server.mjs 在 front/ 下 → root = front/
+//   B) 代码直接放 /www/pakfront，server.mjs 在根下 → root = /www/pakfront
+// 统一用「server.mjs 所在目录」作为项目根，api/ 与 .env 都位于该目录下。
+const root = __dirname
 const PORT = Number(process.env.PORT || 3000)
 
 // 加载 .env（不覆盖已存在的环境变量，方便 PM2 里用 ecosystem 覆盖）
