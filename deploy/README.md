@@ -2,6 +2,7 @@
 
 > 目标：把代码推送到 GitHub → 自动构建 → 部署到阿里云 → 网站更新。
 > 适用：2核2G / 40G / 3M 带宽，纯前端 + Node API（飞书）。
+> **仓库**：公司仓库 `camknife/PAK`；**部署分支**：`feature-online`（首次已手动部署跑通，CICD 待配置）。
 
 ---
 
@@ -44,8 +45,9 @@ GitHub Actions（在 GitHub 服务器构建）
 ```bash
 mkdir -p /www/pakfront
 cd /www/pakfront
-git clone https://github.com/CambridgeFoldingKnife/PAK.git front
+git clone https://github.com/camknife/PAK.git front
 cd front
+git checkout feature-online       # 上线分支
 cp .env.example .env      # 若没有则手动创建
 # 编辑 .env，填入飞书配置（FEISHU_APP_ID / SECRET / TOKEN / TABLE_ID / CONSULT_*）
 ```
@@ -90,7 +92,7 @@ cat ~/.ssh/pakfront.pub >> ~/.ssh/authorized_keys
 | `ALIYUN_SSH_KEY` | 服务器私钥 `~/.ssh/pakfront` 的**全部内容** |
 
 ### 3. 触发自动部署
-push 到 `feature-web2` 即自动部署。改部署分支：编辑 `.github/workflows/deploy.yml` 里的 `branches`。
+push 到 `feature-online` 即自动部署。改部署分支：编辑 `.github/workflows/deploy.yml` 里的 `branches`。
 也可在 Actions 页面手动点「Run workflow」。
 
 ---
@@ -108,7 +110,7 @@ push 到 `feature-web2` 即自动部署。改部署分支：编辑 `.github/work
 
 | 文件 | 作用 |
 | --- | --- |
-| `server.mjs` | 生产 API server（PM2 跑，读 .env，/api/courses、/api/consult） |
+| `server.mjs` | 生产 API server（PM2 跑，读 .env，/api/courses、/api/consult）。⚠️ `root = __dirname`（server.mjs 所在目录，即 front/），`.env` 与 `api/` 必须与 server.mjs 同目录 |
 | `.github/workflows/deploy.yml` | GitHub Actions 自动部署工作流 |
 | `deploy/nginx.conf` | Nginx 站点配置（SPA + /api 反代 + SSL） |
 | `deploy/deploy.sh` | 服务器部署脚本（同步 + 重启，可选） |

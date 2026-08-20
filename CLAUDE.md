@@ -96,7 +96,26 @@ A custom Vite plugin (`figmaAssetResolver()` in `vite.config.ts`) resolves `figm
 
 ## Git
 
-Two remotes: `gitee` (https://gitee.com/feifei-001/pakfront.git) and `github` (https://github.com/CambridgeFoldingKnife/PAK.git). Current dev branch: `feature-web2` (tracks `github/feature-web2`). Push to GitHub with `git push`, PRs via `gh pr create`.
+Two remotes:
+- `github` (https://github.com/CambridgeFoldingKnife/PAK.git) — 个人仓库（预览/开发）
+- `camknife` (https://github.com/camknife/PAK.git) — 公司仓库（生产上线）
+
+（`gitee` 远程已移除。）
+
+Branches:
+- `dev` → tracks `github/dev` — 个人仓库开发主线
+- `feature-online` → tracks `camknife/feature-online` — 公司仓库上线部署分支
+- `main` → tracks `camknife/main` — 公司仓库 main
+
+Push: `git push github dev`（个人） / `git push camknife feature-online`（公司）。camknife 推送需公司账号 PAT（带 Contents 权限）。
+
+## Deployment
+
+生产环境：阿里云 ECS + 宝塔，域名 `icak.com.cn`，代码在 `/www/pakfront/front`，站点 root `/www/pakfront/dist`。
+- Node API：`server.mjs`（PM2 守护，端口 3000），读 `.env` 飞书配置
+- Nginx：SPA 回退 + `/api/` 反代到 3000（见 `deploy/nginx.conf`）
+- 首次已手动部署跑通；CICD 待配置（`deploy.yml` 触发分支需从 `feature-web2` 改为 `feature-online`）
+- ⚠️ `server.mjs` 的 `root = __dirname`（server.mjs 所在目录，即 front/），`.env` 与 `api/` 都在 front/ 下
 
 ## Common Gotchas
 
