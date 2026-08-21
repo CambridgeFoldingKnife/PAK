@@ -9,7 +9,7 @@ import "./styles/index.css"
 // ─── 路由级代码分割：每个页面独立 chunk，按需加载 ────────────────────────────
 const App = lazy(() => import("./app/App.tsx"))
 const CoursePage = lazy(() => import("./app/CoursePage.tsx"))
-const AlumniPage = lazy(() => import("./app/AlumniPage.tsx"))
+// const AlumniPage = lazy(() => import("./app/AlumniPage.tsx")) // 治疗师目录模块暂缓
 const FaqPage = lazy(() => import("./app/FaqPage.tsx"))
 const ContactPage = lazy(() => import("./app/ContactPage.tsx"))
 const LiteraturePage = lazy(() => import("./app/LiteraturePage.tsx"))
@@ -56,11 +56,11 @@ const PAGE_META: Record<string, { title: string; description?: string }> = {
     description:
       "应用肌动学（AK/PAK）是以徒手肌肉测试为核心诊断工具的整合性临床评估体系，1964年由George Goodheart创立，从结构、化学、心理三个维度评估人体失衡。",
   },
-  "/pak-union": {
-    title: "PAK治疗师目录 - 健衡学园",
-    description:
-      "健衡学园PAK治疗师目录：收录经PAK应用肌动学认证培训的治疗师，覆盖康复、物理治疗、功能医学等领域。",
-  },
+  // "/pak-union": {
+  //   title: "PAK治疗师目录 - 健衡学园",
+  //   description:
+  //     "健衡学园PAK治疗师目录：收录经PAK应用肌动学认证培训的治疗师，覆盖康复、物理治疗、功能医学等领域。",
+  // }, // 治疗师目录模块暂缓
   "/faq": {
     title: "FAQ问答 | 关于PAK与课程 - 健衡学园",
     description: "关于应用肌动学（PAK）、课程体系、认证路径、临床技术、学习方式的常见问题解答。",
@@ -106,7 +106,7 @@ createRoot(document.getElementById("root")!).render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/course" element={<CoursePage />} />
-        <Route path="/pak-union" element={<AlumniPage />} />
+        {/* <Route path="/pak-union" element={<AlumniPage />} /> // 治疗师目录模块暂缓 */}
         <Route path="/faq" element={<FaqPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/research" element={<LiteraturePage />} />
