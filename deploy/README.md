@@ -9,7 +9,7 @@
 ## 架构总览
 
 ```
-你 push 到 GitHub (feature-web2)
+你 push 到 GitHub (feature-online)
         │
         ▼
 GitHub Actions（在 GitHub 服务器构建）
@@ -23,6 +23,33 @@ GitHub Actions（在 GitHub 服务器构建）
    ├─ Node API server（server.mjs，PM2 守护，读 .env 飞书配置）
    └─ 图片在 OSS，字体走镜像，服务器只出 HTML/JS/CSS
 ```
+
+## 服务器目录布局（重要）
+
+```
+/www/pakfront/
+├── front/                  # git 仓库（代码 + build 源目录）
+│   ├── server.mjs          # Node API（PM2 守护，port 3000）
+│   ├── .env                # 飞书配置（勿提交 git）
+│   ├── api/                # server.mjs 依赖的接口模块
+│   ├── dist/               # 本地 build 输出目录（npm run build 的落盘位置）
+│   └── scripts/            # 构建脚本（sitemap 等）
+└── dist/                   # ⚠️ 线上站点根目录（Nginx root 指向这里）
+    ├── index.html
+    ├── assets/
+    └── sitemap.xml
+```
+
+> ⚠️ **两个 `dist/` 的区别**：
+> - `front/dist/` 是 `npm run build` 的**输出目录**（构建产物落在这里）
+> - `/www/pakfront/dist/` 是 **Nginx root 指向的线上站点目录**
+> - **手动部署时必须把 `front/dist/` 的内容同步到 `/www/pakfront/dist/`**，否则线上不会更新。
+>   ```bash
+>   cd /www/pakfront/front
+>   npm run build
+>   cp -r dist/* /www/pakfront/dist/
+>   ```
+> - Nginx 站点配置（宝塔）：`icak.com.cn.conf` → `root /www/pakfront/dist;`
 
 ---
 
@@ -99,10 +126,26 @@ push 到 `feature-online` 即自动部署。改部署分支：编辑 `.github/wo
 
 ## 三、日常使用
 
-**改完代码 → `git push` → 等 1-3 分钟 → 网站已更新。**
-- 静态内容（页面/文案/样式）：dist 推送即生效，Nginx 直接读
+### 方式一：服务器手动部署（当前实际在用）
+
+改完代码 push 到远程后，SSH 登录服务器执行：
+
+```bash
+cd /www/pakfront/front
+git pull            # 拉最新（需先在 feature-online 分支）
+npm run build       # 构建 → front/dist/
+cp -r dist/* /www/pakfront/dist/   # ⚠️ 同步到线上 root，否则不生效
+```
+
+- 静态内容（页面/文案/样式）：同步 dist 即生效，Nginx 直接读
 - API 内容（课程中心/咨询表单）：`pm2 restart pak-api` 生效
 - 图片：继续放 OSS，无需服务器
+
+> **忘记 `cp -r dist/* /www/pakfront/dist/` 是最常见的"build 了但线上没变"原因。**
+
+### 方式二：GitHub Actions 自动部署（待配置）
+
+**改完代码 → `git push` → 等 1-3 分钟 → 网站已更新。**（CICD 当前尚未跑通，见文档开头。）
 
 ---
 
