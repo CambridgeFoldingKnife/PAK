@@ -2,7 +2,7 @@ const footerCols = [
   {
     title: "关于",
     links: [
-      { label: "健衡学园简介", href: "http://jianhengkf.com/lists/50.html" },
+      { label: "健衡学园简介", href: "http://www.jianhengkf.com/lists/50.html" },
       // { label: "PAK 联盟（治疗师目录）", href: "/pak-union" }, // 治疗师目录模块暂缓
     ],
   },
