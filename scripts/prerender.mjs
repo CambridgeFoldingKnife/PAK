@@ -7,7 +7,7 @@
  *       本脚本在构建后启动无头浏览器访问各公开路由，等待 React 渲染完成，
  *       把渲染后的完整 HTML 落盘到 dist/<route>/index.html。
  *
- * 已预渲染路由：静态公开页（不含课程中心 /course-center —— 依赖飞书 API，快照无意义）
+ * 已预渲染路由：静态公开页（不含课程中心 /course-center —— 依赖企业微信智能表格 API，快照无意义）
  * Nginx 已配 SPA 回退（try_files $uri $uri/ /index.html），爬虫访问 /course 会命中
  * dist/course/index.html（预渲染版）。
  *

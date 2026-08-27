@@ -2,7 +2,10 @@
  * 生产 API server（阿里云部署用）
  *
  * 在 scripts/dev.mjs 基础上改造：
- * - 从项目根目录 .env 读取飞书配置
+ * - 从项目根目录 .env 读取企业微信智能表格配置
+ *   · /api/courses 走开放 API get_records 读取课程（需 WECOM_COURSE_DOCID/SHEET_ID）
+ *   · /api/consult 走开放 API add_records 写入咨询（需 WECOM_FORM_DOCID/SHEET_ID）
+ *   · 共用 lib/wecom.ts 的 access_token 缓存与重试
  * - 监听 3000 端口，提供 /api/courses 与 /api/consult
  * - 供 PM2 守护运行：pm2 start server.mjs --name pak-api
  *
@@ -26,7 +29,7 @@ const PORT = Number(process.env.PORT || 3000)
 function loadEnv() {
   const envFile = path.join(root, ".env")
   if (!fs.existsSync(envFile)) {
-    console.warn("[warn] 未找到 .env，飞书 API 将不可用")
+    console.warn("[warn] 未找到 .env，企业微信智能表格 API 将不可用")
     return
   }
   for (const line of fs.readFileSync(envFile, "utf8").split(/\r?\n/)) {
