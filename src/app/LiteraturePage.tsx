@@ -23,6 +23,47 @@ const videos = [
     title: "膀胱 肾",
     src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/videos/2026-08/%E8%86%80%E8%83%B1%20%E8%82%BE.mp4",
   },
+  // Hans 教授采访教学视频（新增，OSS 已上传）
+  {
+    title: "Hans教授 定稿采访一",
+    src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/videos/Hans%E6%95%99%E6%8E%88%E9%87%87%E8%AE%BF/Hans%E6%95%99%E6%8E%88%20%E5%AE%9A%E7%A8%BF%E9%87%87%E8%AE%BF%E4%B8%80.mp4",
+  },
+  {
+    title: "Hans教授采访 一",
+    src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/videos/Hans%E6%95%99%E6%8E%88%E9%87%87%E8%AE%BF/Hans%E6%95%99%E6%8E%88-1.mp4",
+  },
+  {
+    title: "Hans教授采访 二",
+    src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/videos/Hans%E6%95%99%E6%8E%88%E9%87%87%E8%AE%BF/Hans%E6%95%99%E6%8E%88-2.mp4",
+  },
+  {
+    title: "Hans教授采访 三",
+    src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/videos/Hans%E6%95%99%E6%8E%88%E9%87%87%E8%AE%BF/Hans%E6%95%99%E6%8E%88-3.mp4",
+  },
+  {
+    title: "Hans教授采访 四",
+    src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/videos/Hans%E6%95%99%E6%8E%88%E9%87%87%E8%AE%BF/Hans%E6%95%99%E6%8E%88-4.mp4",
+  },
+  {
+    title: "Hans教授采访 五",
+    src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/videos/Hans%E6%95%99%E6%8E%88%E9%87%87%E8%AE%BF/Hans%E6%95%99%E6%8E%88-5.mp4",
+  },
+  {
+    title: "Hans教授采访 六",
+    src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/videos/Hans%E6%95%99%E6%8E%88%E9%87%87%E8%AE%BF/Hans%E6%95%99%E6%8E%88-6.mp4",
+  },
+  {
+    title: "Hans教授采访 七",
+    src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/videos/Hans%E6%95%99%E6%8E%88%E9%87%87%E8%AE%BF/Hans%E6%95%99%E6%8E%88-7.mp4",
+  },
+  {
+    title: "Hans教授采访 八",
+    src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/videos/Hans%E6%95%99%E6%8E%88%E9%87%87%E8%AE%BF/Hans%E6%95%99%E6%8E%88-8.mp4",
+  },
+  {
+    title: "Hans教授采访 九",
+    src: "https://icak-website.oss-cn-hangzhou.aliyuncs.com/assets/videos/Hans%E6%95%99%E6%8E%88%E9%87%87%E8%AE%BF/Hans%E6%95%99%E6%8E%88-9.mp4",
+  },
 ]
 
 const imaImages = [
