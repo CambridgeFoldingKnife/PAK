@@ -38,7 +38,7 @@ function Hero() {
       <motion.div style={{ opacity, y }} className="w-full max-w-[1100px] mx-auto flex flex-col items-center">
         <h1 className="font-['Noto_Serif_SC',serif] text-5xl lg:text-6xl xl:text-7xl font-semibold leading-[1.12] text-foreground mb-8">
           {homeEn.heroTitle.split("").map((char, i) => (
-            <span key={i} className="inline-block overflow-hidden align-bottom">
+            <span key={i} className="inline-block overflow-hidden align-bottom py-[0.2em] -my-[0.2em]">
               <span className="inline-block hero-char">
                 {char === " " ? " " : char}
               </span>
