@@ -171,7 +171,7 @@ const features = [
   {
     number: "04",
     title: "国际认证路径",
-    desc: "完成 DÄGAK 规定的 240 学时（6 大模块）理论与实操培训，通过考核后即可获得 ICAK 国际认证资格。",
+    desc: "完成 240 学时（6 大模块）理论与实操培训并通过笔试与实操考核，即可获得 PAK 临床能力证书（PAK Clinical Competence）；再加修 60 学时（累计 300 学时），可报考 ICAK 国际教学 Diplomate 考试。",
   },
 ]
 
