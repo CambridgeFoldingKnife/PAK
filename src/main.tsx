@@ -9,6 +9,9 @@ import "./styles/index.css"
 // ─── 路由级代码分割：每个页面独立 chunk，按需加载 ────────────────────────────
 const App = lazy(() => import("./app/App.tsx"))
 const CoursePage = lazy(() => import("./app/CoursePage.tsx"))
+const EnHomePage = lazy(() => import("./app/EnHomePage.tsx"))
+const EnAboutPage = lazy(() => import("./app/EnAboutPage.tsx"))
+const EnContactPage = lazy(() => import("./app/EnContactPage.tsx"))
 // const AlumniPage = lazy(() => import("./app/AlumniPage.tsx")) // 治疗师目录模块暂缓
 const FaqPage = lazy(() => import("./app/FaqPage.tsx"))
 const ContactPage = lazy(() => import("./app/ContactPage.tsx"))
@@ -104,6 +107,11 @@ createRoot(document.getElementById("root")!).render(
     <CustomCursor />
     <Suspense fallback={<PageLoader />}>
       <Routes>
+        {/* 英文版（Hans 批注定稿） */}
+        <Route path="/en" element={<EnHomePage />} />
+        <Route path="/en/course" element={<EnAboutPage />} />
+        <Route path="/en/contact" element={<EnContactPage />} />
+        {/* 中文版 */}
         <Route path="/" element={<App />} />
         <Route path="/course" element={<CoursePage />} />
         {/* <Route path="/pak-union" element={<AlumniPage />} /> // 治疗师目录模块暂缓 */}
