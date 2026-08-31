@@ -7,28 +7,37 @@ import { resolve } from "path"
 
 const SITE_URL = "https://icak.com.cn"
 
+// 公开路由（不含已砍的 /pak-union）。预渲染页面加尾斜杠（Nginx 目录规范化会 301 到 /route/）。
+// 含英文版 /en、/en/course。
 const ROUTES = [
   "/",
   "/course",
-  "/pak-union",
   "/faq",
   "/contact",
   "/research",
   "/student-scenes",
   "/course-center",
   "/knowledge",
+  "/en",
+  "/en/course",
+  "/en/contact",
 ]
 
 const today = new Date().toISOString().split("T")[0]
 
+// 首页 "/" 保持原样，其余路由统一加尾斜杠，避免 Nginx 301 目录跳转
 const urls = ROUTES.map(
-  (route) =>
-    `  <url>\n` +
-    `    <loc>${SITE_URL}${route}</loc>\n` +
-    `    <lastmod>${today}</lastmod>\n` +
-    `    <changefreq>monthly</changefreq>\n` +
-    `    <priority>${route === "/" ? "1.0" : "0.8"}</priority>\n` +
-    `  </url>`
+  (route) => {
+    const loc = route === "/" ? SITE_URL : `${SITE_URL}${route}/`
+    return (
+      `  <url>\n` +
+      `    <loc>${loc}</loc>\n` +
+      `    <lastmod>${today}</lastmod>\n` +
+      `    <changefreq>monthly</changefreq>\n` +
+      `    <priority>${route === "/" ? "1.0" : "0.8"}</priority>\n` +
+      `  </url>`
+    )
+  }
 ).join("\n")
 
 const xml =
