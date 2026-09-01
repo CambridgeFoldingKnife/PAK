@@ -53,7 +53,7 @@ function Hero() {
 
         <div className="hero-rest relative w-full rounded-2xl border border-white/60 bg-white/35 px-8 py-8 lg:px-12 lg:py-10 shadow-lg shadow-accent/5 backdrop-blur-md mb-14">
           <div className="font-['Noto_Serif_SC',serif] text-xl lg:text-2xl xl:text-3xl leading-relaxed text-foreground">
-           「应用运动机能学是一项可以基于知识、生理事实和可预测确定性来进行的。应该做，也能做到」
+           「应用肌动学是一项可以基于知识、生理事实和可预测确定性来进行的。应该做，也能做到」
             <span className="block font-['Noto_Sans_SC',sans-serif] text-sm lg:text-base text-[#9B9B90] mt-5">
               —— 乔治·J·古德哈特，二世，D.C.，DIBAK
             </span>

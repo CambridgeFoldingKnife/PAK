@@ -41,7 +41,7 @@ export const homeEn = {
   ],
 
   // Features
-  featuresTitle: "Jianheng Academy provides a comprehensive and systematic PAK certification training system",
+  featuresTitle: "Active and Balanced Physiotherapy Academy provides a comprehensive and systematic PAK certification training system",
   featuresSubtitle:
     "From basic theory to high-level clinical application, each module is designed by DÄGAK certified lecturers to ensure that the content is synchronized with the latest international clinical standards and helps students quickly implement in real diagnosis and treatment situations.",
   features: [
@@ -98,7 +98,7 @@ export const aboutEn = {
     { year: "1976", text: "The first AK standardized syllabus is released" },
     { year: "1992", text: "Dr. Hans Garten is certified by DIBAK" },
     { year: "2000+", text: "AK entered China, and many training institutions carried out Chinese teaching" },
-    { year: "2026", text: "Jianheng Academy introduces Hans Garten's official Chinese course" },
+    { year: "2026", text: "Active and Balanced Physiotherapy Academy introduces Hans Garten's official Chinese course" },
   ],
 
   // 02 Core theory

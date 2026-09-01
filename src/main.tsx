@@ -93,22 +93,22 @@ const PAGE_META: Record<string, { title: string; description?: string }> = {
   },
   // 英文版（Hans 批注定稿）
   "/en": {
-    title: "PAK Applied Kinesiology | Jianheng Academy",
+    title: "PAK Applied Kinesiology | Active and Balanced Physiotherapy Academy",
     description:
       "Professional Applied Kinesiology (PAK) certification training. Learn manual muscle testing, the Golden Triangle of Health, and the international certification path with ICAK/DÄGAK certified courses.",
   },
   "/en/course": {
-    title: "About PAK | What is Applied Kinesiology - Jianheng Academy",
+    title: "About PAK | What is Applied Kinesiology - Active and Balanced Physiotherapy Academy",
     description:
       "Applied Kinesiology (AK/PAK) is a holistic clinical assessment system founded by Dr. George Goodheart in 1964, using manual muscle testing to evaluate the structure, chemistry and psychology dimensions of health.",
   },
   "/en/contact": {
-    title: "Course Consultation - Jianheng Academy",
+    title: "Course Consultation - Active and Balanced Physiotherapy Academy",
     description:
       "Book a course consultation for PAK Applied Kinesiology certification training modules, online preparatory courses and international certification.",
   },
   "/en/faq": {
-    title: "FAQ | About PAK & Courses - Jianheng Academy",
+    title: "FAQ | About PAK & Courses - Active and Balanced Physiotherapy Academy",
     description:
       "Answers to common questions about Applied Kinesiology (PAK), the course system, certification path, clinical techniques and registration.",
   },

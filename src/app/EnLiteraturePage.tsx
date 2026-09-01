@@ -136,7 +136,7 @@ export default function EnLiteraturePage() {
                     </h3>
                     <p className="font-['Noto_Sans_SC',sans-serif] text-lg lg:text-xl text-[#6B6B62] leading-relaxed mb-8">
                       ima is an AI-powered knowledge management assistant by Tencent. We have organized all
-                      of Jianheng Academy's course materials into the library, so you can ask questions directly
+                      of Active and Balanced Physiotherapy Academy's course materials into the library, so you can ask questions directly
                       via Q&A, or browse and search the original documents anytime — learning PAK has never been easier.
                     </p>
 
