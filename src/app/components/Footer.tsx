@@ -24,7 +24,7 @@ const footerColsEn = [
   {
     title: "About",
     links: [
-      { label: "About Jianheng Academy", href: "http://www.jianhengkf.com/lists/50.html" },
+      { label: "About Active and Balanced Physiotherapy Academy", href: "http://www.jianhengkf.com/lists/50.html" },
     ],
   },
   {
@@ -50,7 +50,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <p className="font-['Noto_Serif_SC',serif] text-base font-semibold text-[#F5F5F0] mb-3">
-              {isEn ? "PAK · Jianheng Academy" : "PAK · 健衡学园"}
+              {isEn ? "PAK · Active and Balanced Physiotherapy Academy" : "PAK · 健衡学园"}
             </p>
             <p className="font-['Noto_Sans_SC',sans-serif] text-sm text-[#6B6B62] leading-relaxed max-w-[280px]">
               {isEn
@@ -65,7 +65,7 @@ export default function Footer() {
                 </span>
               </div>
               <div className="flex flex-col items-center gap-1.5">
-                <img src="/assets/渠道活码-AK官网-推广码.jpg" alt="PAK Official Website QR" className="h-20 w-auto rounded-sm" />
+                <img src="/assets/AK销售码.jpg" alt="PAK Official Website QR" className="h-20 w-auto rounded-sm" />
                 <span className="font-['Noto_Sans_SC',sans-serif] text-xs text-[#6B6B62]">
                   {isEn ? "PAK Official QR" : "PAK官网推广码"}
                 </span>
@@ -124,7 +124,7 @@ export default function Footer() {
         <div className="border-t border-[#333330] pt-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
           <p className="font-['Noto_Sans_SC',sans-serif] text-xs text-[#4A4A45]">
             {isEn
-              ? "© 2026 PAK (Applied Kinesiology) Jianheng Academy. All rights reserved."
+              ? "© 2026 PAK (Applied Kinesiology) Active and Balanced Physiotherapy Academy. All rights reserved."
               : "© 2026 PAK（应用肌动学） 健衡学园. 保留所有权利。"}
           </p>
           <div className="flex gap-5">
