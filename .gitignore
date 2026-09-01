@@ -1,5 +1,7 @@
 node_modules/
 dist/
+preview/
+.workbuddy/
 .DS_Store
 .env
 .env.local
@@ -11,3 +13,4 @@ pnpm-lock.yaml
 ~$*
 .vercel
 .vercel
+scripts/preview-server.mjs
