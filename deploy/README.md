@@ -1,21 +1,22 @@
-# 阿里云部署指南（GitHub Actions CI/CD）
+# 阿里云部署指南（服务器端定时拉取 · 方案 A）
 
-> 目标：把代码推送到 GitHub → 自动构建 → 部署到阿里云 → 网站更新。
+> 目标：推送代码到公司仓库 `camknife/PAK` 的 `feature-online` → 服务器每 10 分钟自动构建部署 → 网站更新。
 > 适用：2核2G / 40G / 3M 带宽，纯前端 + Node API（飞书）。
-> **仓库**：公司仓库 `camknife/PAK`；**部署分支**：`feature-online`（首次已手动部署跑通，CICD 待配置）。
+> **仓库**：公司仓库 `camknife/PAK`；**部署分支**：`feature-online`（已上线，自动部署运行中）。
 
 ---
 
 ## 架构总览
 
 ```
-你 push 到 GitHub (feature-online)
+你 push 到 camknife/feature-online
         │
         ▼
-GitHub Actions（在 GitHub 服务器构建）
-   ├─ npm ci + npm run build → dist/
-   ├─ rsync 推送 dist/ → 服务器 /www/pakfront/dist
-   └─ SSH 执行部署脚本 → pm2 restart pak-api
+服务器 /www/pakfront/deploy.sh（宝塔计划任务，每 10 分钟）
+   ├─ git fetch 检测 feature-online 更新
+   ├─ 有更新 → git pull → npm install → npm run build（含预渲染）
+   ├─ 复制 front/dist/ → /www/pakfront/dist/
+   └─ pm2 restart pak-api
         │
         ▼
 阿里云服务器
@@ -23,6 +24,8 @@ GitHub Actions（在 GitHub 服务器构建）
    ├─ Node API server（server.mjs，PM2 守护，读 .env 飞书配置）
    └─ 图片在 OSS，字体走镜像，服务器只出 HTML/JS/CSS
 ```
+
+> ⚠️ 已弃用 GitHub Actions：`.github/workflows/deploy.yml` 已删除，改用服务器端定时部署。
 
 ## 服务器目录布局（重要）
 

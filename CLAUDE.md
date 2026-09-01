@@ -103,11 +103,17 @@ Two remotes:
 （`gitee` 远程已移除。）
 
 Branches:
-- `dev` → tracks `github/dev` — 个人仓库开发主线
-- `feature-online` → tracks `camknife/feature-online` — 公司仓库上线部署分支
-- `main` → tracks `camknife/main` — 公司仓库 main
+- `dev` → tracks `github/dev` — 个人仓库开发主线（Vercel 预览）
+- `feature-language-20260901` → tracks `github/feature-language-20260901` — 英文版（/en 多语言）开发分支，通过 PR 合入 dev
+- `feature-online` → tracks `camknife/feature-online` — 公司仓库上线部署分支（生产）
+- `main` → tracks `camknife/main` — 公司仓库 main（生产主线，合并 feature-online）
 
 Push: `git push github dev`（个人） / `git push camknife feature-online`（公司）。camknife 推送需公司账号 PAT（带 Contents 权限）。
+
+分支工作流（当前 2026-09）：
+- 个人 `dev` 是 Vercel 预览主线，英文版等功能通过 `feature-language-20260901` 发 PR 合入
+- 生产：`feature-online` 是唯一部署分支（服务器 10 分钟定时拉取构建），改动合入它即上线
+- `main` 定期合并 `feature-online` 作为生产归档基线
 
 ## Deployment
 
@@ -123,7 +129,17 @@ Push: `git push github dev`（个人） / `git push camknife feature-online`（�
 
 - Node API：`server.mjs`（PM2 守护，端口 3000），读 `.env` 飞书配置
 - Nginx：SPA 回退 + `/api/` 反代到 3000（见 `deploy/nginx.conf`）
-- 首次已手动部署跑通；`deploy.yml` 触发分支已改为 `feature-online`（CICD 实际尚未跑通，日常用手动部署）
+
+**自动部署（方案 A：服务器端定时拉取）**：
+- 服务器 `/www/pakfront/deploy.sh`（宝塔计划任务每 10 分钟执行一次）
+- 检测 `feature-online` 分支更新 → `git pull` → `npm install` → `npm run build`（含预渲染）→ 复制 dist → `pm2 restart pak-api`
+- ⚠️ 服务器 build 触发预渲染需 Playwright chromium（已装，Alibaba Cloud Linux 需 `yum` 装 nss/atk/libXcomposite 等）
+- 已删除 `.github/workflows/deploy.yml`（GitHub Actions 不再用于部署）
+
+**英文版（/en 多语言）**：
+- 路由 `/en`、`/en/course`、`/en/contact`、`/en/research`、`/en/faq`（Hans 批注定稿英文页）
+- 预渲染脚本 `scripts/prerender.mjs` 含英文路由，AI 可抓取英文内容
+
 - ⚠️ `server.mjs` 的 `root = __dirname`（server.mjs 所在目录，即 front/），`.env` 与 `api/` 都在 front/ 下
 - ⚠️ 页脚"健衡学园简介"链接指向老站 `http://www.jianhengkf.com/lists/50.html`（**必须带 www**；无 www 的 `jianhengkf.com` 是另一台老服务器，恒 404，勿改回裸域名）
 
