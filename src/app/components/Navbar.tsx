@@ -13,10 +13,12 @@ const links = [
   { label: "FAQ问答", href: "/faq" },
 ]
 
-// 英文模式导航：仅首页 + 关于PAK（Hans 批注定稿的两页）
+// 英文模式导航：首页 + 关于PAK + FAQ（Hans 批注定稿页面，逐页扩展）
 const enLinks = [
   { label: "Home", href: "/en" },
   { label: "About PAK", href: "/en/course" },
+  { label: "Learning Materials", href: "/en/research" },
+  { label: "FAQ", href: "/en/faq" },
 ]
 
 export default function Navbar() {

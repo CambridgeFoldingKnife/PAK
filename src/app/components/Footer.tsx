@@ -30,9 +30,9 @@ const footerColsEn = [
   {
     title: "Resources",
     links: [
-      { label: "FAQ Q&A", href: "/faq" },
+      { label: "FAQ Q&A", href: "/en/faq" },
       { label: "Clinical Research", href: "/research" },
-      { label: "Course Consultation", href: "/contact" },
+      { label: "Course Consultation", href: "/en/contact" },
     ],
   },
 ]

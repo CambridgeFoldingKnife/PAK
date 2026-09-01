@@ -21,6 +21,8 @@ const ROUTES = [
   "/en",
   "/en/course",
   "/en/contact",
+  "/en/research",
+  "/en/faq",
 ]
 
 const today = new Date().toISOString().split("T")[0]

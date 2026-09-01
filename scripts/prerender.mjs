@@ -40,6 +40,8 @@ const ROUTES = [
   "/en",
   "/en/course",
   "/en/contact",
+  "/en/research",
+  "/en/faq",
 ]
 
 // 内容就绪判定：这些选择器出现说明 React 已渲染完成（每个路由对应的关键内容节点）
@@ -54,6 +56,8 @@ const READY_SELECTORS = {
   "/en": "main",                      // 英文首页
   "/en/course": "main",               // 英文 About
   "/en/contact": "main",              // 英文咨询页
+  "/en/research": "main",             // 英文学习资料
+  "/en/faq": "main",                  // 英文 FAQ
 }
 
 // 静态服务端口（用 vite preview 或 node 简单静态服务）
